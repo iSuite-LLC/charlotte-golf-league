@@ -17,7 +17,7 @@ import os, sys, io, json, time, hashlib, subprocess, openpyxl
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
-BASE        = r"C:\Users\ehigh\claude\Golf League"
+BASE        = r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League"
 SCORES_FILE = os.path.join(BASE, r"Scores\Scores.xlsx")
 MANIFEST    = os.path.join(BASE, "setup", "processed_files.json")
 PROCESSOR   = os.path.join(BASE, "setup", "process_scores.py")

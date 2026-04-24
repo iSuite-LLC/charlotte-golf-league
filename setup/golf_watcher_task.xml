@@ -27,8 +27,8 @@
   <Actions Context="Author">
     <Exec>
       <Command>py</Command>
-      <Arguments>-3 "C:\Users\ehigh\claude\Golf League\watcher.py"</Arguments>
-      <WorkingDirectory>C:\Users\ehigh\claude\Golf League</WorkingDirectory>
+      <Arguments>-3 "C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\setup\watcher.py"</Arguments>
+      <WorkingDirectory>C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League</WorkingDirectory>
     </Exec>
   </Actions>
 </Task>

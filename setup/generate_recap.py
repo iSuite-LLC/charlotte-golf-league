@@ -16,7 +16,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
 LEAGUE     = r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\2026 IMI Golf League.xlsx"
-OUTPUT_DIR = r"C:\Users\ehigh\claude\Golf League\Recap Emails"
+OUTPUT_DIR = r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\Recap Emails"
 
 # ── Round schedule ─────────────────────────────────────────────────────────────
 ROUNDS = {
