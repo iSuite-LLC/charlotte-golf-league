@@ -1,7 +1,7 @@
 # IMI Golf League 2026 — Standings
 
 **Season:** 2026 | **Rounds:** 9 | **Players:** 15
-**Last updated:** 2026-04-24 via Claude
+**Last updated:** 2026-04-28 via Claude
 
 ---
 
@@ -14,14 +14,14 @@ BYE: David Maddox
 
 ## Standings
 
-*Round 1 in progress — no scores submitted yet.*
+*Round 1 in progress — 2 of 7 matches recorded.*
 
 | Rank | Player | Total Pts | Record | Avg NET |
 |------|--------|-----------|--------|---------|
-| — | Brian Wojcio | 0 | 0-0-0 | — |
-| — | Ethan High | 0 | 0-0-0 | — |
-| — | Rob Bass | 0 | 0-0-0 | — |
-| — | Carson Bass | 0 | 0-0-0 | — |
+| 1 | Carson Bass | 7 | 1-0-0 | 38.0 |
+| 2 | Ethan High | 6 | 1-0-0 | 39.0 |
+| 3 | Brian Wojcio | 2 | 0-1-0 | 43.0 |
+| 4 | Rob Bass | 1 | 0-1-0 | 43.0 |
 | — | Michael McHugh | 0 | 0-0-0 | — |
 | — | Bruce Atkins | 0 | 0-0-0 | — |
 | — | Alex Palmer | 0 | 0-0-0 | — |
