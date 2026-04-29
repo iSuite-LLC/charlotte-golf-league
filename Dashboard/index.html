@@ -74,7 +74,8 @@
     .tab-btn:hover { color: var(--text); }
     .tab-btn.active { color: var(--text); border-bottom-color: var(--blue); }
     /* ── Content ── */
-    .content { max-width: 900px; margin: 0 auto; padding: 24px 16px; background: #2d5a1b; min-height: calc(100vh - 100px); }
+    .content-bg { background: #2d5a1b; min-height: calc(100vh - 100px); }
+    .content { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
     .hidden  { display: none !important; }
     /* ── Standings Table ── */
     .standings-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
@@ -210,10 +211,12 @@
   <button class="tab-btn"         onclick="showTab('schedule', this)">Schedule</button>
 </nav>
 
-<main class="content">
-  <div id="tab-standings" class="tab-pane"></div>
-  <div id="tab-results"   class="tab-pane hidden"></div>
-  <div id="tab-schedule"  class="tab-pane hidden"></div>
+<main class="content-bg">
+  <div class="content">
+    <div id="tab-standings" class="tab-pane"></div>
+    <div id="tab-results"   class="tab-pane hidden"></div>
+    <div id="tab-schedule"  class="tab-pane hidden"></div>
+  </div>
 </main>
 
 <script>
