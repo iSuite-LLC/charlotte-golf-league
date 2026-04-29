@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IMI Golf League 2026</title>
+  <style>
+    :root {
+      --bg:           #111111;
+      --surface:      #1e1e1e;
+      --surface-hover:#252525;
+      --border:       #333333;
+      --text:         #ffffff;
+      --muted:        #888888;
+      --red:          #cc2027;
+      --blue:         #1a6fc4;
+      --green:        #5aaa35;
+      --orange:       #e87722;
+      --silver:       #aaaaaa;
+      --bronze:       #cd7f32;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      min-height: 100vh;
+    }
+    /* ── Header ── */
+    .site-header {
+      background: #000;
+      border-bottom: 2px solid var(--orange);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-left  { display: flex; align-items: center; gap: 12px; }
+    .imi-dots     { display: flex; gap: 5px; }
+    .dot          { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .header-title-group h1 {
+      font-size: 1.1rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.1;
+    }
+    .header-title-group .year {
+      font-size: 0.72rem; color: var(--orange);
+      font-weight: 600; letter-spacing: 0.1em;
+    }
+    .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+    .round-badge {
+      background: var(--orange); color: #000;
+      font-size: 0.68rem; font-weight: 700;
+      padding: 3px 8px; border-radius: 3px;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .last-updated { font-size: 0.68rem; color: var(--muted); }
+    /* ── Tabs ── */
+    .tab-nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+    }
+    .tab-btn {
+      background: none; border: none; color: var(--muted);
+      cursor: pointer; font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.05em; padding: 12px 24px;
+      text-transform: uppercase; transition: color 0.15s;
+      border-bottom: 3px solid transparent; margin-bottom: -1px;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--text); border-bottom-color: var(--blue); }
+    /* ── Content ── */
+    .content { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+    .hidden  { display: none !important; }
+    /* ── Standings Table ── */
+    .standings-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .standings-table thead th {
+      color: var(--muted); font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.08em; padding: 8px 12px;
+      text-align: left; text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+    .player-row { cursor: pointer; transition: background 0.1s; }
+    .player-row:hover { background: var(--surface-hover); }
+    .player-row.expanded { background: var(--surface); }
+    .player-row td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .player-row.muted td { color: var(--muted); cursor: default; }
+    .rank-badge {
+      display: inline-block; width: 26px; height: 26px;
+      border-radius: 50%; background: var(--surface);
+      color: var(--muted); font-size: 0.75rem; font-weight: 700;
+      line-height: 26px; text-align: center;
+    }
+    .rank-badge.gold   { background: var(--orange); color: #000; }
+    .rank-badge.silver { background: var(--silver);  color: #000; }
+    .rank-badge.bronze { background: var(--bronze);  color: #fff; }
+    .player-name { font-weight: 600; }
+    .pts   { font-weight: 700; font-size: 1rem; color: var(--orange); }
+    .rec-w { color: var(--red);   font-weight: 600; }
+    .rec-l { color: var(--muted); }
+    .rec-d { color: var(--green); font-weight: 600; }
+    .avg-net { color: var(--muted); }
+    /* ── Player expand panel ── */
+    .expand-row td {
+      padding: 0; background: #181818;
+      border-bottom: 2px solid var(--blue);
+    }
+    .player-detail { padding: 12px 16px; }
+    .detail-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .detail-table th {
+      color: var(--muted); font-size: 0.67rem; font-weight: 600;
+      letter-spacing: 0.08em; padding: 6px 10px;
+      text-align: left; text-transform: uppercase;
+    }
+    .detail-table td { padding: 7px 10px; border-top: 1px solid #2a2a2a; }
+    .result-W { color: var(--red);   font-weight: 700; }
+    .result-D { color: var(--green); font-weight: 700; }
+    .result-L { color: var(--muted); }
+    /* ── Results ── */
+    .round-section {
+      background: var(--surface); border-radius: 6px;
+      margin-bottom: 16px; overflow: hidden;
+    }
+    .round-header {
+      background: #1a1a1a; border-left: 4px solid var(--orange);
+      display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    }
+    .round-label {
+      font-size: 0.85rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .round-dates { color: var(--muted); font-size: 0.8rem; }
+    .badge {
+      font-size: 0.65rem; font-weight: 700;
+      padding: 3px 7px; border-radius: 3px;
+      text-transform: uppercase; letter-spacing: 0.05em; margin-left: auto;
+    }
+    .badge.in-progress { background: var(--orange); color: #000; }
+    .badge.complete    { background: #2a2a2a; color: var(--green); }
+    .round-bye {
+      color: var(--muted); font-size: 0.78rem;
+      padding: 6px 16px; border-bottom: 1px solid var(--border);
+    }
+    .matches { padding: 8px 0; }
+    .match {
+      display: flex; align-items: center; gap: 12px; padding: 8px 16px;
+    }
+    .match + .match { border-top: 1px solid #2a2a2a; }
+    .match-winner { font-weight: 700; flex: 1; }
+    .match-loser  { color: var(--muted); flex: 1; text-align: right; }
+    .match-score  { color: var(--orange); font-size: 0.85rem; font-weight: 700; white-space: nowrap; }
+    /* ── Schedule ── */
+    .schedule-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    .schedule-table thead th {
+      color: var(--muted); font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.08em; padding: 8px 12px;
+      text-align: left; text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+    .schedule-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); }
+    .schedule-table tr.current-round td  { background: #1e1e1e; }
+    .schedule-table tr.complete-round td { color: var(--muted); }
+    .status-complete { color: var(--green);  font-weight: 600; }
+    .status-current  { color: var(--orange); font-weight: 600; }
+    .status-upcoming { color: #555; }
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .site-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .header-right { align-items: flex-start; }
+      .tab-btn { padding: 10px 14px; font-size: 0.75rem; }
+      .standings-table thead th:nth-child(4),
+      .standings-table .player-row td:nth-child(4) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-left">
+    <div class="imi-dots">
+      <span class="dot" style="background:#cc2027"></span>
+      <span class="dot" style="background:#1a6fc4"></span>
+      <span class="dot" style="background:#5aaa35"></span>
+      <span class="dot" style="background:#e87722"></span>
+    </div>
+    <div class="header-title-group">
+      <h1>IMI Golf League</h1>
+      <div class="year">2026 Season</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span id="current-round-badge" class="round-badge" style="display:none"></span>
+    <span id="last-updated" class="last-updated"></span>
+  </div>
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active"  onclick="showTab('standings', this)">Standings</button>
+  <button class="tab-btn"         onclick="showTab('results', this)">Results</button>
+  <button class="tab-btn"         onclick="showTab('schedule', this)">Schedule</button>
+</nav>
+
+<main class="content">
+  <div id="tab-standings" class="tab-pane"></div>
+  <div id="tab-results"   class="tab-pane hidden"></div>
+  <div id="tab-schedule"  class="tab-pane hidden"></div>
+</main>
+
+<script>
+  let leagueData = null;
+
+  async function init() {
+    try {
+      const resp = await fetch('data.json');
+      if (!resp.ok) throw new Error('fetch failed');
+      leagueData = await resp.json();
+      renderAll();
+    } catch (e) {
+      document.querySelector('.content').innerHTML =
+        '<p style="color:#555;text-align:center;padding:60px 0">Could not load league data.</p>';
+    }
+  }
+
+  function renderAll() {
+    renderHeader();
+    renderStandings();
+    renderResults();
+    renderSchedule();
+  }
+
+  function showTab(name, btn) {
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.add('hidden'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.remove('hidden');
+    btn.classList.add('active');
+  }
+
+  /* ── Header ── */
+  function renderHeader() {
+    document.getElementById('last-updated').textContent = 'Updated: ' + leagueData.lastUpdated;
+    const cur  = leagueData.rounds.find(r => r.status === 'in_progress');
+    const last = [...leagueData.rounds].reverse().find(r => r.status === 'complete');
+    const badge = document.getElementById('current-round-badge');
+    if (cur) {
+      badge.textContent    = 'Round ' + cur.round + ' In Progress';
+      badge.style.display  = 'inline-block';
+    } else if (last) {
+      badge.textContent    = 'Round ' + last.round + ' Complete';
+      badge.style.display  = 'inline-block';
+    }
+  }
+
+  /* ── Standings ── */
+  function rankBadge(rank) {
+    const cls = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : '';
+    return `<span class="rank-badge ${cls}">${rank}</span>`;
+  }
+
+  function recordHTML(record) {
+    const [w, l, d] = record.split('-');
+    return `<span class="rec-w">${w}W</span> <span class="rec-l">${l}L</span> <span class="rec-d">${d}D</span>`;
+  }
+
+  function renderPlayerDetail(player) {
+    if (!player.rounds.length) {
+      return '<div class="player-detail"><p style="color:#555;font-size:0.8rem;padding:4px 0">No rounds played yet.</p></div>';
+    }
+    const rows = player.rounds.map(r => `
+      <tr>
+        <td>R${r.round}</td>
+        <td>${r.opponent || '—'}</td>
+        <td class="result-${r.result}">${r.result}</td>
+        <td>${r.matchPts}</td>
+        <td>${r.net !== null ? r.net : '—'}</td>
+      </tr>`).join('');
+    return `<div class="player-detail">
+      <table class="detail-table">
+        <thead><tr><th>Rd</th><th>Opponent</th><th>Result</th><th>Pts</th><th>NET</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+  }
+
+  function toggleExpand(playerId) {
+    document.getElementById('expand-' + playerId).classList.toggle('hidden');
+    document.getElementById('row-'    + playerId).classList.toggle('expanded');
+  }
+
+  function renderStandings() {
+    const ranked = leagueData.players
+      .filter(p => p.rounds.length > 0)
+      .sort((a, b) => b.totalPts - a.totalPts || (a.avgNet || 999) - (b.avgNet || 999));
+    const unranked = leagueData.players.filter(p => p.rounds.length === 0);
+
+    let html = `<table class="standings-table">
+      <thead><tr>
+        <th>Rank</th><th>Player</th><th>Pts</th><th>Record</th><th>Avg NET</th>
+      </tr></thead><tbody>`;
+
+    ranked.forEach((p, i) => {
+      html += `
+        <tr class="player-row" id="row-${p.id}" onclick="toggleExpand(${p.id})">
+          <td>${rankBadge(i + 1)}</td>
+          <td class="player-name">${p.name}</td>
+          <td class="pts">${p.totalPts}</td>
+          <td>${recordHTML(p.record)}</td>
+          <td class="avg-net">${p.avgNet !== null ? p.avgNet.toFixed(1) : '—'}</td>
+        </tr>
+        <tr class="expand-row hidden" id="expand-${p.id}">
+          <td colspan="5">${renderPlayerDetail(p)}</td>
+        </tr>`;
+    });
+
+    unranked.forEach(p => {
+      html += `<tr class="player-row muted">
+        <td>—</td><td class="player-name">${p.name}</td>
+        <td>—</td><td>—</td><td>—</td>
+      </tr>`;
+    });
+
+    html += '</tbody></table>';
+    document.getElementById('tab-standings').innerHTML = html;
+  }
+
+  /* ── Results ── */
+  function renderResults() {
+    const rounds = leagueData.rounds.slice().reverse();  // most recent first
+
+    const html = rounds.map(r => {
+      if (r.status === 'upcoming') {
+        return `<div class="round-section" style="opacity:0.4">
+          <div class="round-header">
+            <span class="round-label">Round ${r.round}</span>
+            <span class="round-dates">${r.dates}</span>
+            <span class="badge" style="background:#2a2a2a;color:#555;margin-left:auto">Upcoming</span>
+          </div>
+          <div class="round-bye">BYE: ${r.bye}</div>
+        </div>`;
+      }
+      const badgeCls = r.status === 'in_progress' ? 'in-progress' : 'complete';
+      const badgeTxt = r.status === 'in_progress' ? 'In Progress' : '✓ Complete';
+      const matchRows = r.matches.map(m => {
+        const draw = m.winner === null;
+        return `<div class="match">
+          <span class="${!draw && m.winner === m.p1 ? 'match-winner' : 'match-loser'}">${m.p1}</span>
+          <span class="match-score">${m.p1Pts} – ${m.p2Pts}</span>
+          <span class="${!draw && m.winner === m.p2 ? 'match-winner' : 'match-loser'}">${m.p2}</span>
+        </div>`;
+      }).join('');
+      return `<div class="round-section">
+        <div class="round-header">
+          <span class="round-label">Round ${r.round}</span>
+          <span class="round-dates">${r.dates}</span>
+          <span class="badge ${badgeCls}">${badgeTxt}</span>
+        </div>
+        <div class="round-bye">BYE: ${r.bye}</div>
+        <div class="matches">${matchRows}</div>
+      </div>`;
+    }).join('');
+
+    document.getElementById('tab-results').innerHTML = html;
+  }
+
+  /* ── Schedule ── */
+  function renderSchedule() {
+    const rows = leagueData.schedule.map(s => {
+      const rd     = leagueData.rounds.find(r => r.round === s.round);
+      const status = rd ? rd.status : 'upcoming';
+      const statusHTML =
+        status === 'complete'    ? '<span class="status-complete">✓ Done</span>'  :
+        status === 'in_progress' ? '<span class="status-current">● Now</span>'    :
+                                   '<span class="status-upcoming">Upcoming</span>';
+      const rowCls = status === 'in_progress' ? 'current-round'
+                   : status === 'complete'    ? 'complete-round' : '';
+      return `<tr class="${rowCls}">
+        <td>R${s.round}</td>
+        <td>${s.dates}</td>
+        <td>${s.bye}</td>
+        <td>${statusHTML}</td>
+      </tr>`;
+    }).join('');
+
+    document.getElementById('tab-schedule').innerHTML = `
+      <table class="schedule-table">
+        <thead><tr><th>Round</th><th>Dates</th><th>BYE</th><th>Status</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+
+  init();
+</script>
+</body>
+</html>
