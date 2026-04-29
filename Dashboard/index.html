@@ -227,12 +227,12 @@
     .sc-gross-row.sc-p-winner .sc-td-label { color: var(--green); }
     .sc-net-row td { color: var(--muted); font-size: 0.75rem; border-bottom: 1px solid #1c1c1c; }
     .sc-total-col { border-left: 1px solid #2a2a2a !important; font-weight: 700; }
-    .sc-eagle  { color: #3b82f6; }
-    .sc-birdie { color: #f1c40f; }
-    .sc-par    { }
-    .sc-bogey  { color: var(--orange); }
-    .sc-double { color: var(--red); }
-    .sc-triple { color: #8b0000; }
+    .sc-note { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; }
+    .sc-birdie .sc-note { border: 1.5px solid #fff; border-radius: 50%; }
+    .sc-eagle  .sc-note { border: 1.5px solid #fff; border-radius: 50%; box-shadow: 0 0 0 2.5px #141414, 0 0 0 4px #fff; }
+    .sc-bogey  .sc-note { border: 1.5px solid #fff; }
+    .sc-double .sc-note { border: 1.5px solid #fff; box-shadow: 0 0 0 2.5px #141414, 0 0 0 4px #fff; }
+    .sc-table td { padding: 5px 9px; }
     /* ── Schedule ── */
     .schedule-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
     .schedule-table thead th {
@@ -568,10 +568,9 @@
       const d = gross - par;
       if (d <= -2) return 'sc-eagle';
       if (d === -1) return 'sc-birdie';
-      if (d === 0)  return 'sc-par';
+      if (d === 0)  return '';
       if (d === 1)  return 'sc-bogey';
-      if (d === 2)  return 'sc-double';
-      return 'sc-triple';
+      return 'sc-double';
     }
 
     function parRowHTML(par, total) {
@@ -583,9 +582,11 @@
     function playerRowsHTML(firstName, sc, isWinner) {
       if (!sc) return '';
       const gross = sc.gross || [], par = sc.par || [], net = sc.net || [];
-      const grossCells = gross.map(g =>
-        `<td>${g != null ? g : '—'}</td>`
-      ).join('');
+      const grossCells = par.map((p, i) => {
+        const cls = scoreColor(gross[i], p);
+        const val = gross[i] != null ? gross[i] : '—';
+        return cls ? `<td class="${cls}"><span class="sc-note">${val}</span></td>` : `<td>${val}</td>`;
+      }).join('');
       const netCells = net.map(n => `<td>${n != null ? n : '—'}</td>`).join('');
       return `
         <tr class="sc-gross-row${isWinner ? ' sc-p-winner' : ''}">
