@@ -58,6 +58,20 @@
       text-transform: uppercase; letter-spacing: 0.05em;
     }
     .last-updated { font-size: 0.68rem; color: var(--muted); }
+    /* ── Season Progress Bar ── */
+    .season-progress {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 7px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .progress-label { font-size: 0.65rem; color: var(--muted); font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; }
+    .progress-track { flex: 1; display: flex; gap: 3px; }
+    .progress-seg   { flex: 1; height: 7px; border-radius: 2px; background: #2a2a2a; }
+    .progress-seg.complete    { background: var(--green); }
+    .progress-seg.in-progress { background: var(--orange); }
     /* ── Tabs ── */
     .tab-nav {
       background: var(--surface);
@@ -76,6 +90,37 @@
     /* ── Content ── */
     .content { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
     .hidden  { display: none !important; }
+    /* ── Podium ── */
+    .podium { display: flex; justify-content: center; align-items: flex-end; gap: 8px; margin-bottom: 24px; }
+    .podium-card {
+      background: var(--surface); border-radius: 6px;
+      padding: 14px 12px 16px; text-align: center;
+      flex: 1; max-width: 220px; min-width: 0;
+      border-top: 3px solid var(--border);
+      cursor: pointer; transition: background 0.1s;
+    }
+    .podium-card:hover { background: var(--surface-hover); }
+    .podium-card.first  { border-top-color: var(--orange); padding-bottom: 28px; }
+    .podium-card.second { border-top-color: var(--silver); }
+    .podium-card.third  { border-top-color: var(--bronze); }
+    .podium-rank { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .podium-card.first  .podium-rank { color: var(--orange); }
+    .podium-card.second .podium-rank { color: var(--silver); }
+    .podium-card.third  .podium-rank { color: var(--bronze); }
+    .podium-name { font-weight: 700; font-size: 0.92rem; margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .podium-pts  { font-size: 1.6rem; font-weight: 700; color: var(--orange); line-height: 1; }
+    .podium-rec  { font-size: 0.72rem; margin-top: 5px; }
+    /* ── Search ── */
+    .search-wrap { margin-bottom: 16px; }
+    .search-input {
+      width: 100%; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 4px;
+      color: var(--text); font-size: 0.88rem;
+      padding: 9px 14px; outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-input:focus { border-color: var(--blue); }
+    .search-input::placeholder { color: #555; }
     /* ── Standings Table ── */
     .standings-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
     .standings-table thead th {
@@ -103,16 +148,18 @@
     .rank-badge.silver { background: var(--silver);  color: #000; }
     .rank-badge.bronze { background: var(--bronze);  color: #fff; }
     .player-name { font-weight: 600; }
-    .pts   { font-weight: 700; font-size: 1rem; color: var(--orange); }
-    .rec-w { color: var(--green); font-weight: 600; }
-    .rec-l { color: var(--red);   font-weight: 600; }
-    .rec-d { color: var(--muted); }
+    .last-match  { font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
+    .lm-w { color: var(--green); }
+    .lm-l { color: var(--red); }
+    .pts     { font-weight: 700; font-size: 1rem; color: var(--orange); }
+    .rec-w   { color: var(--green); font-weight: 600; }
+    .rec-l   { color: var(--red);   font-weight: 600; }
+    .rec-d   { color: var(--muted); }
     .avg-net { color: var(--blue); }
+    .hcp     { color: var(--muted); font-size: 0.85rem; }
+    .sparkline { display: inline-block; vertical-align: middle; overflow: visible; }
     /* ── Player expand panel ── */
-    .expand-row td {
-      padding: 0; background: #181818;
-      border-bottom: 2px solid var(--blue);
-    }
+    .expand-row td { padding: 0; background: #181818; border-bottom: 2px solid var(--blue); }
     .player-detail { padding: 12px 16px; }
     .detail-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
     .detail-table th {
@@ -123,43 +170,45 @@
     .detail-table td { padding: 7px 10px; border-top: 1px solid #2a2a2a; }
     .result-W { color: var(--green); font-weight: 700; }
     .result-D { color: var(--muted); font-weight: 700; }
-    .result-L { color: var(--red);   }
-    /* ── Results ── */
-    .round-section {
+    .result-L { color: var(--red); }
+    /* ── Mobile player cards ── */
+    .player-cards { display: none; }
+    .player-card {
       background: var(--surface); border-radius: 6px;
-      margin-bottom: 16px; overflow: hidden;
+      padding: 14px 16px; margin-bottom: 8px;
+      cursor: pointer; border-left: 3px solid var(--border);
+      transition: background 0.1s;
     }
+    .player-card:hover { background: var(--surface-hover); }
+    .player-card.rank-1 { border-left-color: var(--orange); }
+    .player-card.rank-2 { border-left-color: var(--silver); }
+    .player-card.rank-3 { border-left-color: var(--bronze); }
+    .card-top    { display: flex; align-items: center; gap: 10px; }
+    .card-name   { font-weight: 700; flex: 1; }
+    .card-pts    { font-size: 1.1rem; font-weight: 700; color: var(--orange); }
+    .card-bottom { display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.78rem; padding-left: 36px; }
+    .card-expand { border-top: 1px solid var(--border); margin: 10px -16px -14px; }
+    /* ── Results ── */
+    .round-section { background: var(--surface); border-radius: 6px; margin-bottom: 16px; overflow: hidden; }
     .round-header {
       background: #1a1a1a; border-left: 4px solid var(--orange);
       display: flex; align-items: center; gap: 12px; padding: 12px 16px;
     }
-    .round-label {
-      font-size: 0.85rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.05em;
-    }
+    .round-label { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
     .round-dates { color: var(--muted); font-size: 0.8rem; }
-    .badge {
-      font-size: 0.65rem; font-weight: 700;
-      padding: 3px 7px; border-radius: 3px;
-      text-transform: uppercase; letter-spacing: 0.05em; margin-left: auto;
-    }
+    .badge { font-size: 0.65rem; font-weight: 700; padding: 3px 7px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.05em; margin-left: auto; }
     .badge.in-progress { background: var(--orange); color: #000; }
     .badge.complete    { background: #2a2a2a; color: var(--green); }
-    .round-bye {
-      color: var(--muted); font-size: 0.78rem;
-      padding: 6px 16px; border-bottom: 1px solid var(--border);
-    }
+    .round-bye { color: var(--muted); font-size: 0.78rem; padding: 6px 16px; border-bottom: 1px solid var(--border); }
     .matches { padding: 8px 0; }
-    .match {
-      display: flex; align-items: center; gap: 12px; padding: 8px 16px;
-    }
+    .match { display: flex; align-items: center; gap: 12px; padding: 8px 16px; }
     .match + .match { border-top: 1px solid #2a2a2a; }
     .match-winner    { font-weight: 700; color: var(--green); }
     .match-loser     { color: var(--muted); }
     .pairing-unplayed { color: var(--muted); font-style: italic; }
-    .match-p1     { flex: 1; }
-    .match-p2     { flex: 1; text-align: right; }
-    .match-score  { color: var(--orange); font-size: 0.85rem; font-weight: 700; white-space: nowrap; min-width: 55px; text-align: center; }
+    .match-p1    { flex: 1; }
+    .match-p2    { flex: 1; text-align: right; }
+    .match-score { color: var(--orange); font-size: 0.85rem; font-weight: 700; white-space: nowrap; min-width: 55px; text-align: center; }
     /* ── Schedule ── */
     .schedule-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
     .schedule-table thead th {
@@ -185,8 +234,10 @@
       .site-header { flex-direction: column; align-items: flex-start; gap: 8px; }
       .header-right { align-items: flex-start; }
       .tab-btn { padding: 10px 14px; font-size: 0.75rem; }
-      .standings-table thead th:nth-child(4),
-      .standings-table .player-row td:nth-child(4) { display: none; }
+      .standings-table { display: none; }
+      .player-cards { display: block; }
+      .podium-card { padding: 10px 8px 14px; }
+      .podium-pts  { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -211,10 +262,16 @@
   </div>
 </header>
 
+<div id="season-progress" class="season-progress" style="display:none">
+  <span class="progress-label">Season</span>
+  <div class="progress-track" id="progress-track"></div>
+  <span id="progress-text" class="progress-label"></span>
+</div>
+
 <nav class="tab-nav">
-  <button class="tab-btn active"  onclick="showTab('standings', this)">Standings</button>
-  <button class="tab-btn"         onclick="showTab('results', this)">Results</button>
-  <button class="tab-btn"         onclick="showTab('schedule', this)">Schedule</button>
+  <button class="tab-btn active" onclick="showTab('standings', this)">Standings</button>
+  <button class="tab-btn"        onclick="showTab('results', this)">Results</button>
+  <button class="tab-btn"        onclick="showTab('schedule', this)">Schedule</button>
 </nav>
 
 <main class="content">
@@ -240,6 +297,7 @@
 
   function renderAll() {
     renderHeader();
+    renderSeasonProgress();
     renderStandings();
     renderResults();
     renderSchedule();
@@ -259,15 +317,26 @@
     const last = [...leagueData.rounds].reverse().find(r => r.status === 'complete');
     const badge = document.getElementById('current-round-badge');
     if (cur) {
-      badge.textContent    = 'Round ' + cur.round + ' In Progress';
-      badge.style.display  = 'inline-block';
+      badge.textContent   = 'Round ' + cur.round + ' In Progress';
+      badge.style.display = 'inline-block';
     } else if (last) {
-      badge.textContent    = 'Round ' + last.round + ' Complete';
-      badge.style.display  = 'inline-block';
+      badge.textContent   = 'Round ' + last.round + ' Complete';
+      badge.style.display = 'inline-block';
     }
   }
 
-  /* ── Standings ── */
+  /* ── Season Progress Bar ── */
+  function renderSeasonProgress() {
+    const complete = leagueData.rounds.filter(r => r.status === 'complete').length;
+    const segs = leagueData.rounds.map(r =>
+      `<div class="progress-seg ${r.status === 'complete' ? 'complete' : r.status === 'in_progress' ? 'in-progress' : ''}"></div>`
+    ).join('');
+    document.getElementById('progress-track').innerHTML = segs;
+    document.getElementById('progress-text').textContent = complete + '/' + leagueData.rounds.length;
+    document.getElementById('season-progress').style.display = 'flex';
+  }
+
+  /* ── Shared helpers ── */
   function rankBadge(rank) {
     const cls = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : '';
     return `<span class="rank-badge ${cls}">${rank}</span>`;
@@ -278,6 +347,34 @@
     if (parts.length < 3) return record || '—';
     const [w, l, d] = parts;
     return `<span class="rec-w">${w}</span>-<span class="rec-l">${l}</span>-<span class="rec-d">${d}</span>`;
+  }
+
+  function lastMatchHTML(player) {
+    if (!player.rounds.length) return '';
+    const last = player.rounds[player.rounds.length - 1];
+    const opp  = last.opponent ? last.opponent.split(' ')[0] : null;
+    const verb = last.result === 'W' ? 'Beat' : last.result === 'L' ? 'Lost to' : 'Drew';
+    const cls  = last.result === 'W' ? 'lm-w' : last.result === 'L' ? 'lm-l' : '';
+    const tail = opp ? ` ${opp} &middot; R${last.round}` : ` &middot; R${last.round}`;
+    return `<div class="last-match"><span class="${cls}">${verb}</span>${tail}</div>`;
+  }
+
+  function sparklineHTML(player) {
+    if (!player.rounds.length) return '';
+    const W = 64, H = 20, PAD = 3;
+    const pts = player.rounds.map(r => ({
+      x: PAD + ((r.round - 1) / 8) * (W - PAD * 2),
+      y: H - PAD - (Math.max(0, r.matchPts) / 8) * (H - PAD * 2),
+      result: r.result,
+    }));
+    const line = pts.length > 1
+      ? `<polyline points="${pts.map(p => p.x.toFixed(1) + ',' + p.y.toFixed(1)).join(' ')}" fill="none" stroke="#1a6fc4" stroke-width="1.5" stroke-linejoin="round"/>`
+      : '';
+    const dots = pts.map(p => {
+      const fill = p.result === 'W' ? '#5aaa35' : p.result === 'L' ? '#cc2027' : '#888888';
+      return `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="2.5" fill="${fill}"/>`;
+    }).join('');
+    return `<svg class="sparkline" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${line}${dots}</svg>`;
   }
 
   function renderPlayerDetail(player) {
@@ -300,52 +397,140 @@
     </div>`;
   }
 
+  /* ── Podium ── */
+  function renderPodium(ranked) {
+    if (!ranked.length) return '';
+    const top  = ranked.slice(0, Math.min(3, ranked.length));
+    const order    = top.length >= 3 ? [top[1], top[0], top[2]] : top.length === 2 ? [top[1], top[0]] : [top[0]];
+    const rankNums = top.length >= 3 ? [2, 1, 3]                : top.length === 2 ? [2, 1]           : [1];
+    const clsMap   = { 1: 'first', 2: 'second', 3: 'third' };
+    const labelMap = { 1: '1st Place', 2: '2nd Place', 3: '3rd Place' };
+    const cards = order.map((p, i) => {
+      const rank = rankNums[i];
+      return `<div class="podium-card ${clsMap[rank]}" onclick="toggleExpand('${p.id}')">
+        <div class="podium-rank">${labelMap[rank]}</div>
+        <div class="podium-name">${p.name.split(' ')[0]}</div>
+        <div class="podium-pts">${p.totalPts}</div>
+        <div class="podium-rec">${recordHTML(p.record)}</div>
+      </div>`;
+    }).join('');
+    return `<div class="podium">${cards}</div>`;
+  }
+
+  /* ── Standings ── */
   function toggleExpand(playerId) {
     document.getElementById('expand-' + playerId).classList.toggle('hidden');
     document.getElementById('row-'    + playerId).classList.toggle('expanded');
   }
 
+  function toggleCardExpand(playerId) {
+    document.getElementById('card-expand-' + playerId).classList.toggle('hidden');
+  }
+
+  function filterStandings(query) {
+    const q = query.toLowerCase();
+    document.querySelectorAll('#tab-standings .player-row').forEach(row => {
+      const name = row.querySelector('.player-name');
+      if (!name) return;
+      const show = name.textContent.toLowerCase().includes(q);
+      row.style.display = show ? '' : 'none';
+      const exp = document.getElementById('expand-' + row.id.replace('row-', ''));
+      if (exp) exp.style.display = show ? '' : 'none';
+    });
+    document.querySelectorAll('#tab-standings .player-card').forEach(card => {
+      const name = card.querySelector('.card-name');
+      if (!name) return;
+      card.style.display = name.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+
   function renderStandings() {
-    const ranked = leagueData.players
+    const ranked   = leagueData.players
       .filter(p => p.rounds.length > 0)
       .sort((a, b) => b.totalPts - a.totalPts || (a.avgNet || 999) - (b.avgNet || 999));
     const unranked = leagueData.players.filter(p => p.rounds.length === 0);
 
-    let html = `<table class="standings-table">
+    const hcp = p => (p.handicap != null ? p.handicap : '—');
+
+    // Podium
+    const podiumHTML = renderPodium(ranked);
+
+    // Search
+    const searchHTML = `<div class="search-wrap">
+      <input class="search-input" type="text" placeholder="Search players..." oninput="filterStandings(this.value)">
+    </div>`;
+
+    // Desktop table (7 cols: Rank, Player, Pts, Record, Hcp, Avg NET, Form)
+    let tableHTML = `<table class="standings-table">
       <thead><tr>
-        <th>Rank</th><th>Player</th><th>Pts</th><th>Record</th><th>Avg NET</th>
+        <th>Rank</th><th>Player</th><th>Pts</th><th>Record</th><th>Hcp</th><th>Avg NET</th><th>Form</th>
       </tr></thead><tbody>`;
 
     ranked.forEach((p, i) => {
-      html += `
+      tableHTML += `
         <tr class="player-row" id="row-${p.id}" onclick="toggleExpand('${p.id}')">
           <td>${rankBadge(i + 1)}</td>
-          <td class="player-name">${p.name}</td>
+          <td>
+            <div class="player-name">${p.name}</div>
+            ${lastMatchHTML(p)}
+          </td>
           <td class="pts">${p.totalPts}</td>
           <td>${recordHTML(p.record)}</td>
+          <td class="hcp">${hcp(p)}</td>
           <td class="avg-net">${p.avgNet !== null ? p.avgNet.toFixed(1) : '—'}</td>
+          <td>${sparklineHTML(p)}</td>
         </tr>
         <tr class="expand-row hidden" id="expand-${p.id}">
-          <td colspan="5">${renderPlayerDetail(p)}</td>
+          <td colspan="7">${renderPlayerDetail(p)}</td>
         </tr>`;
     });
 
     unranked.forEach(p => {
-      html += `<tr class="player-row muted">
+      tableHTML += `<tr class="player-row muted">
         <td>—</td><td class="player-name">${p.name}</td>
-        <td>—</td><td>—</td><td>—</td>
+        <td>—</td><td>—</td><td class="hcp">${hcp(p)}</td><td>—</td><td></td>
       </tr>`;
     });
+    tableHTML += '</tbody></table>';
 
-    html += '</tbody></table>';
-    document.getElementById('tab-standings').innerHTML = html;
+    // Mobile cards
+    let cardsHTML = '<div class="player-cards">';
+    ranked.forEach((p, i) => {
+      const rank = i + 1;
+      cardsHTML += `
+        <div class="player-card ${rank <= 3 ? 'rank-' + rank : ''}" onclick="toggleCardExpand('${p.id}')">
+          <div class="card-top">
+            <span style="min-width:26px">${rankBadge(rank)}</span>
+            <span class="card-name">${p.name}</span>
+            <span class="card-pts">${p.totalPts}</span>
+          </div>
+          <div class="card-bottom">
+            <span>${recordHTML(p.record)}</span>
+            <span class="hcp">HCP ${hcp(p)}</span>
+            <span class="avg-net">${p.avgNet !== null ? p.avgNet.toFixed(1) : '—'} avg</span>
+          </div>
+          <div id="card-expand-${p.id}" class="card-expand hidden">
+            ${renderPlayerDetail(p)}
+          </div>
+        </div>`;
+    });
+    unranked.forEach(p => {
+      cardsHTML += `<div class="player-card" style="opacity:0.45">
+        <div class="card-top">
+          <span style="min-width:26px;color:#555;font-size:0.75rem;font-weight:700">—</span>
+          <span class="card-name">${p.name}</span>
+          <span class="card-pts" style="color:#555">—</span>
+        </div>
+      </div>`;
+    });
+    cardsHTML += '</div>';
+
+    document.getElementById('tab-standings').innerHTML = podiumHTML + searchHTML + tableHTML + cardsHTML;
   }
 
   /* ── Results ── */
   function renderResults() {
-    const rounds = leagueData.rounds.slice();
-
-    const html = rounds.map(r => {
+    const html = leagueData.rounds.map(r => {
       if (r.status === 'upcoming') {
         return `<div class="round-section" style="opacity:0.4">
           <div class="round-header">
@@ -356,7 +541,7 @@
         </div>`;
       }
       const badgeCls = r.status === 'in_progress' ? 'in-progress' : 'complete';
-      const badgeTxt = r.status === 'in_progress' ? 'In Progress' : '✓ Complete';
+      const badgeTxt = r.status === 'in_progress' ? 'In Progress' : 'Complete';
       const matchRows = r.matches.map(m => {
         const draw = m.winner === null;
         return `<div class="match">
@@ -375,7 +560,6 @@
         <div class="matches">${matchRows}</div>
       </div>`;
     }).join('');
-
     document.getElementById('tab-results').innerHTML = html;
   }
 
@@ -386,7 +570,7 @@
 
   function renderRoundDetail(roundNum) {
     const rd = leagueData.rounds.find(r => r.round === roundNum);
-    if (!rd || !rd.pairings || rd.pairings.length === 0) {
+    if (!rd || !rd.pairings || !rd.pairings.length) {
       return '<div class="schedule-detail"><p style="color:#555;font-size:0.82rem">No matchups scheduled.</p></div>';
     }
     const rows = rd.pairings.map(m => {
@@ -397,9 +581,9 @@
         ? `<span style="color:var(--orange);font-weight:700">${m.p1Pts} – ${m.p2Pts}</span>`
         : `<span style="color:#555;font-style:italic">Not played</span>`;
       return `<tr>
-        <td class="${m.played ? p1cls : ''}">${m.p1}</td>
+        <td class="${p1cls}">${m.p1}</td>
         <td style="text-align:center;width:90px">${score}</td>
-        <td class="${m.played ? p2cls : ''}" style="text-align:right">${m.p2}</td>
+        <td class="${p2cls}" style="text-align:right">${m.p2}</td>
       </tr>`;
     }).join('');
     return `<div class="schedule-detail">
@@ -412,8 +596,8 @@
       const rd     = leagueData.rounds.find(r => r.round === s.round);
       const status = rd ? rd.status : 'upcoming';
       const statusHTML =
-        status === 'complete'    ? '<span class="status-complete">✓ Done</span>'  :
-        status === 'in_progress' ? '<span class="status-current">● Now</span>'    :
+        status === 'complete'    ? '<span class="status-complete">Done</span>'     :
+        status === 'in_progress' ? '<span class="status-current">Now</span>'       :
                                    '<span class="status-upcoming">Upcoming</span>';
       const rowCls = [
         status === 'in_progress' ? 'current-round' : status === 'complete' ? 'complete-round' : '',
@@ -429,7 +613,6 @@
           <td colspan="4">${renderRoundDetail(s.round)}</td>
         </tr>`;
     }).join('');
-
     document.getElementById('tab-schedule').innerHTML = `
       <table class="schedule-table">
         <thead><tr><th>Round</th><th>Dates</th><th>BYE</th><th>Status</th></tr></thead>

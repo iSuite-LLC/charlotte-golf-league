@@ -6,6 +6,7 @@
     {
       "id": 1,
       "name": "Brian Wojcio",
+      "handicap": 12,
       "totalPts": 2,
       "record": "0-1-0",
       "avgNet": 43.0,
@@ -22,6 +23,7 @@
     {
       "id": 2,
       "name": "Ethan High",
+      "handicap": 12,
       "totalPts": 6,
       "record": "1-0-0",
       "avgNet": 39.0,
@@ -38,6 +40,7 @@
     {
       "id": 3,
       "name": "Rob Bass",
+      "handicap": 15,
       "totalPts": 1,
       "record": "0-1-0",
       "avgNet": 43.0,
@@ -54,6 +57,7 @@
     {
       "id": 4,
       "name": "Carson Bass",
+      "handicap": 20,
       "totalPts": 7,
       "record": "1-0-0",
       "avgNet": 38.0,
@@ -70,6 +74,7 @@
     {
       "id": 5,
       "name": "Michael McHugh",
+      "handicap": 22,
       "totalPts": 0,
       "record": "0-1-0",
       "avgNet": 46.0,
@@ -86,6 +91,7 @@
     {
       "id": 6,
       "name": "Bruce Atkins",
+      "handicap": 24,
       "totalPts": 8,
       "record": "1-0-0",
       "avgNet": 33.0,
@@ -102,6 +108,7 @@
     {
       "id": 7,
       "name": "Alex Palmer",
+      "handicap": 27,
       "totalPts": 0,
       "record": "0-0-0",
       "avgNet": null,
@@ -110,6 +117,7 @@
     {
       "id": 8,
       "name": "Curtis Lynn",
+      "handicap": 28,
       "totalPts": 0,
       "record": "0-0-0",
       "avgNet": null,
@@ -118,6 +126,7 @@
     {
       "id": 9,
       "name": "Ben Linck",
+      "handicap": 30,
       "totalPts": 1,
       "record": "0-1-0",
       "avgNet": 39.0,
@@ -134,6 +143,7 @@
     {
       "id": 10,
       "name": "Charlotte Hayes",
+      "handicap": 36,
       "totalPts": 7,
       "record": "1-0-0",
       "avgNet": 27.0,
@@ -150,6 +160,7 @@
     {
       "id": 11,
       "name": "David Maddox",
+      "handicap": 36,
       "totalPts": 0,
       "record": "0-0-0",
       "avgNet": null,
@@ -158,6 +169,7 @@
     {
       "id": 12,
       "name": "Jerome Martin",
+      "handicap": 36,
       "totalPts": 4,
       "record": "0-0-1",
       "avgNet": 54.0,
@@ -174,6 +186,7 @@
     {
       "id": 13,
       "name": "Kaylan Adams",
+      "handicap": 36,
       "totalPts": 4,
       "record": "0-0-1",
       "avgNet": 54.0,
@@ -190,6 +203,7 @@
     {
       "id": 14,
       "name": "Megan Serian",
+      "handicap": 36,
       "totalPts": 0,
       "record": "0-0-0",
       "avgNet": null,
@@ -198,6 +212,7 @@
     {
       "id": 15,
       "name": "Nick Coglianese",
+      "handicap": 36,
       "totalPts": 0,
       "record": "0-0-0",
       "avgNet": null,

@@ -218,9 +218,14 @@ def write_dashboard_json(rnd, name_to_num):
     """Write Dashboard/data.json from current workbook state + Scores.xlsx match tabs."""
     num_to_name = {v: k for k, v in name_to_num.items()}
 
-    # Read all player stats from Scores 2026
+    # Read all player stats from Scores 2026 and handicaps from Schedule
     wb_main   = openpyxl.load_workbook(LEAGUE, data_only=True, read_only=True)
     ws_scores = wb_main['Scores 2026']
+    handicaps = {}
+    for player_num, row in enumerate(
+        wb_main['Schedule'].iter_rows(min_row=15, max_row=29, values_only=True), start=1
+    ):
+        handicaps[player_num] = row[3]   # col D
 
     players = []
     for num in range(1, 16):
@@ -243,12 +248,13 @@ def write_dashboard_json(rnd, name_to_num):
                 })
 
         players.append({
-            'id':       num,
-            'name':     name,
-            'totalPts': total_pts,
-            'record':   record,
-            'avgNet':   avg_net,
-            'rounds':   rounds_data,
+            'id':        num,
+            'name':      name,
+            'handicap':  handicaps.get(num),
+            'totalPts':  total_pts,
+            'record':    record,
+            'avgNet':    avg_net,
+            'rounds':    rounds_data,
         })
 
     wb_main.close()
