@@ -598,19 +598,12 @@
         </tr>`;
     }
 
-    const par1 = sc1 ? sc1.par : null;
-    const par2 = sc2 ? sc2.par : null;
-    const parsMatch = par1 && par2 && JSON.stringify(par1) === JSON.stringify(par2);
-    const parHTML = parsMatch
-      ? parRowHTML(par1, sc1.parTotal)
-      : (parRowHTML(par1, sc1 && sc1.parTotal) + parRowHTML(par2, sc2 && sc2.parTotal));
+    const parHTML = parRowHTML((sc1 || sc2).par, (sc1 || sc2).parTotal);
 
     const p1First = match.p1.split(' ')[0];
     const p2First = match.p2.split(' ')[0];
-    const meta1 = sc1 ? [sc1.course, sc1.nine].filter(Boolean).join(' · ') : '';
-    const meta2 = sc2 ? [sc2.course, sc2.nine].filter(Boolean).join(' · ') : '';
-    const metaLine = meta1 === meta2 ? meta1
-      : `${p1First}: ${meta1}${meta2 ? ' &nbsp;&middot;&nbsp; ' + p2First + ': ' + meta2 : ''}`;
+    const sc = sc1 || sc2;
+    const metaLine = [sc.course, sc.nine].filter(Boolean).join(' · ');
 
     const holeHdrs = [1,2,3,4,5,6,7,8,9].map(h => `<th class="sc-hole-num">${h}</th>`).join('');
 
