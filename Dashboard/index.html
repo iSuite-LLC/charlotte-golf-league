@@ -203,14 +203,36 @@
     .badge.complete    { background: #2a2a2a; color: var(--green); }
     .round-bye { color: var(--muted); font-size: 0.78rem; padding: 6px 16px; border-bottom: 1px solid var(--border); }
     .matches { padding: 8px 0; }
+    .match-wrap + .match-wrap { border-top: 1px solid #2a2a2a; }
     .match { display: flex; align-items: center; gap: 12px; padding: 8px 16px; }
-    .match + .match { border-top: 1px solid #2a2a2a; }
+    .match.clickable-match { cursor: pointer; }
+    .match.clickable-match:hover { background: var(--surface-hover); }
     .match-winner    { font-weight: 700; color: var(--green); }
     .match-loser     { color: var(--muted); }
     .pairing-unplayed { color: var(--muted); font-style: italic; }
     .match-p1    { flex: 1; }
     .match-p2    { flex: 1; text-align: right; }
     .match-score { color: var(--orange); font-size: 0.85rem; font-weight: 700; white-space: nowrap; min-width: 55px; text-align: center; }
+    .sc-chevron  { font-size: 0.65rem; color: var(--muted); flex-shrink: 0; }
+    /* ── Scorecard panel ── */
+    .scorecard-panel { background: #141414; padding: 10px 16px 14px; }
+    .sc-meta { font-size: 0.7rem; color: var(--muted); margin-bottom: 8px; letter-spacing: 0.02em; }
+    .sc-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .sc-table { border-collapse: collapse; font-size: 0.8rem; white-space: nowrap; }
+    .sc-table th, .sc-table td { padding: 4px 7px; text-align: center; }
+    .sc-th-label, .sc-td-label { text-align: left !important; font-size: 0.7rem; color: var(--muted); font-weight: 600; min-width: 52px; }
+    .sc-hole-num { color: var(--muted); font-size: 0.68rem; font-weight: 600; min-width: 24px; }
+    .sc-par-row td { color: #555; font-size: 0.75rem; border-bottom: 1px solid #222; }
+    .sc-gross-row td { font-weight: 700; }
+    .sc-gross-row.sc-p-winner .sc-td-label { color: var(--green); }
+    .sc-net-row td { color: var(--muted); font-size: 0.75rem; border-bottom: 1px solid #1c1c1c; }
+    .sc-total-col { border-left: 1px solid #2a2a2a !important; font-weight: 700; }
+    .sc-eagle  { color: #3b82f6; }
+    .sc-birdie { color: #f1c40f; }
+    .sc-par    { }
+    .sc-bogey  { color: var(--orange); }
+    .sc-double { color: var(--red); }
+    .sc-triple { color: #8b0000; }
     /* ── Schedule ── */
     .schedule-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
     .schedule-table thead th {
@@ -530,6 +552,83 @@
     document.getElementById('tab-standings').innerHTML = podiumHTML + searchHTML + tableHTML + cardsHTML;
   }
 
+  /* ── Scorecard ── */
+  function toggleScorecard(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('hidden');
+  }
+
+  function scorecardHTML(match, id) {
+    const sc1 = match.p1Scorecard;
+    const sc2 = match.p2Scorecard;
+    if (!sc1 && !sc2) return '';
+
+    function scoreColor(gross, par) {
+      if (gross == null || par == null) return '';
+      const d = gross - par;
+      if (d <= -2) return 'sc-eagle';
+      if (d === -1) return 'sc-birdie';
+      if (d === 0)  return 'sc-par';
+      if (d === 1)  return 'sc-bogey';
+      if (d === 2)  return 'sc-double';
+      return 'sc-triple';
+    }
+
+    function parRowHTML(par, total) {
+      if (!par) return '';
+      const cells = par.map(p => `<td>${p != null ? p : '—'}</td>`).join('');
+      return `<tr class="sc-par-row"><td class="sc-td-label">Par</td>${cells}<td class="sc-total-col">${total != null ? total : ''}</td></tr>`;
+    }
+
+    function playerRowsHTML(firstName, sc, isWinner) {
+      if (!sc) return '';
+      const gross = sc.gross || [], par = sc.par || [], net = sc.net || [];
+      const grossCells = par.map((p, i) =>
+        `<td class="${scoreColor(gross[i], p)}">${gross[i] != null ? gross[i] : '—'}</td>`
+      ).join('');
+      const netCells = net.map(n => `<td>${n != null ? n : '—'}</td>`).join('');
+      return `
+        <tr class="sc-gross-row${isWinner ? ' sc-p-winner' : ''}">
+          <td class="sc-td-label">${firstName}</td>${grossCells}
+          <td class="sc-total-col">${sc.grossTotal != null ? sc.grossTotal : '—'}</td>
+        </tr>
+        <tr class="sc-net-row">
+          <td class="sc-td-label" style="font-size:0.63rem;color:#444">net</td>${netCells}
+          <td class="sc-total-col">${sc.netTotal != null ? sc.netTotal : '—'}</td>
+        </tr>`;
+    }
+
+    const par1 = sc1 ? sc1.par : null;
+    const par2 = sc2 ? sc2.par : null;
+    const parsMatch = par1 && par2 && JSON.stringify(par1) === JSON.stringify(par2);
+    const parHTML = parsMatch
+      ? parRowHTML(par1, sc1.parTotal)
+      : (parRowHTML(par1, sc1 && sc1.parTotal) + parRowHTML(par2, sc2 && sc2.parTotal));
+
+    const p1First = match.p1.split(' ')[0];
+    const p2First = match.p2.split(' ')[0];
+    const meta1 = sc1 ? [sc1.course, sc1.nine].filter(Boolean).join(' · ') : '';
+    const meta2 = sc2 ? [sc2.course, sc2.nine].filter(Boolean).join(' · ') : '';
+    const metaLine = meta1 === meta2 ? meta1
+      : `${p1First}: ${meta1}${meta2 ? ' &nbsp;&middot;&nbsp; ' + p2First + ': ' + meta2 : ''}`;
+
+    const holeHdrs = [1,2,3,4,5,6,7,8,9].map(h => `<th class="sc-hole-num">${h}</th>`).join('');
+
+    return `<div id="${id}" class="scorecard-panel hidden">
+      <div class="sc-meta">${metaLine}</div>
+      <div class="sc-scroll"><table class="sc-table">
+        <thead>
+          <tr><th class="sc-th-label">Hole</th>${holeHdrs}<th class="sc-hole-num sc-total-col">TOT</th></tr>
+          ${parHTML}
+        </thead>
+        <tbody>
+          ${playerRowsHTML(p1First, sc1, match.winner === match.p1)}
+          ${playerRowsHTML(p2First, sc2, match.winner === match.p2)}
+        </tbody>
+      </table></div>
+    </div>`;
+  }
+
   /* ── Results ── */
   function renderResults() {
     const html = leagueData.rounds.map(r => {
@@ -544,12 +643,20 @@
       }
       const badgeCls = r.status === 'in_progress' ? 'in-progress' : 'complete';
       const badgeTxt = r.status === 'in_progress' ? 'In Progress' : 'Complete';
-      const matchRows = r.matches.map(m => {
-        const draw = m.winner === null;
-        return `<div class="match">
-          <span class="match-p1 ${!draw && m.winner === m.p1 ? 'match-winner' : 'match-loser'}">${m.p1}</span>
-          <span class="match-score">${m.p1Pts} – ${m.p2Pts}</span>
-          <span class="match-p2 ${!draw && m.winner === m.p2 ? 'match-winner' : 'match-loser'}">${m.p2}</span>
+      const played = (r.pairings || r.matches || []).filter(m => m.played !== false);
+      const matchRows = played.map((m, mi) => {
+        const draw    = m.winner === null;
+        const scId    = `sc-r${r.round}-m${mi}`;
+        const hasCard = !!(m.p1Scorecard || m.p2Scorecard);
+        const sc      = hasCard ? scorecardHTML(m, scId) : '';
+        return `<div class="match-wrap">
+          <div class="match${hasCard ? ' clickable-match' : ''}"${hasCard ? ` onclick="toggleScorecard('${scId}')"` : ''}>
+            <span class="match-p1 ${!draw && m.winner === m.p1 ? 'match-winner' : 'match-loser'}">${m.p1}</span>
+            <span class="match-score">${m.p1Pts} – ${m.p2Pts}</span>
+            <span class="match-p2 ${!draw && m.winner === m.p2 ? 'match-winner' : 'match-loser'}">${m.p2}</span>
+            ${hasCard ? '<span class="sc-chevron">▾</span>' : ''}
+          </div>
+          ${sc}
         </div>`;
       }).join('');
       return `<div class="round-section">

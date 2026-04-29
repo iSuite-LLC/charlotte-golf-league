@@ -214,6 +214,68 @@ def parse_matches(ws):
     return matches
 
 
+def parse_scorecards(ws):
+    """
+    Parse hole-by-hole scorecard data from a Calculator-format worksheet.
+    Returns dict: player_name → {course, nine, par, parTotal, gross, grossTotal, net, netTotal}
+
+    Detects scorecard blocks by rows where row[bs+1] == 'Handicap:' (bs ∈ BLOCK_STARTS).
+    Row offsets from Handicap row: +2=PAR, +4=GROSS, +6=NET.
+    Hole values occupy cols bs+1 through bs+9; total at bs+10.
+    """
+    scorecards = {}
+    rows = [list(r) for r in ws.iter_rows(values_only=True)]
+
+    def safe_get(row, cols):
+        return [row[c] if c < len(row) else None for c in cols]
+
+    def total_at(row, col):
+        return row[col] if col < len(row) else None
+
+    for i, row in enumerate(rows):
+        for bs in BLOCK_STARTS:
+            if len(row) <= bs + 8:
+                continue
+            if row[bs + 1] != 'Handicap:':
+                continue
+            name = row[bs]
+            if not isinstance(name, str) or not name.strip():
+                continue
+            name = name.strip()
+            nine = row[bs + 8] if len(row) > bs + 8 else None
+
+            # Find course name by searching backward for block header row ('First 3' at bs+2)
+            course = None
+            for j in range(i - 1, max(i - 15, -1), -1):
+                pr = rows[j]
+                if len(pr) > bs + 2 and pr[bs + 2] == 'First 3':
+                    course = pr[bs] if len(pr) > bs else None
+                    break
+
+            if i + 6 >= len(rows):
+                continue
+
+            hole_cols = list(range(bs + 1, bs + 10))   # 9 values: bs+1 .. bs+9
+            tot_col   = bs + 10
+
+            par_row   = rows[i + 2]
+            gross_row = rows[i + 4]
+            net_row   = rows[i + 6]
+
+            scorecards[name] = {
+                'course':     course,
+                'nine':       nine,
+                'par':        safe_get(par_row,   hole_cols),
+                'parTotal':   total_at(par_row,   tot_col),
+                'gross':      safe_get(gross_row, hole_cols),
+                'grossTotal': total_at(gross_row, tot_col),
+                'net':        safe_get(net_row,   hole_cols),
+                'netTotal':   total_at(net_row,   tot_col),
+            }
+
+    return scorecards
+
+
 def write_dashboard_json(rnd, name_to_num):
     """Write Dashboard/data.json from current workbook state + Scores.xlsx match tabs."""
     num_to_name = {v: k for k, v in name_to_num.items()}
@@ -260,17 +322,20 @@ def write_dashboard_json(rnd, name_to_num):
     wb_main.close()
 
     # Read match pairings from each score tab; fill in opponents
-    wb_src     = openpyxl.load_workbook(SCORES_XLSX, data_only=True, read_only=True)
+    wb_src     = openpyxl.load_workbook(SCORES_XLSX, data_only=True)   # not read_only: both parse fns need to iterate
     rounds_out = []
 
     for r in range(1, TOTAL_ROUNDS + 1):
-        tab      = f'R{r} Scores'
-        sched    = SCHEDULE[r - 1]
-        matches  = []
-        expected = ROUND_MATCH_COUNTS[r]
+        tab        = f'R{r} Scores'
+        sched      = SCHEDULE[r - 1]
+        matches    = []
+        scorecards = {}
+        expected   = ROUND_MATCH_COUNTS[r]
 
         if tab in wb_src.sheetnames:
-            for m in parse_matches(wb_src[tab]):
+            ws_tab     = wb_src[tab]
+            scorecards = parse_scorecards(ws_tab)
+            for m in parse_matches(ws_tab):
                 matches.append({
                     'p1': m['p1'], 'p1Pts': m['p1Pts'], 'p1Net': m['p1Net'],
                     'p2': m['p2'], 'p2Pts': m['p2Pts'], 'p2Net': m['p2Net'],
@@ -299,7 +364,12 @@ def write_dashboard_json(rnd, name_to_num):
                 None
             )
             if played:
-                pairings.append({**played, 'played': True})
+                entry = {**played, 'played': True}
+                sc1 = scorecards.get(played['p1'])
+                sc2 = scorecards.get(played['p2'])
+                if sc1: entry['p1Scorecard'] = sc1
+                if sc2: entry['p2Scorecard'] = sc2
+                pairings.append(entry)
             else:
                 pairings.append({
                     'p1': p1_name, 'p1Pts': None, 'p1Net': None,
