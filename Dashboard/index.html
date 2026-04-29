@@ -334,7 +334,7 @@
 
   /* ── Results ── */
   function renderResults() {
-    const rounds = leagueData.rounds.slice().reverse();  // most recent first
+    const rounds = leagueData.rounds.slice();
 
     const html = rounds.map(r => {
       if (r.status === 'upcoming') {
