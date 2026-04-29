@@ -1,0 +1,365 @@
+{
+  "season": 2026,
+  "lastUpdated": "2026-04-29",
+  "currentRound": 1,
+  "players": [
+    {
+      "id": 1,
+      "name": "Brian Wojcio",
+      "totalPts": 2,
+      "record": "0-1-0",
+      "avgNet": 43.0,
+      "rounds": [
+        {
+          "round": 1,
+          "matchPts": 2,
+          "net": 43,
+          "opponent": "Ethan High",
+          "result": "L"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Ethan High",
+      "totalPts": 6,
+      "record": "1-0-0",
+      "avgNet": 39.0,
+      "rounds": [
+        {
+          "round": 1,
+          "matchPts": 6,
+          "net": 39,
+          "opponent": "Brian Wojcio",
+          "result": "W"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Rob Bass",
+      "totalPts": 1,
+      "record": "0-1-0",
+      "avgNet": 43.0,
+      "rounds": [
+        {
+          "round": 1,
+          "matchPts": 1,
+          "net": 43,
+          "opponent": "Carson Bass",
+          "result": "L"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Carson Bass",
+      "totalPts": 7,
+      "record": "1-0-0",
+      "avgNet": 38.0,
+      "rounds": [
+        {
+          "round": 1,
+          "matchPts": 7,
+          "net": 38,
+          "opponent": "Rob Bass",
+          "result": "W"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Michael McHugh",
+      "totalPts": 0,
+      "record": "0-1-0",
+      "avgNet": 46.0,
+      "rounds": [
+        {
+          "round": 1,
+          "matchPts": 0,
+          "net": 46,
+          "opponent": "Bruce Atkins",
+          "result": "L"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Bruce Atkins",
+      "totalPts": 8,
+      "record": "1-0-0",
+      "avgNet": 33.0,
+      "rounds": [
+        {
+          "round": 1,
+          "matchPts": 8,
+          "net": 33,
+          "opponent": "Michael McHugh",
+          "result": "W"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Alex Palmer",
+      "totalPts": 0,
+      "record": "0-0-0",
+      "avgNet": null,
+      "rounds": []
+    },
+    {
+      "id": 8,
+      "name": "Curtis Lynn",
+      "totalPts": 0,
+      "record": "0-0-0",
+      "avgNet": null,
+      "rounds": []
+    },
+    {
+      "id": 9,
+      "name": "Ben Linck",
+      "totalPts": 1,
+      "record": "0-1-0",
+      "avgNet": 39.0,
+      "rounds": [
+        {
+          "round": 1,
+          "matchPts": 1,
+          "net": 39,
+          "opponent": "Charlotte Hayes",
+          "result": "L"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Charlotte Hayes",
+      "totalPts": 7,
+      "record": "1-0-0",
+      "avgNet": 27.0,
+      "rounds": [
+        {
+          "round": 1,
+          "matchPts": 7,
+          "net": 27,
+          "opponent": "Ben Linck",
+          "result": "W"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "David Maddox",
+      "totalPts": 0,
+      "record": "0-0-0",
+      "avgNet": null,
+      "rounds": []
+    },
+    {
+      "id": 12,
+      "name": "Jerome Martin",
+      "totalPts": 4,
+      "record": "0-0-1",
+      "avgNet": 54.0,
+      "rounds": [
+        {
+          "round": 1,
+          "matchPts": 4,
+          "net": 54,
+          "opponent": "Kaylan Adams",
+          "result": "D"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Kaylan Adams",
+      "totalPts": 4,
+      "record": "0-0-1",
+      "avgNet": 54.0,
+      "rounds": [
+        {
+          "round": 1,
+          "matchPts": 4,
+          "net": 54,
+          "opponent": "Jerome Martin",
+          "result": "D"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Megan Serian",
+      "totalPts": 0,
+      "record": "0-0-0",
+      "avgNet": null,
+      "rounds": []
+    },
+    {
+      "id": 15,
+      "name": "Nick Coglianese",
+      "totalPts": 0,
+      "record": "0-0-0",
+      "avgNet": null,
+      "rounds": []
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "dates": "Apr 20 – May 1",
+      "bye": "David Maddox",
+      "status": "in_progress",
+      "matches": [
+        {
+          "p1": "Brian Wojcio",
+          "p1Pts": 2,
+          "p1Net": 43,
+          "p2": "Ethan High",
+          "p2Pts": 6,
+          "p2Net": 39,
+          "winner": "Ethan High"
+        },
+        {
+          "p1": "Bruce Atkins",
+          "p1Pts": 8,
+          "p1Net": 33,
+          "p2": "Michael McHugh",
+          "p2Pts": 0,
+          "p2Net": 46,
+          "winner": "Bruce Atkins"
+        },
+        {
+          "p1": "Rob Bass",
+          "p1Pts": 1,
+          "p1Net": 43,
+          "p2": "Carson Bass",
+          "p2Pts": 7,
+          "p2Net": 38,
+          "winner": "Carson Bass"
+        },
+        {
+          "p1": "Ben Linck",
+          "p1Pts": 1,
+          "p1Net": 39,
+          "p2": "Charlotte Hayes",
+          "p2Pts": 7,
+          "p2Net": 27,
+          "winner": "Charlotte Hayes"
+        },
+        {
+          "p1": "Jerome Martin",
+          "p1Pts": 4,
+          "p1Net": 54,
+          "p2": "Kaylan Adams",
+          "p2Pts": 4,
+          "p2Net": 54,
+          "winner": null
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "dates": "May 4 – May 15",
+      "bye": "Nick Coglianese",
+      "status": "upcoming",
+      "matches": []
+    },
+    {
+      "round": 3,
+      "dates": "May 18 – May 29",
+      "bye": "Charlotte Hayes",
+      "status": "upcoming",
+      "matches": []
+    },
+    {
+      "round": 4,
+      "dates": "Jun 1 – Jun 12",
+      "bye": "Jerome Martin",
+      "status": "upcoming",
+      "matches": []
+    },
+    {
+      "round": 5,
+      "dates": "Jun 15 – Jun 26",
+      "bye": "Wojcio / High / R. Bass",
+      "status": "upcoming",
+      "matches": []
+    },
+    {
+      "round": 6,
+      "dates": "Jun 29 – Jul 10",
+      "bye": "C. Bass / McHugh / Atkins",
+      "status": "upcoming",
+      "matches": []
+    },
+    {
+      "round": 7,
+      "dates": "Jul 13 – Jul 24",
+      "bye": "Palmer / Lynn / Link",
+      "status": "upcoming",
+      "matches": []
+    },
+    {
+      "round": 8,
+      "dates": "Jul 27 – Aug 7",
+      "bye": "Kaylan Adams",
+      "status": "upcoming",
+      "matches": []
+    },
+    {
+      "round": 9,
+      "dates": "Aug 10 – Aug 21",
+      "bye": "Megan Serian",
+      "status": "upcoming",
+      "matches": []
+    }
+  ],
+  "schedule": [
+    {
+      "round": 1,
+      "dates": "Apr 20 – May 1",
+      "bye": "David Maddox"
+    },
+    {
+      "round": 2,
+      "dates": "May 4 – May 15",
+      "bye": "Nick Coglianese"
+    },
+    {
+      "round": 3,
+      "dates": "May 18 – May 29",
+      "bye": "Charlotte Hayes"
+    },
+    {
+      "round": 4,
+      "dates": "Jun 1 – Jun 12",
+      "bye": "Jerome Martin"
+    },
+    {
+      "round": 5,
+      "dates": "Jun 15 – Jun 26",
+      "bye": "Wojcio / High / R. Bass"
+    },
+    {
+      "round": 6,
+      "dates": "Jun 29 – Jul 10",
+      "bye": "C. Bass / McHugh / Atkins"
+    },
+    {
+      "round": 7,
+      "dates": "Jul 13 – Jul 24",
+      "bye": "Palmer / Lynn / Link"
+    },
+    {
+      "round": 8,
+      "dates": "Jul 27 – Aug 7",
+      "bye": "Kaylan Adams"
+    },
+    {
+      "round": 9,
+      "dates": "Aug 10 – Aug 21",
+      "bye": "Megan Serian"
+    }
+  ]
+}
