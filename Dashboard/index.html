@@ -255,8 +255,11 @@
     .status-current  { color: var(--orange); font-weight: 600; }
     .status-upcoming { color: #555; }
     /* ── Stats ── */
-    .stats-section  { margin-bottom: 28px; }
-    .stats-heading  { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+    .course-box       { background: var(--surface); border-radius: 6px; padding: 16px; margin-bottom: 20px; border: 1px solid var(--border); }
+    .course-box-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; }
+    .stats-section  { margin-bottom: 16px; }
+    .stats-section:last-child { margin-bottom: 0; }
+    .stats-heading  { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid var(--border); }
     .hole-grid      { display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; }
     .hole-card      { background: var(--surface); border-radius: 5px; padding: 10px 4px 8px; text-align: center; }
     .hole-card-num  { font-size: 0.6rem; color: var(--muted); font-weight: 600; margin-bottom: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
@@ -808,28 +811,49 @@
         '<p style="color:#555;text-align:center;padding:60px 0">No scorecard data yet.</p>';
       return;
     }
-    let html = '';
-    for (const [courseName, data] of Object.entries(difficulty).sort((a, b) => a[0].localeCompare(b[0]))) {
-      const cards = data.par.map((par, i) => {
+
+    // Group by course name, preserve front/back as sub-sections
+    const byCourse = {};
+    for (const [key, data] of Object.entries(difficulty)) {
+      const sep    = key.lastIndexOf(' · ');
+      const course = sep >= 0 ? key.slice(0, sep) : key;
+      const nine   = sep >= 0 ? key.slice(sep + 3) : '';
+      if (!byCourse[course]) byCourse[course] = [];
+      byCourse[course].push({ nine, data });
+    }
+
+    function nineSection(nine, data) {
+      const isBack = nine === 'Back 9';
+      const cards  = data.par.map((par, i) => {
+        const holeNum = isBack ? i + 10 : i + 1;
         const avg = data.avgGross[i];
-        if (avg == null || par == null) return `<div class="hole-card"><div class="hole-card-num">Hole ${i+1}</div><div class="hole-card-par">—</div></div>`;
-        const diff    = avg - par;
-        const diffStr = diff === 0 ? 'E' : (diff > 0 ? '+' : '') + diff.toFixed(1);
-        const cls     = diff < 0 ? 'diff-under' : diff < 0.5 ? 'diff-even' : diff < 1.5 ? 'diff-bogey' : 'diff-hard';
+        if (avg == null || par == null) return `<div class="hole-card"><div class="hole-card-num">Hole ${holeNum}</div><div class="hole-card-par">—</div></div>`;
+        const diff     = avg - par;
+        const diffStr  = diff === 0 ? 'E' : (diff > 0 ? '+' : '') + diff.toFixed(1);
+        const cls      = diff < 0 ? 'diff-under' : diff < 0.5 ? 'diff-even' : diff < 1.5 ? 'diff-bogey' : 'diff-hard';
         const barColor = diff < 0 ? 'var(--green)' : diff < 1 ? '#555' : diff < 2 ? 'var(--orange)' : 'var(--red)';
         const barPct   = Math.min(100, Math.max(0, (diff / 3) * 100));
         return `<div class="hole-card">
-          <div class="hole-card-num">Hole ${i+1}</div>
+          <div class="hole-card-num">Hole ${holeNum}</div>
           <div class="hole-card-par">Par ${par}</div>
           <div class="hole-card-avg">${avg.toFixed(1)}</div>
           <div class="hole-card-diff ${cls}">${diffStr}</div>
           <div class="hole-card-bar"><div class="hole-card-bar-fill" style="width:${barPct.toFixed(0)}%;background:${barColor}"></div></div>
         </div>`;
       }).join('');
-      const sampleCount = data.counts[0] || 0;
-      html += `<div class="stats-section">
-        <div class="stats-heading">${courseName} <span style="font-weight:400;color:#555;font-size:0.65rem">(${sampleCount} rounds)</span></div>
+      const n = data.counts[0] || 0;
+      return `<div class="stats-section">
+        <div class="stats-heading">${nine} <span style="font-weight:400;color:#555;font-size:0.65rem">(${n} rounds)</span></div>
         <div class="hole-grid">${cards}</div>
+      </div>`;
+    }
+
+    let html = '';
+    for (const [course, sections] of Object.entries(byCourse).sort((a, b) => a[0].localeCompare(b[0]))) {
+      sections.sort((a, b) => a.nine.localeCompare(b.nine));
+      html += `<div class="course-box">
+        <div class="course-box-title">${course}</div>
+        ${sections.map(s => nineSection(s.nine, s.data)).join('')}
       </div>`;
     }
     document.getElementById('tab-stats').innerHTML = html;
