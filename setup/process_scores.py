@@ -241,7 +241,7 @@ def write_dashboard_json(rnd, name_to_num):
     wb_main.close()
 
     # Read match pairings from each score tab; fill in opponents
-    wb_src     = openpyxl.load_workbook(SCORES_XLSX, data_only=True)
+    wb_src     = openpyxl.load_workbook(SCORES_XLSX, data_only=True, read_only=True)
     rounds_out = []
 
     for r in range(1, TOTAL_ROUNDS + 1):
@@ -287,6 +287,7 @@ def write_dashboard_json(rnd, name_to_num):
         'schedule':     SCHEDULE,
     }
 
+    os.makedirs(os.path.dirname(DASHBOARD_JSON), exist_ok=True)
     with open(DASHBOARD_JSON, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 

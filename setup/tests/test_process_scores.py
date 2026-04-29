@@ -55,15 +55,12 @@ def test_parse_matches_empty_sheet():
 def test_write_dashboard_json_structure():
     """Integration test — writes real data.json and validates structure."""
     import json as _json
-    from process_scores import write_dashboard_json, build_name_map
+    from process_scores import write_dashboard_json, build_name_map, DASHBOARD_JSON
 
     name_to_num = build_name_map()
     write_dashboard_json(1, name_to_num)
 
-    with open(
-        r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\Dashboard\data.json",
-        encoding='utf-8'
-    ) as f:
+    with open(DASHBOARD_JSON, encoding='utf-8') as f:
         data = _json.load(f)
 
     assert data['season'] == 2026
@@ -82,3 +79,17 @@ def test_write_dashboard_json_structure():
     for r in data['rounds']:
         assert r['status'] in ('complete', 'in_progress', 'upcoming')
         assert isinstance(r['matches'], list)
+
+    # Spot-check: Ethan High should have R1 data (player #2, mp_row=5)
+    ethan = next((p for p in data['players'] if p['name'] == 'Ethan High'), None)
+    assert ethan is not None
+    r1 = next((rd for rd in ethan['rounds'] if rd['round'] == 1), None)
+    assert r1 is not None, "Ethan High should have R1 data"
+    assert r1['matchPts'] == 6
+    assert r1['net'] == 39
+    assert r1['opponent'] == 'Brian Wojcio'
+    assert r1['result'] == 'W'
+
+    # Spot-check: R1 should have at least one match recorded
+    r1_round = next(r for r in data['rounds'] if r['round'] == 1)
+    assert len(r1_round['matches']) > 0
