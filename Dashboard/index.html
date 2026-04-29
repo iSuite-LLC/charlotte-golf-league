@@ -154,9 +154,11 @@
       display: flex; align-items: center; gap: 12px; padding: 8px 16px;
     }
     .match + .match { border-top: 1px solid #2a2a2a; }
-    .match-winner { font-weight: 700; flex: 1; }
-    .match-loser  { color: var(--muted); flex: 1; text-align: right; }
-    .match-score  { color: var(--orange); font-size: 0.85rem; font-weight: 700; white-space: nowrap; }
+    .match-winner { font-weight: 700; }
+    .match-loser  { color: var(--muted); }
+    .match-p1     { flex: 1; }
+    .match-p2     { flex: 1; text-align: right; }
+    .match-score  { color: var(--orange); font-size: 0.85rem; font-weight: 700; white-space: nowrap; min-width: 55px; text-align: center; }
     /* ── Schedule ── */
     .schedule-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
     .schedule-table thead th {
@@ -351,9 +353,9 @@
       const matchRows = r.matches.map(m => {
         const draw = m.winner === null;
         return `<div class="match">
-          <span class="${!draw && m.winner === m.p1 ? 'match-winner' : 'match-loser'}">${m.p1}</span>
+          <span class="match-p1 ${!draw && m.winner === m.p1 ? 'match-winner' : 'match-loser'}">${m.p1}</span>
           <span class="match-score">${m.p1Pts} – ${m.p2Pts}</span>
-          <span class="${!draw && m.winner === m.p2 ? 'match-winner' : 'match-loser'}">${m.p2}</span>
+          <span class="match-p2 ${!draw && m.winner === m.p2 ? 'match-winner' : 'match-loser'}">${m.p2}</span>
         </div>`;
       }).join('');
       return `<div class="round-section">
