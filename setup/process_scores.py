@@ -390,6 +390,7 @@ def process(source_path, tab_name):
         print(f"\nERROR: Could not save — close the file in Excel and re-run.")
         return []
 
+    write_dashboard_json(rnd, name_to_num)
     return updated
 
 
