@@ -170,6 +170,12 @@
     .schedule-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); }
     .schedule-table tr.current-round td  { background: #1e1e1e; }
     .schedule-table tr.complete-round td { color: var(--muted); }
+    .schedule-table tr.clickable { cursor: pointer; transition: background 0.1s; }
+    .schedule-table tr.clickable:hover td { background: var(--surface-hover); }
+    .schedule-expand-row td { padding: 0; background: #181818; border-bottom: 2px solid var(--orange); }
+    .schedule-detail { padding: 12px 16px; }
+    .matchup-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .matchup-table td { padding: 7px 10px; border-top: 1px solid #2a2a2a; }
     .status-complete { color: var(--green);  font-weight: 600; }
     .status-current  { color: var(--orange); font-weight: 600; }
     .status-upcoming { color: #555; }
@@ -373,6 +379,33 @@
   }
 
   /* ── Schedule ── */
+  function toggleRound(roundNum) {
+    document.getElementById('round-expand-' + roundNum).classList.toggle('hidden');
+  }
+
+  function renderRoundDetail(roundNum) {
+    const rd = leagueData.rounds.find(r => r.round === roundNum);
+    if (!rd || rd.matches.length === 0) {
+      return '<div class="schedule-detail"><p style="color:#555;font-size:0.82rem">No matchups recorded yet.</p></div>';
+    }
+    const rows = rd.matches.map(m => {
+      const draw = m.winner === null;
+      const p1cls = !draw && m.winner === m.p1 ? 'match-winner' : 'match-loser';
+      const p2cls = !draw && m.winner === m.p2 ? 'match-winner' : 'match-loser';
+      const score = m.p1Pts !== null
+        ? `<span style="color:var(--orange);font-weight:700">${m.p1Pts} – ${m.p2Pts}</span>`
+        : `<span style="color:#555">vs</span>`;
+      return `<tr>
+        <td class="${p1cls}">${m.p1}</td>
+        <td style="text-align:center;width:70px">${score}</td>
+        <td class="${p2cls}" style="text-align:right">${m.p2}</td>
+      </tr>`;
+    }).join('');
+    return `<div class="schedule-detail">
+      <table class="matchup-table"><tbody>${rows}</tbody></table>
+    </div>`;
+  }
+
   function renderSchedule() {
     const rows = leagueData.schedule.map(s => {
       const rd     = leagueData.rounds.find(r => r.round === s.round);
@@ -381,14 +414,19 @@
         status === 'complete'    ? '<span class="status-complete">✓ Done</span>'  :
         status === 'in_progress' ? '<span class="status-current">● Now</span>'    :
                                    '<span class="status-upcoming">Upcoming</span>';
-      const rowCls = status === 'in_progress' ? 'current-round'
-                   : status === 'complete'    ? 'complete-round' : '';
-      return `<tr class="${rowCls}">
-        <td>R${s.round}</td>
-        <td>${s.dates}</td>
-        <td>${s.bye}</td>
-        <td>${statusHTML}</td>
-      </tr>`;
+      const rowCls = [
+        status === 'in_progress' ? 'current-round' : status === 'complete' ? 'complete-round' : '',
+        'clickable'
+      ].join(' ').trim();
+      return `<tr class="${rowCls}" id="round-row-${s.round}" onclick="toggleRound(${s.round})">
+          <td>R${s.round}</td>
+          <td>${s.dates}</td>
+          <td>${s.bye}</td>
+          <td>${statusHTML}</td>
+        </tr>
+        <tr class="schedule-expand-row hidden" id="round-expand-${s.round}">
+          <td colspan="4">${renderRoundDetail(s.round)}</td>
+        </tr>`;
     }).join('');
 
     document.getElementById('tab-schedule').innerHTML = `
