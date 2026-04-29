@@ -50,3 +50,35 @@ def test_parse_matches_draw():
 def test_parse_matches_empty_sheet():
     ws = _make_ws([[None] * 30])
     assert parse_matches(ws) == []
+
+
+def test_write_dashboard_json_structure():
+    """Integration test — writes real data.json and validates structure."""
+    import json as _json
+    from process_scores import write_dashboard_json, build_name_map
+
+    name_to_num = build_name_map()
+    write_dashboard_json(1, name_to_num)
+
+    with open(
+        r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\Dashboard\data.json",
+        encoding='utf-8'
+    ) as f:
+        data = _json.load(f)
+
+    assert data['season'] == 2026
+    assert isinstance(data['lastUpdated'], str)
+    assert len(data['players']) == 15
+    assert len(data['rounds'])  == 9
+    assert len(data['schedule']) == 9
+
+    for p in data['players']:
+        assert 'id' in p
+        assert 'name' in p
+        assert 'totalPts' in p
+        assert 'record' in p
+        assert isinstance(p['rounds'], list)
+
+    for r in data['rounds']:
+        assert r['status'] in ('complete', 'in_progress', 'upcoming')
+        assert isinstance(r['matches'], list)

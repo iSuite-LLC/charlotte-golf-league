@@ -15,7 +15,8 @@ Round detection from tab name (case-insensitive):
   Falls back to the next unfilled round in Scores 2026.
 """
 
-import sys, os, re, io, openpyxl
+import sys, os, re, io, json, openpyxl
+from datetime import date as _date
 if __name__ == '__main__':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
@@ -26,6 +27,24 @@ TOTAL_ROUNDS   = 9    # rounds 1-9 → columns D-L (4-12)
 COL_TOTAL = 13      # M  League Total Score
 COL_REC   = 14      # N  Match Record
 COL_AVG   = 15      # O  Average NET Score
+
+DASHBOARD_JSON = r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\Dashboard\data.json"
+SCORES_XLSX    = r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\Scores\Scores.xlsx"
+
+SCHEDULE = [
+    {'round': 1, 'dates': 'Apr 20 – May 1',  'bye': 'David Maddox'},
+    {'round': 2, 'dates': 'May 4 – May 15',  'bye': 'Nick Coglianese'},
+    {'round': 3, 'dates': 'May 18 – May 29', 'bye': 'Charlotte Hayes'},
+    {'round': 4, 'dates': 'Jun 1 – Jun 12',  'bye': 'Jerome Martin'},
+    {'round': 5, 'dates': 'Jun 15 – Jun 26', 'bye': 'Wojcio / High / R. Bass'},
+    {'round': 6, 'dates': 'Jun 29 – Jul 10', 'bye': 'C. Bass / McHugh / Atkins'},
+    {'round': 7, 'dates': 'Jul 13 – Jul 24', 'bye': 'Palmer / Lynn / Link'},
+    {'round': 8, 'dates': 'Jul 27 – Aug 7',  'bye': 'Kaylan Adams'},
+    {'round': 9, 'dates': 'Aug 10 – Aug 21', 'bye': 'Megan Serian'},
+]
+
+# Expected match count per round (rounds 5-7 have 3-way BYEs → 6 matches each)
+ROUND_MATCH_COUNTS = {1: 7, 2: 7, 3: 7, 4: 7, 5: 6, 6: 6, 7: 6, 8: 7, 9: 7}
 
 def round_col(r):
     return 3 + r    # R1→4(D), R2→5(E), ... R9→12(L)
@@ -180,6 +199,98 @@ def parse_matches(ws):
                 })
 
     return matches
+
+
+def write_dashboard_json(rnd, name_to_num):
+    """Write Dashboard/data.json from current workbook state + Scores.xlsx match tabs."""
+    num_to_name = {v: k for k, v in name_to_num.items()}
+
+    # Read all player stats from Scores 2026
+    wb_main   = openpyxl.load_workbook(LEAGUE, data_only=True, read_only=True)
+    ws_scores = wb_main['Scores 2026']
+
+    players = []
+    for num in range(1, 16):
+        name                      = num_to_name.get(num, f'Player {num}')
+        total_pts, record, avg_net = compute_stats(ws_scores, num)
+        mp_row, net_row           = PLAYER_ROWS[num]
+
+        rounds_data = []
+        for r in range(1, TOTAL_ROUNDS + 1):
+            col = round_col(r)
+            pts = ws_scores.cell(row=mp_row,  column=col).value
+            net = ws_scores.cell(row=net_row, column=col).value
+            if pts is not None:
+                rounds_data.append({
+                    'round':    r,
+                    'matchPts': pts,
+                    'net':      net,
+                    'opponent': None,
+                    'result':   outcome(pts),
+                })
+
+        players.append({
+            'id':       num,
+            'name':     name,
+            'totalPts': total_pts,
+            'record':   record,
+            'avgNet':   avg_net,
+            'rounds':   rounds_data,
+        })
+
+    wb_main.close()
+
+    # Read match pairings from each score tab; fill in opponents
+    wb_src     = openpyxl.load_workbook(SCORES_XLSX, data_only=True)
+    rounds_out = []
+
+    for r in range(1, TOTAL_ROUNDS + 1):
+        tab      = f'R{r} Scores'
+        sched    = SCHEDULE[r - 1]
+        matches  = []
+        expected = ROUND_MATCH_COUNTS[r]
+
+        if tab in wb_src.sheetnames:
+            for m in parse_matches(wb_src[tab]):
+                matches.append({
+                    'p1': m['p1'], 'p1Pts': m['p1Pts'], 'p1Net': m['p1Net'],
+                    'p2': m['p2'], 'p2Pts': m['p2Pts'], 'p2Net': m['p2Net'],
+                    'winner': m['winner'],
+                })
+                for player in players:
+                    for rd in player['rounds']:
+                        if rd['round'] == r:
+                            if player['name'] == m['p1']:
+                                rd['opponent'] = m['p2']
+                            elif player['name'] == m['p2']:
+                                rd['opponent'] = m['p1']
+
+        n      = len(matches)
+        status = 'upcoming' if n == 0 else ('complete' if n >= expected else 'in_progress')
+
+        rounds_out.append({
+            'round':   r,
+            'dates':   sched['dates'],
+            'bye':     sched['bye'],
+            'status':  status,
+            'matches': matches,
+        })
+
+    wb_src.close()
+
+    data = {
+        'season':       2026,
+        'lastUpdated':  _date.today().isoformat(),
+        'currentRound': rnd,
+        'players':      players,
+        'rounds':       rounds_out,
+        'schedule':     SCHEDULE,
+    }
+
+    with open(DASHBOARD_JSON, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+
+    print(f"Dashboard JSON: {DASHBOARD_JSON}")
 
 
 def outcome(pts):
