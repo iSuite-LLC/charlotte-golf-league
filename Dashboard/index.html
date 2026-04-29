@@ -254,6 +254,24 @@
     .status-complete { color: var(--green);  font-weight: 600; }
     .status-current  { color: var(--orange); font-weight: 600; }
     .status-upcoming { color: #555; }
+    /* ── Stats ── */
+    .stats-section  { margin-bottom: 28px; }
+    .stats-heading  { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+    .hole-grid      { display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; }
+    .hole-card      { background: var(--surface); border-radius: 5px; padding: 10px 4px 8px; text-align: center; }
+    .hole-card-num  { font-size: 0.6rem; color: var(--muted); font-weight: 600; margin-bottom: 2px; letter-spacing: 0.05em; text-transform: uppercase; }
+    .hole-card-par  { font-size: 0.7rem; color: #555; margin-bottom: 5px; }
+    .hole-card-avg  { font-size: 1rem; font-weight: 700; margin-bottom: 3px; }
+    .hole-card-diff { font-size: 0.72rem; font-weight: 700; margin-bottom: 6px; }
+    .hole-card-bar  { height: 4px; border-radius: 2px; background: #2a2a2a; margin: 0 6px; }
+    .hole-card-bar-fill { height: 100%; border-radius: 2px; }
+    .diff-under  { color: var(--green); }
+    .diff-even   { color: var(--muted); }
+    .diff-bogey  { color: var(--orange); }
+    .diff-hard   { color: var(--red); }
+    /* ── H2H ── */
+    .h2h-section { margin-top: 12px; padding-top: 10px; border-top: 1px solid #2a2a2a; }
+    .h2h-heading { font-size: 0.67rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 0 10px; margin-bottom: 4px; }
     /* ── Responsive ── */
     @media (max-width: 600px) {
       .site-header { flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -263,6 +281,7 @@
       .player-cards { display: block; }
       .podium-card { padding: 10px 8px 14px; }
       .podium-pts  { font-size: 1.2rem; }
+      .hole-grid   { grid-template-columns: repeat(3, 1fr); }
     }
   </style>
 </head>
@@ -298,12 +317,14 @@
   <button class="tab-btn active" onclick="showTab('standings', this)">Standings</button>
   <button class="tab-btn"        onclick="showTab('results', this)">Results</button>
   <button class="tab-btn"        onclick="showTab('schedule', this)">Schedule</button>
+  <button class="tab-btn"        onclick="showTab('stats', this)">Stats</button>
 </nav>
 
 <main class="content">
   <div id="tab-standings" class="tab-pane"></div>
   <div id="tab-results"   class="tab-pane hidden"></div>
   <div id="tab-schedule"  class="tab-pane hidden"></div>
+  <div id="tab-stats"     class="tab-pane hidden"></div>
 </main>
 
 <script>
@@ -327,6 +348,7 @@
     renderStandings();
     renderResults();
     renderSchedule();
+    renderStats();
   }
 
   function showTab(name, btn) {
@@ -415,11 +437,40 @@
         <td>${r.matchPts}</td>
         <td>${r.net !== null ? r.net : '—'}</td>
       </tr>`).join('');
+
+    // Head-to-head tally
+    const h2h = {};
+    for (const rd of player.rounds) {
+      if (!rd.opponent) continue;
+      if (!h2h[rd.opponent]) h2h[rd.opponent] = { w: 0, l: 0, d: 0 };
+      if      (rd.result === 'W') h2h[rd.opponent].w++;
+      else if (rd.result === 'L') h2h[rd.opponent].l++;
+      else                        h2h[rd.opponent].d++;
+    }
+    let h2hHTML = '';
+    if (Object.keys(h2h).length) {
+      const h2hRows = Object.entries(h2h)
+        .sort((a, b) => (b[1].w - b[1].l) - (a[1].w - a[1].l))
+        .map(([opp, rec]) => `
+          <tr>
+            <td>${opp}</td>
+            <td><span class="rec-w">${rec.w}</span>-<span class="rec-l">${rec.l}</span>-<span class="rec-d">${rec.d}</span></td>
+          </tr>`).join('');
+      h2hHTML = `<div class="h2h-section">
+        <div class="h2h-heading">Head to Head</div>
+        <table class="detail-table">
+          <thead><tr><th>Opponent</th><th>Record</th></tr></thead>
+          <tbody>${h2hRows}</tbody>
+        </table>
+      </div>`;
+    }
+
     return `<div class="player-detail">
       <table class="detail-table">
         <thead><tr><th>Rd</th><th>Opponent</th><th>Result</th><th>Pts</th><th>NET</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>
+      ${h2hHTML}
     </div>`;
   }
 
@@ -723,6 +774,65 @@
         <thead><tr><th>Round</th><th>Dates</th><th>BYE</th><th>Status</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>`;
+  }
+
+  /* ── Stats ── */
+  function buildHoleDifficulty() {
+    const courses = {};
+    for (const round of leagueData.rounds) {
+      for (const pairing of (round.pairings || [])) {
+        if (!pairing.played) continue;
+        for (const sc of [pairing.p1Scorecard, pairing.p2Scorecard]) {
+          if (!sc || !sc.gross || !sc.par) continue;
+          const key = [sc.course, sc.nine].filter(Boolean).join(' · ');
+          if (!courses[key]) courses[key] = { par: sc.par.slice(), totals: new Array(9).fill(0), counts: new Array(9).fill(0) };
+          sc.gross.forEach((g, i) => { if (g != null) { courses[key].totals[i] += g; courses[key].counts[i]++; } });
+        }
+      }
+    }
+    const result = {};
+    for (const [key, d] of Object.entries(courses)) {
+      result[key] = {
+        par:      d.par,
+        avgGross: d.totals.map((t, i) => d.counts[i] > 0 ? t / d.counts[i] : null),
+        counts:   d.counts,
+      };
+    }
+    return result;
+  }
+
+  function renderStats() {
+    const difficulty = buildHoleDifficulty();
+    if (!Object.keys(difficulty).length) {
+      document.getElementById('tab-stats').innerHTML =
+        '<p style="color:#555;text-align:center;padding:60px 0">No scorecard data yet.</p>';
+      return;
+    }
+    let html = '';
+    for (const [courseName, data] of Object.entries(difficulty)) {
+      const cards = data.par.map((par, i) => {
+        const avg = data.avgGross[i];
+        if (avg == null || par == null) return `<div class="hole-card"><div class="hole-card-num">Hole ${i+1}</div><div class="hole-card-par">—</div></div>`;
+        const diff    = avg - par;
+        const diffStr = diff === 0 ? 'E' : (diff > 0 ? '+' : '') + diff.toFixed(1);
+        const cls     = diff < 0 ? 'diff-under' : diff < 0.5 ? 'diff-even' : diff < 1.5 ? 'diff-bogey' : 'diff-hard';
+        const barColor = diff < 0 ? 'var(--green)' : diff < 1 ? '#555' : diff < 2 ? 'var(--orange)' : 'var(--red)';
+        const barPct   = Math.min(100, Math.max(0, (diff / 3) * 100));
+        return `<div class="hole-card">
+          <div class="hole-card-num">Hole ${i+1}</div>
+          <div class="hole-card-par">Par ${par}</div>
+          <div class="hole-card-avg">${avg.toFixed(1)}</div>
+          <div class="hole-card-diff ${cls}">${diffStr}</div>
+          <div class="hole-card-bar"><div class="hole-card-bar-fill" style="width:${barPct.toFixed(0)}%;background:${barColor}"></div></div>
+        </div>`;
+      }).join('');
+      const sampleCount = data.counts[0] || 0;
+      html += `<div class="stats-section">
+        <div class="stats-heading">${courseName} <span style="font-weight:400;color:#555;font-size:0.65rem">(${sampleCount} rounds)</span></div>
+        <div class="hole-grid">${cards}</div>
+      </div>`;
+    }
+    document.getElementById('tab-stats').innerHTML = html;
   }
 
   init();
