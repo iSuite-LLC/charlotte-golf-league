@@ -16,7 +16,8 @@ Round detection from tab name (case-insensitive):
 """
 
 import sys, os, re, io, openpyxl
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+if __name__ == '__main__':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
 LEAGUE         = r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\2026 IMI Golf League.xlsx"
 SHEET_PASSWORD = "steelers"
@@ -139,6 +140,45 @@ def parse_scores(ws):
                 del pending_p2[bs]
 
     return results
+
+
+def parse_matches(ws):
+    """
+    Parse match pairings from a Calculator-format worksheet.
+    Returns list of {p1, p1Pts, p1Net, p2, p2Pts, p2Net, winner}.
+    """
+    matches = []
+    pending = {}   # block_start → {p1, p1Pts, p1Net, p2Pts}
+
+    for row in ws.iter_rows(values_only=True):
+        row = list(row)
+        for bs in BLOCK_STARTS:
+            if len(row) <= bs + 10:
+                continue
+            if row[bs + 1] != 'Holes Won':
+                continue
+            name = row[bs]
+            if not isinstance(name, str) or not name.strip():
+                continue
+            name   = name.strip()
+            net    = row[bs + 6]
+            p1_pts = row[bs + 8]
+            p2_pts = row[bs + 10]
+
+            if p1_pts is not None:
+                pending[bs] = {'p1': name, 'p1Pts': p1_pts, 'p1Net': net, 'p2Pts': p2_pts}
+            elif bs in pending and pending[bs].get('p2Pts') is not None:
+                p      = pending.pop(bs)
+                winner = p['p1'] if p['p1Pts'] > p['p2Pts'] else (
+                    name if p['p2Pts'] > p['p1Pts'] else None
+                )
+                matches.append({
+                    'p1': p['p1'], 'p1Pts': p['p1Pts'], 'p1Net': p['p1Net'],
+                    'p2': name,    'p2Pts': p['p2Pts'],  'p2Net': net,
+                    'winner': winner,
+                })
+
+    return matches
 
 
 def outcome(pts):
