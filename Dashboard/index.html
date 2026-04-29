@@ -270,7 +270,7 @@
     const parts = (record || '').split('-');
     if (parts.length < 3) return record || '—';
     const [w, l, d] = parts;
-    return `<span class="rec-w">${w}W</span> <span class="rec-l">${l}L</span> <span class="rec-d">${d}D</span>`;
+    return `<span class="rec-w">${w}</span>-<span class="rec-l">${l}</span>-<span class="rec-d">${d}</span>`;
   }
 
   function renderPlayerDetail(player) {
