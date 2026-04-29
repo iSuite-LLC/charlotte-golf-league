@@ -583,8 +583,8 @@
     function playerRowsHTML(firstName, sc, isWinner) {
       if (!sc) return '';
       const gross = sc.gross || [], par = sc.par || [], net = sc.net || [];
-      const grossCells = par.map((p, i) =>
-        `<td class="${scoreColor(gross[i], p)}">${gross[i] != null ? gross[i] : '—'}</td>`
+      const grossCells = gross.map(g =>
+        `<td>${g != null ? g : '—'}</td>`
       ).join('');
       const netCells = net.map(n => `<td>${n != null ? n : '—'}</td>`).join('');
       return `
