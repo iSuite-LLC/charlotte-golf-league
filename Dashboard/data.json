@@ -323,7 +323,7 @@
             "netTotal": 43
           },
           "p2Scorecard": {
-            "course": null,
+            "course": "Skybrook",
             "nine": "Front 9",
             "par": [
               4,
@@ -413,7 +413,7 @@
             "netTotal": 43
           },
           "p2Scorecard": {
-            "course": null,
+            "course": "Skybrook",
             "nine": "Front 9",
             "par": [
               4,
@@ -503,7 +503,7 @@
             "netTotal": 33
           },
           "p2Scorecard": {
-            "course": null,
+            "course": "Highland Creek",
             "nine": "Front 9",
             "par": [
               4,
@@ -603,7 +603,7 @@
             "netTotal": 39
           },
           "p2Scorecard": {
-            "course": null,
+            "course": "Skybrook",
             "nine": "Back 9",
             "par": [
               4,
@@ -693,7 +693,7 @@
             "netTotal": 54
           },
           "p2Scorecard": {
-            "course": null,
+            "course": "Highland Creek",
             "nine": "Front 9",
             "par": [
               4,

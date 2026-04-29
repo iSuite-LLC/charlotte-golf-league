@@ -246,7 +246,7 @@ def parse_scorecards(ws):
 
             # Find course name by searching backward for block header row ('First 3' at bs+2)
             course = None
-            for j in range(i - 1, max(i - 15, -1), -1):
+            for j in range(i - 1, max(i - 25, -1), -1):
                 pr = rows[j]
                 if len(pr) > bs + 2 and pr[bs + 2] == 'First 3':
                     course = pr[bs] if len(pr) > bs else None
