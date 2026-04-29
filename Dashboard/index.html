@@ -107,7 +107,7 @@
     .rec-w { color: var(--green); font-weight: 600; }
     .rec-l { color: var(--red);   font-weight: 600; }
     .rec-d { color: var(--muted); }
-    .avg-net { color: var(--muted); }
+    .avg-net { color: var(--blue); }
     /* ── Player expand panel ── */
     .expand-row td {
       padding: 0; background: #181818;
@@ -121,9 +121,9 @@
       text-align: left; text-transform: uppercase;
     }
     .detail-table td { padding: 7px 10px; border-top: 1px solid #2a2a2a; }
-    .result-W { color: var(--red);   font-weight: 700; }
-    .result-D { color: var(--green); font-weight: 700; }
-    .result-L { color: var(--muted); }
+    .result-W { color: var(--green); font-weight: 700; }
+    .result-D { color: var(--muted); font-weight: 700; }
+    .result-L { color: var(--red);   }
     /* ── Results ── */
     .round-section {
       background: var(--surface); border-radius: 6px;
@@ -154,8 +154,9 @@
       display: flex; align-items: center; gap: 12px; padding: 8px 16px;
     }
     .match + .match { border-top: 1px solid #2a2a2a; }
-    .match-winner { font-weight: 700; }
-    .match-loser  { color: var(--muted); }
+    .match-winner    { font-weight: 700; color: var(--green); }
+    .match-loser     { color: var(--muted); }
+    .pairing-unplayed { color: var(--muted); font-style: italic; }
     .match-p1     { flex: 1; }
     .match-p2     { flex: 1; text-align: right; }
     .match-score  { color: var(--orange); font-size: 0.85rem; font-weight: 700; white-space: nowrap; min-width: 55px; text-align: center; }
@@ -370,7 +371,7 @@
           <span class="round-dates">${r.dates}</span>
           <span class="badge ${badgeCls}">${badgeTxt}</span>
         </div>
-        <div class="round-bye">BYE: ${r.bye}</div>
+        <div class="round-bye"><span style="color:var(--orange);font-weight:600">BYE:</span> ${r.bye}</div>
         <div class="matches">${matchRows}</div>
       </div>`;
     }).join('');
@@ -390,8 +391,8 @@
     }
     const rows = rd.pairings.map(m => {
       const draw = m.played && m.winner === null;
-      const p1cls = m.played && !draw && m.winner === m.p1 ? 'match-winner' : 'match-loser';
-      const p2cls = m.played && !draw && m.winner === m.p2 ? 'match-winner' : 'match-loser';
+      const p1cls = !m.played ? 'pairing-unplayed' : (!draw && m.winner === m.p1 ? 'match-winner' : 'match-loser');
+      const p2cls = !m.played ? 'pairing-unplayed' : (!draw && m.winner === m.p2 ? 'match-winner' : 'match-loser');
       const score = m.played
         ? `<span style="color:var(--orange);font-weight:700">${m.p1Pts} – ${m.p2Pts}</span>`
         : `<span style="color:#555;font-style:italic">Not played</span>`;
