@@ -1,7 +1,7 @@
 # IMI Golf League 2026 — Standings
 
 **Season:** 2026 | **Rounds:** 9 | **Players:** 15
-**Last updated:** 2026-04-28 via Claude (R1: 3 of 7 matches)
+**Last updated:** 2026-04-29 via Claude (R1: 5 of 7 matches)
 
 ---
 
@@ -14,25 +14,25 @@ BYE: David Maddox
 
 ## Standings
 
-*Round 1 in progress — 3 of 7 matches recorded.*
+*Round 1 in progress — 5 of 7 matches recorded.*
 
 | Rank | Player | Total Pts | Record | Avg NET |
 |------|--------|-----------|--------|---------|
-| 1 | Carson Bass | 7 | 1-0-0 | 38.0 |
-| 2 | Ethan High | 6 | 1-0-0 | 39.0 |
-| 3 | Jerome Martin | 4 | 0-0-1 | 54.0 |
-| 3 | Kaylan Adams | 4 | 0-0-1 | 54.0 |
-| 5 | Brian Wojcio | 2 | 0-1-0 | 43.0 |
-| 6 | Rob Bass | 1 | 0-1-0 | 43.0 |
-| — | Michael McHugh | 0 | 0-0-0 | — |
-| — | Bruce Atkins | 0 | 0-0-0 | — |
-| — | Alex Palmer | 0 | 0-0-0 | — |
-| — | Curtis Lynn | 0 | 0-0-0 | — |
-| — | Charlotte Hayes | 0 | 0-0-0 | — |
+| 1 | Bruce Atkins | 8 | 1-0-0 | 33.0 |
+| 2 | Carson Bass | 7 | 1-0-0 | 38.0 |
+| 2 | Charlotte Hayes | 7 | 1-0-0 | 27.0 |
+| 4 | Ethan High | 6 | 1-0-0 | 39.0 |
+| 5 | Jerome Martin | 4 | 0-0-1 | 54.0 |
+| 5 | Kaylan Adams | 4 | 0-0-1 | 54.0 |
+| 7 | Brian Wojcio | 2 | 0-1-0 | 43.0 |
+| 8 | Ben Linck | 1 | 0-1-0 | 39.0 |
+| 8 | Rob Bass | 1 | 0-1-0 | 43.0 |
+| 10 | Michael McHugh | 0 | 0-1-0 | 46.0 |
+| — | Alex Palmer | — | — | — |
+| — | Curtis Lynn | — | — | — |
 | — | David Maddox (BYE) | 0 | 0-0-0 | — |
-| — | Megan Serian | 0 | 0-0-0 | — |
-| — | Nick Coglianese | 0 | 0-0-0 | — |
-| — | Ben Link | 0 | 0-0-0 | — |
+| — | Megan Serian | — | — | — |
+| — | Nick Coglianese | — | — | — |
 
 ---
 

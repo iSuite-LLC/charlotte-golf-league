@@ -50,7 +50,7 @@ PLAYER_ROWS = {
 
 # 0-indexed col where each side-by-side matchup block begins.
 # Within each block: +0=name, +1='Holes Won', +6=NET, +8=P1_pts, +10=P2_pts
-BLOCK_STARTS = [1, 14, 27]
+BLOCK_STARTS = [1, 15, 29]
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
