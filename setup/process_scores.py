@@ -46,6 +46,19 @@ SCHEDULE = [
 # Expected match count per round (rounds 5-7 have 3-way BYEs → 6 matches each)
 ROUND_MATCH_COUNTS = {1: 7, 2: 7, 3: 7, 4: 7, 5: 6, 6: 6, 7: 6, 8: 7, 9: 7}
 
+# Full round-by-round pairing schedule (player numbers, from Schedule tab)
+ROUND_PAIRINGS = {
+    1: [(1,2),(3,4),(5,6),(7,8),(9,10),(12,13),(14,15)],
+    2: [(1,3),(2,4),(5,7),(6,8),(9,12),(10,13),(11,14)],
+    3: [(1,4),(2,5),(3,6),(7,13),(8,15),(9,14),(11,12)],
+    4: [(1,5),(2,7),(3,8),(4,6),(9,13),(10,14),(11,15)],
+    5: [(4,5),(6,7),(8,9),(10,11),(12,15),(13,14)],
+    6: [(1,8),(2,3),(7,10),(9,11),(12,14),(13,15)],
+    7: [(1,10),(2,11),(3,12),(4,15),(5,14),(6,13)],
+    8: [(1,6),(2,8),(3,5),(4,14),(7,11),(9,15),(10,12)],
+    9: [(1,9),(2,6),(3,7),(4,8),(5,12),(10,15),(11,13)],
+}
+
 def round_col(r):
     return 3 + r    # R1→4(D), R2→5(E), ... R9→12(L)
 
@@ -268,12 +281,33 @@ def write_dashboard_json(rnd, name_to_num):
         n      = len(matches)
         status = 'upcoming' if n == 0 else ('complete' if n >= expected else 'in_progress')
 
+        # Build full pairings list (played + unplayed) from the known schedule
+        pairings = []
+        for p1_num, p2_num in ROUND_PAIRINGS.get(r, []):
+            p1_name = num_to_name.get(p1_num, f'Player {p1_num}')
+            p2_name = num_to_name.get(p2_num, f'Player {p2_num}')
+            played = next(
+                (m for m in matches
+                 if (m['p1'] == p1_name and m['p2'] == p2_name) or
+                    (m['p1'] == p2_name and m['p2'] == p1_name)),
+                None
+            )
+            if played:
+                pairings.append({**played, 'played': True})
+            else:
+                pairings.append({
+                    'p1': p1_name, 'p1Pts': None, 'p1Net': None,
+                    'p2': p2_name, 'p2Pts': None, 'p2Net': None,
+                    'winner': None, 'played': False,
+                })
+
         rounds_out.append({
-            'round':   r,
-            'dates':   sched['dates'],
-            'bye':     sched['bye'],
-            'status':  status,
-            'matches': matches,
+            'round':    r,
+            'dates':    sched['dates'],
+            'bye':      sched['bye'],
+            'status':   status,
+            'matches':  matches,
+            'pairings': pairings,
         })
 
     wb_src.close()

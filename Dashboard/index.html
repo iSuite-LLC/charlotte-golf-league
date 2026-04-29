@@ -385,20 +385,20 @@
 
   function renderRoundDetail(roundNum) {
     const rd = leagueData.rounds.find(r => r.round === roundNum);
-    if (!rd || rd.matches.length === 0) {
-      return '<div class="schedule-detail"><p style="color:#555;font-size:0.82rem">No matchups recorded yet.</p></div>';
+    if (!rd || !rd.pairings || rd.pairings.length === 0) {
+      return '<div class="schedule-detail"><p style="color:#555;font-size:0.82rem">No matchups scheduled.</p></div>';
     }
-    const rows = rd.matches.map(m => {
-      const draw = m.winner === null;
-      const p1cls = !draw && m.winner === m.p1 ? 'match-winner' : 'match-loser';
-      const p2cls = !draw && m.winner === m.p2 ? 'match-winner' : 'match-loser';
-      const score = m.p1Pts !== null
+    const rows = rd.pairings.map(m => {
+      const draw = m.played && m.winner === null;
+      const p1cls = m.played && !draw && m.winner === m.p1 ? 'match-winner' : 'match-loser';
+      const p2cls = m.played && !draw && m.winner === m.p2 ? 'match-winner' : 'match-loser';
+      const score = m.played
         ? `<span style="color:var(--orange);font-weight:700">${m.p1Pts} – ${m.p2Pts}</span>`
-        : `<span style="color:#555">vs</span>`;
+        : `<span style="color:#555;font-style:italic">Not played</span>`;
       return `<tr>
-        <td class="${p1cls}">${m.p1}</td>
-        <td style="text-align:center;width:70px">${score}</td>
-        <td class="${p2cls}" style="text-align:right">${m.p2}</td>
+        <td class="${m.played ? p1cls : ''}">${m.p1}</td>
+        <td style="text-align:center;width:90px">${score}</td>
+        <td class="${m.played ? p2cls : ''}" style="text-align:right">${m.p2}</td>
       </tr>`;
     }).join('');
     return `<div class="schedule-detail">
