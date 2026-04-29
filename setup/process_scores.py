@@ -166,6 +166,7 @@ def parse_matches(ws):
             p2_pts = row[bs + 10]
 
             if p1_pts is not None:
+                # Calculator format carries p2's total pts on the P1 row (+10); P2 row has None at +8/+10.
                 pending[bs] = {'p1': name, 'p1Pts': p1_pts, 'p1Net': net, 'p2Pts': p2_pts}
             elif bs in pending and pending[bs].get('p2Pts') is not None:
                 p      = pending.pop(bs)
