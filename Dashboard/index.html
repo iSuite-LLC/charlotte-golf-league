@@ -265,7 +265,9 @@
   }
 
   function recordHTML(record) {
-    const [w, l, d] = record.split('-');
+    const parts = (record || '').split('-');
+    if (parts.length < 3) return record || '—';
+    const [w, l, d] = parts;
     return `<span class="rec-w">${w}W</span> <span class="rec-l">${l}L</span> <span class="rec-d">${d}D</span>`;
   }
 
@@ -307,7 +309,7 @@
 
     ranked.forEach((p, i) => {
       html += `
-        <tr class="player-row" id="row-${p.id}" onclick="toggleExpand(${p.id})">
+        <tr class="player-row" id="row-${p.id}" onclick="toggleExpand('${p.id}')">
           <td>${rankBadge(i + 1)}</td>
           <td class="player-name">${p.name}</td>
           <td class="pts">${p.totalPts}</td>
