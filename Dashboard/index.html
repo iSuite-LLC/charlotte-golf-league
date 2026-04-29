@@ -809,7 +809,7 @@
       return;
     }
     let html = '';
-    for (const [courseName, data] of Object.entries(difficulty)) {
+    for (const [courseName, data] of Object.entries(difficulty).sort((a, b) => a[0].localeCompare(b[0]))) {
       const cards = data.par.map((par, i) => {
         const avg = data.avgGross[i];
         if (avg == null || par == null) return `<div class="hole-card"><div class="hole-card-num">Hole ${i+1}</div><div class="hole-card-par">—</div></div>`;
