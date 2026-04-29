@@ -62,16 +62,17 @@
     .season-progress {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
-      padding: 7px 20px;
+      padding: 10px 20px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
-    .progress-label { font-size: 0.65rem; color: var(--muted); font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; }
-    .progress-track { flex: 1; display: flex; gap: 3px; }
-    .progress-seg   { flex: 1; height: 7px; border-radius: 2px; background: #2a2a2a; }
-    .progress-seg.complete    { background: var(--green); }
+    .progress-label { font-size: 0.72rem; color: var(--text); font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; }
+    .progress-track { flex: 1; display: flex; gap: 4px; }
+    .progress-seg   { flex: 1; height: 12px; border-radius: 3px; background: #2a2a2a; }
+    .progress-seg.complete    { background: var(--green); box-shadow: 0 0 6px rgba(90,170,53,0.45); }
     .progress-seg.in-progress { background: var(--orange); }
+    .progress-trophy { font-size: 1.1rem; line-height: 1; flex-shrink: 0; }
     /* ── Tabs ── */
     .tab-nav {
       background: var(--surface);
@@ -290,6 +291,7 @@
   <span class="progress-label">Season</span>
   <div class="progress-track" id="progress-track"></div>
   <span id="progress-text" class="progress-label"></span>
+  <span class="progress-trophy">🏆</span>
 </div>
 
 <nav class="tab-nav">
