@@ -265,6 +265,7 @@ def parse_scorecards(ws):
             scorecards[name] = {
                 'course':     course,
                 'nine':       nine,
+                'handicap':   row[bs + 2] if len(row) > bs + 2 else None,
                 'par':        safe_get(par_row,   hole_cols),
                 'parTotal':   total_at(par_row,   tot_col),
                 'gross':      safe_get(gross_row, hole_cols),

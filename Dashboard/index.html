@@ -661,9 +661,10 @@
         return cls ? `<td class="${cls}"><span class="sc-note">${val}</span></td>` : `<td>${val}</td>`;
       }).join('');
       const netCells = net.map(n => `<td>${n != null ? n : '—'}</td>`).join('');
+      const hcpLabel = sc.handicap != null ? ` <span style="font-size:0.63rem;color:#555;font-weight:400">(${sc.handicap})</span>` : '';
       return `
         <tr class="sc-gross-row${isWinner ? ' sc-p-winner' : ''}">
-          <td class="sc-td-label">${firstName}</td>${grossCells}
+          <td class="sc-td-label">${firstName}${hcpLabel}</td>${grossCells}
           <td class="sc-total-col">${sc.grossTotal != null ? sc.grossTotal : '—'}</td>
         </tr>
         <tr class="sc-net-row">

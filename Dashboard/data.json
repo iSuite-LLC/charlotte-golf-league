@@ -285,6 +285,7 @@
           "p1Scorecard": {
             "course": "Skybrook",
             "nine": "Front 9",
+            "handicap": 12,
             "par": [
               4,
               3,
@@ -325,6 +326,7 @@
           "p2Scorecard": {
             "course": "Skybrook",
             "nine": "Front 9",
+            "handicap": 12,
             "par": [
               4,
               3,
@@ -375,6 +377,7 @@
           "p1Scorecard": {
             "course": "Skybrook",
             "nine": "Front 9",
+            "handicap": 15,
             "par": [
               4,
               3,
@@ -415,6 +418,7 @@
           "p2Scorecard": {
             "course": "Skybrook",
             "nine": "Front 9",
+            "handicap": 20,
             "par": [
               4,
               3,
@@ -465,6 +469,7 @@
           "p1Scorecard": {
             "course": "Highland Creek",
             "nine": "Front 9",
+            "handicap": 24,
             "par": [
               4,
               5,
@@ -505,6 +510,7 @@
           "p2Scorecard": {
             "course": "Highland Creek",
             "nine": "Front 9",
+            "handicap": 22,
             "par": [
               4,
               5,
@@ -565,6 +571,7 @@
           "p1Scorecard": {
             "course": "Skybrook",
             "nine": "Front 9",
+            "handicap": 30,
             "par": [
               4,
               3,
@@ -605,6 +612,7 @@
           "p2Scorecard": {
             "course": "Skybrook",
             "nine": "Front 9",
+            "handicap": 20,
             "par": [
               4,
               3,
@@ -655,6 +663,7 @@
           "p1Scorecard": {
             "course": "Highland Creek",
             "nine": "Front 9",
+            "handicap": 36,
             "par": [
               4,
               5,
@@ -695,6 +704,7 @@
           "p2Scorecard": {
             "course": "Highland Creek",
             "nine": "Front 9",
+            "handicap": 36,
             "par": [
               4,
               5,
