@@ -20,26 +20,29 @@ def main():
 
     cloudinary.config(cloud_name=cloud_name, api_key=api_key, api_secret=api_secret, secure=True)
 
-    resources, next_cursor = [], None
-    while True:
-        search = (cloudinary.search.Search()
-                  .expression('asset_folder="golf-league" AND resource_type=image')
-                  .max_results(100))
-        if next_cursor:
-            search = search.next_cursor(next_cursor)
-        result      = search.execute()
-        resources  += result.get('resources', [])
-        next_cursor = result.get('next_cursor')
-        if not next_cursor:
-            break
+    resources = []
+    for resource_type in ('image', 'video'):
+        next_cursor = None
+        while True:
+            search = (cloudinary.search.Search()
+                      .expression(f'asset_folder="golf-league" AND resource_type={resource_type}')
+                      .max_results(100))
+            if next_cursor:
+                search = search.next_cursor(next_cursor)
+            result      = search.execute()
+            resources  += result.get('resources', [])
+            next_cursor = result.get('next_cursor')
+            if not next_cursor:
+                break
 
     photos = [
         {
-            'url':        r['secure_url'],
-            'public_id':  r['public_id'],
-            'created_at': r['created_at'],
-            'width':      r.get('width'),
-            'height':     r.get('height'),
+            'url':           r['secure_url'],
+            'public_id':     r['public_id'],
+            'created_at':    r['created_at'],
+            'width':         r.get('width'),
+            'height':        r.get('height'),
+            'resource_type': r.get('resource_type', 'image'),
         }
         for r in resources
     ]

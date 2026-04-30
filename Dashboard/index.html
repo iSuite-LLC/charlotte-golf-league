@@ -932,9 +932,13 @@
       return;
     }
     grid.innerHTML = all.map(p =>
-      `<div class="photo-item" onclick="openLightbox('${p.url}')">
-        <img src="${thumbUrl(p.url)}" alt="League photo" loading="lazy">
-      </div>`
+      p.resource_type === 'video'
+        ? `<div class="photo-item">
+            <video src="${p.url}" controls playsinline preload="metadata" style="width:100%;display:block;border-radius:4px"></video>
+           </div>`
+        : `<div class="photo-item" onclick="openLightbox('${p.url}')">
+            <img src="${thumbUrl(p.url)}" alt="League photo" loading="lazy">
+           </div>`
     ).join('');
   }
 
@@ -950,10 +954,11 @@
       const form = new FormData();
       form.append('file', files[i]);
       form.append('upload_preset', UPLOAD_PRESET);
+      form.append('resource_type', 'auto');
       try {
-        const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: form });
+        const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`, { method: 'POST', body: form });
         const data = await res.json();
-        if (data.secure_url) newPhotos.push({ url: data.secure_url, public_id: data.public_id, created_at: data.created_at, width: data.width, height: data.height });
+        if (data.secure_url) newPhotos.push({ url: data.secure_url, public_id: data.public_id, created_at: data.created_at, width: data.width, height: data.height, resource_type: data.resource_type });
       } catch (e) { console.error('Upload error:', e); }
     }
     btn.disabled = false;
@@ -973,7 +978,7 @@
       <div class="upload-bar">
         <button class="upload-btn" id="upload-btn" onclick="document.getElementById('photo-input').click()">+ Upload Photos</button>
         <span class="upload-status" id="upload-status"></span>
-        <input type="file" id="photo-input" accept="image/*" multiple style="display:none" onchange="handleUpload(this)">
+        <input type="file" id="photo-input" accept="image/*,video/*" multiple style="display:none" onchange="handleUpload(this)">
       </div>
       <div id="photo-grid" class="photo-grid"></div>`;
     refreshPhotoGrid();
