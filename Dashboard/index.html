@@ -78,13 +78,18 @@
       background: var(--surface);
       border-bottom: 1px solid var(--border);
       display: flex;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
     }
+    .tab-nav::-webkit-scrollbar { display: none; }
     .tab-btn {
       background: none; border: none; color: var(--muted);
       cursor: pointer; font-size: 0.82rem; font-weight: 600;
       letter-spacing: 0.05em; padding: 12px 24px;
       text-transform: uppercase; transition: color 0.15s;
       border-bottom: 3px solid transparent; margin-bottom: -1px;
+      flex-shrink: 0; white-space: nowrap;
     }
     .tab-btn:hover { color: var(--text); }
     .tab-btn.active { color: var(--text); border-bottom-color: var(--blue); }
