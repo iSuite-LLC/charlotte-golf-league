@@ -1,5 +1,6 @@
 import cloudinary
 import cloudinary.api
+import cloudinary.search
 import json
 import os
 from pathlib import Path
@@ -21,10 +22,12 @@ def main():
 
     resources, next_cursor = [], None
     while True:
-        kwargs = dict(type='upload', asset_folder='golf-league', max_results=100, resource_type='image')
+        search = (cloudinary.search.Search()
+                  .expression('asset_folder="golf-league" AND resource_type=image')
+                  .max_results(100))
         if next_cursor:
-            kwargs['next_cursor'] = next_cursor
-        result      = cloudinary.api.resources(**kwargs)
+            search = search.next_cursor(next_cursor)
+        result      = search.execute()
         resources  += result.get('resources', [])
         next_cursor = result.get('next_cursor')
         if not next_cursor:
