@@ -127,13 +127,13 @@
       "id": 9,
       "name": "Ben Linck",
       "handicap": 30,
-      "totalPts": 1,
+      "totalPts": 3,
       "record": "0-1-0",
       "avgNet": 39.0,
       "rounds": [
         {
           "round": 1,
-          "matchPts": 1,
+          "matchPts": 3,
           "net": 39,
           "opponent": "Charlotte Hayes",
           "result": "L"
@@ -144,14 +144,14 @@
       "id": 10,
       "name": "Charlotte Hayes",
       "handicap": 20,
-      "totalPts": 7,
+      "totalPts": 5,
       "record": "1-0-0",
-      "avgNet": 27.0,
+      "avgNet": 35.0,
       "rounds": [
         {
           "round": 1,
-          "matchPts": 7,
-          "net": 27,
+          "matchPts": 5,
+          "net": 35,
           "opponent": "Ben Linck",
           "result": "W"
         }
@@ -255,11 +255,11 @@
         },
         {
           "p1": "Ben Linck",
-          "p1Pts": 1,
+          "p1Pts": 3,
           "p1Net": 39,
           "p2": "Charlotte Hayes",
-          "p2Pts": 7,
-          "p2Net": 27,
+          "p2Pts": 5,
+          "p2Net": 35,
           "winner": "Charlotte Hayes"
         },
         {
@@ -555,26 +555,26 @@
         },
         {
           "p1": "Ben Linck",
-          "p1Pts": 1,
+          "p1Pts": 3,
           "p1Net": 39,
           "p2": "Charlotte Hayes",
-          "p2Pts": 7,
-          "p2Net": 27,
+          "p2Pts": 5,
+          "p2Net": 35,
           "winner": "Charlotte Hayes",
           "played": true,
           "p1Scorecard": {
             "course": "Skybrook",
-            "nine": "Back 9",
+            "nine": "Front 9",
             "par": [
+              4,
+              3,
               4,
               5,
               4,
               4,
               3,
-              4,
-              3,
-              4,
-              5
+              5,
+              4
             ],
             "parTotal": 36,
             "gross": [
@@ -591,10 +591,10 @@
             "grossTotal": 54,
             "net": [
               5,
-              6,
-              4,
+              7,
               3,
-              5,
+              4,
+              4,
               4,
               5,
               3,
@@ -604,17 +604,17 @@
           },
           "p2Scorecard": {
             "course": "Skybrook",
-            "nine": "Back 9",
+            "nine": "Front 9",
             "par": [
+              4,
+              3,
               4,
               5,
               4,
               4,
               3,
-              4,
-              3,
-              4,
-              5
+              5,
+              4
             ],
             "parTotal": 36,
             "gross": [
@@ -630,17 +630,17 @@
             ],
             "grossTotal": 45,
             "net": [
+              4,
+              5,
+              3,
+              5,
               3,
               4,
               2,
               4,
-              2,
-              3,
-              1,
-              3,
               5
             ],
-            "netTotal": 27
+            "netTotal": 35
           }
         },
         {
