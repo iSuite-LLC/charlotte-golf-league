@@ -410,25 +410,17 @@
     return `<div class="last-match"><span class="${cls}">${verb}</span>${tail}</div>`;
   }
 
-  function sparklineHTML(player) {
-    if (!player.rounds.length) return '';
-    const W = 64, H = 20, PAD = 3;
-    const baseline = H - PAD;
-    const midY     = H - PAD - (4 / 8) * (H - PAD * 2);
-    const pts = player.rounds.map(r => ({
-      x: PAD + ((r.round - 1) / 8) * (W - PAD * 2),
-      y: H - PAD - (Math.max(0, r.matchPts) / 8) * (H - PAD * 2),
-      result: r.result,
-    }));
-    const refLines = `<line x1="${PAD}" y1="${midY.toFixed(1)}" x2="${W-PAD}" y2="${midY.toFixed(1)}" stroke="#2a2a2a" stroke-width="0.75" stroke-dasharray="2,2"/><line x1="${PAD}" y1="${baseline}" x2="${W-PAD}" y2="${baseline}" stroke="#383838" stroke-width="0.75"/>`;
-    const line = pts.length > 1
-      ? `<polyline points="${pts.map(p => p.x.toFixed(1) + ',' + p.y.toFixed(1)).join(' ')}" fill="none" stroke="#1a6fc4" stroke-width="1.5" stroke-linejoin="round"/>`
-      : '';
-    const dots = pts.map(p => {
-      const fill = p.result === 'W' ? '#5aaa35' : p.result === 'L' ? '#cc2027' : '#888888';
-      return `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="2.5" fill="${fill}"/>`;
-    }).join('');
-    return `<svg class="sparkline" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${refLines}${line}${dots}</svg>`;
+  function streakHTML(player) {
+    if (!player.rounds.length) return '—';
+    const results = player.rounds.map(r => r.result);
+    const last = results[results.length - 1];
+    let count = 0;
+    for (let i = results.length - 1; i >= 0; i--) {
+      if (results[i] === last) count++;
+      else break;
+    }
+    const color = last === 'W' ? 'var(--green)' : last === 'L' ? 'var(--red)' : 'var(--muted)';
+    return `<span style="font-weight:700;color:${color}">${last}${count}</span>`;
   }
 
   function renderPlayerDetail(player) {
@@ -546,7 +538,7 @@
     // Desktop table (7 cols: Rank, Player, Hcp, Pts, Record, Avg NET, Form)
     let tableHTML = `<table class="standings-table">
       <thead><tr>
-        <th>Rank</th><th>Player</th><th>Hcp</th><th>Pts</th><th>Record</th><th>Avg NET</th><th>Form</th>
+        <th>Rank</th><th>Player</th><th>Hcp</th><th>Pts</th><th>Record</th><th>Avg NET</th><th>Streak</th>
       </tr></thead><tbody>`;
 
     ranked.forEach((p, i) => {
@@ -561,7 +553,7 @@
           <td class="pts">${p.totalPts}</td>
           <td>${recordHTML(p.record)}</td>
           <td class="avg-net">${p.avgNet !== null ? p.avgNet.toFixed(1) : '—'}</td>
-          <td>${sparklineHTML(p)}</td>
+          <td>${streakHTML(p)}</td>
         </tr>
         <tr class="expand-row hidden" id="expand-${p.id}">
           <td colspan="7">${renderPlayerDetail(p)}</td>
