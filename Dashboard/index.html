@@ -974,7 +974,7 @@
     grid.innerHTML = all.map(p =>
       p.resource_type === 'video'
         ? `<div class="photo-item">
-            <video src="${p.url}" controls playsinline preload="metadata" style="width:100%;display:block;border-radius:4px"></video>
+            <video src="${p.url.replace(/\.(mov|avi|wmv|mkv)$/i, '.mp4')}" controls playsinline preload="metadata" style="width:100%;display:block;border-radius:4px"></video>
            </div>`
         : `<div class="photo-item" onclick="openLightbox('${p.url}')">
             <img src="${thumbUrl(p.url)}" alt="League photo" loading="lazy">
