@@ -272,8 +272,6 @@
     .diff-even   { color: var(--muted); }
     .diff-bogey  { color: var(--orange); }
     .diff-hard   { color: var(--red); }
-    /* ── Icons ── */
-    .svg-icon { display: inline-block; vertical-align: middle; flex-shrink: 0; }
     /* ── H2H ── */
     .h2h-section { margin-top: 12px; padding-top: 10px; border-top: 1px solid #2a2a2a; }
     .h2h-heading { font-size: 0.67rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 0 10px; margin-bottom: 4px; }
@@ -300,14 +298,6 @@
       <span class="dot" style="background:#5aaa35"></span>
       <span class="dot" style="background:#e87722"></span>
     </div>
-    <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true" style="flex-shrink:0">
-      <circle cx="13" cy="13" r="12.5" fill="#ffffff" stroke="#dddddd" stroke-width="0.5"/>
-      <circle cx="10.5" cy="10" r="1.4" fill="#cccccc"/>
-      <circle cx="15.5" cy="9.5" r="1.4" fill="#cccccc"/>
-      <circle cx="9.5" cy="15.5" r="1.4" fill="#cccccc"/>
-      <circle cx="16" cy="15.5" r="1.4" fill="#cccccc"/>
-      <circle cx="13" cy="13" r="1.4" fill="#cccccc"/>
-    </svg>
     <div class="header-title-group">
       <h1>IMI Golf League</h1>
       <div class="year">2026 Season</div>
@@ -327,10 +317,10 @@
 </div>
 
 <nav class="tab-nav">
-  <button class="tab-btn active" onclick="showTab('standings', this)"><svg width="12" height="13" viewBox="0 0 12 13" fill="none" aria-hidden="true" style="display:inline-block;vertical-align:-2px;margin-right:5px"><line x1="3.5" y1="0.5" x2="7.5" y2="9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6 9 Q8.5 8 9.5 10 Q10.5 12 8.5 12.5 Q6 13 6 9Z" fill="currentColor"/></svg>Standings</button>
-  <button class="tab-btn"        onclick="showTab('results', this)"><svg width="12" height="13" viewBox="0 0 12 13" fill="none" aria-hidden="true" style="display:inline-block;vertical-align:-2px;margin-right:5px"><line x1="3.5" y1="0.5" x2="7.5" y2="9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6 9 Q8.5 8 9.5 10 Q10.5 12 8.5 12.5 Q6 13 6 9Z" fill="currentColor"/></svg>Results</button>
-  <button class="tab-btn"        onclick="showTab('schedule', this)"><svg width="12" height="13" viewBox="0 0 12 13" fill="none" aria-hidden="true" style="display:inline-block;vertical-align:-2px;margin-right:5px"><line x1="3.5" y1="0.5" x2="7.5" y2="9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6 9 Q8.5 8 9.5 10 Q10.5 12 8.5 12.5 Q6 13 6 9Z" fill="currentColor"/></svg>Schedule</button>
-  <button class="tab-btn"        onclick="showTab('stats', this)"><svg width="12" height="13" viewBox="0 0 12 13" fill="none" aria-hidden="true" style="display:inline-block;vertical-align:-2px;margin-right:5px"><line x1="3.5" y1="0.5" x2="7.5" y2="9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6 9 Q8.5 8 9.5 10 Q10.5 12 8.5 12.5 Q6 13 6 9Z" fill="currentColor"/></svg>Stats</button>
+  <button class="tab-btn active" onclick="showTab('standings', this)">Standings</button>
+  <button class="tab-btn"        onclick="showTab('results', this)">Results</button>
+  <button class="tab-btn"        onclick="showTab('schedule', this)">Schedule</button>
+  <button class="tab-btn"        onclick="showTab('stats', this)">Stats</button>
 </nav>
 
 <main class="content">
@@ -342,9 +332,6 @@
 
 <script>
   let leagueData = null;
-
-  const FLAG_SVG   = `<svg width="11" height="13" viewBox="0 0 11 13" fill="none" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-right:3px"><line x1="3" y1="1.5" x2="3" y2="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M3 1.5 L10 4.5 L3 8Z" fill="currentColor"/><circle cx="3" cy="12" r="1.2" fill="currentColor"/></svg>`;
-  const GOLFER_SVG = `<svg width="26" height="28" viewBox="0 0 26 28" aria-hidden="true" style="margin-bottom:4px"><circle cx="13" cy="4" r="3" fill="#e87722"/><line x1="13" y1="7" x2="13" y2="18" stroke="#e87722" stroke-width="2" stroke-linecap="round"/><line x1="13" y1="10" x2="20" y2="7" stroke="#e87722" stroke-width="2" stroke-linecap="round"/><line x1="13" y1="11" x2="6" y2="14" stroke="#e87722" stroke-width="2" stroke-linecap="round"/><line x1="13" y1="18" x2="10" y2="26" stroke="#e87722" stroke-width="2" stroke-linecap="round"/><line x1="13" y1="18" x2="16" y2="26" stroke="#e87722" stroke-width="2" stroke-linecap="round"/><line x1="20" y1="7" x2="23" y2="15" stroke="#e87722" stroke-width="1.5" stroke-linecap="round"/></svg>`;
 
   async function init() {
     try {
@@ -501,7 +488,6 @@
     const cards = order.map((p, i) => {
       const rank = rankNums[i];
       return `<div class="podium-card ${clsMap[rank]}" onclick="toggleExpand('${p.id}')">
-        ${rank === 1 ? GOLFER_SVG : ''}
         <div class="podium-rank">${labelMap[rank]}</div>
         <div class="podium-name">${p.name.split(' ')[0]}</div>
         <div class="podium-pts">${p.totalPts}<span class="podium-pts-label">pts</span></div>
@@ -706,7 +692,7 @@
         </div>`;
       }
       const badgeCls = r.status === 'in_progress' ? 'in-progress' : 'complete';
-      const badgeTxt = r.status === 'in_progress' ? 'In Progress' : `${FLAG_SVG}Complete`;
+      const badgeTxt = r.status === 'in_progress' ? 'In Progress' : 'Complete';
       const played = (r.pairings || r.matches || []).filter(m => m.played !== false);
       const matchRows = played.map((m, mi) => {
         const draw    = m.winner === null;
@@ -769,7 +755,7 @@
       const rd     = leagueData.rounds.find(r => r.round === s.round);
       const status = rd ? rd.status : 'upcoming';
       const statusHTML =
-        status === 'complete'    ? `<span class="status-complete">${FLAG_SVG}Done</span>`     :
+        status === 'complete'    ? '<span class="status-complete">Done</span>'     :
         status === 'in_progress' ? '<span class="status-current">Now</span>'       :
                                    '<span class="status-upcoming">Upcoming</span>';
       const rowCls = [
@@ -882,7 +868,7 @@
       }
       sections.sort((a, b) => a.nine === 'Front 9' ? -1 : 1);
       html += `<div class="course-box">
-        <div class="course-box-title">${FLAG_SVG}${course}</div>
+        <div class="course-box-title">${course}</div>
         ${sections.map(s => nineSection(s.nine, s.data)).join('')}
       </div>`;
     }
