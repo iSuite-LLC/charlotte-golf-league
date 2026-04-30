@@ -895,15 +895,14 @@
   /* ── Photos ── */
   const CLOUD_NAME    = 'drt2wzgmx';
   const UPLOAD_PRESET = 'golf-league-uploads';
-  const PHOTO_TAG     = 'imi-golf-2026';
   let sessionPhotos   = [];
 
   async function fetchPhotos() {
     try {
-      const res = await fetch(`https://res.cloudinary.com/${CLOUD_NAME}/image/list/${PHOTO_TAG}.json`);
+      const res = await fetch('photos.json');
       if (!res.ok) return [];
       const data = await res.json();
-      return (data.resources || []).map(r => ({ url: r.secure_url, public_id: r.public_id, created_at: r.created_at, width: r.width, height: r.height }));
+      return data.photos || [];
     } catch (e) { return []; }
   }
 
@@ -951,7 +950,6 @@
       const form = new FormData();
       form.append('file', files[i]);
       form.append('upload_preset', UPLOAD_PRESET);
-      form.append('tags', PHOTO_TAG);
       try {
         const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: form });
         const data = await res.json();
