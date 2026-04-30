@@ -79,6 +79,7 @@
     .progress-seg.complete    { background: var(--green); box-shadow: 0 0 6px rgba(90,170,53,0.45); }
     .progress-seg.in-progress { background: var(--orange); }
     .progress-cart  { position: absolute; right: -14px; top: 50%; transform: translateY(-50%); z-index: 10; pointer-events: none; }
+    .progress-trophy { flex-shrink: 0; }
     /* ── Tabs ── */
     .tab-nav {
       background: var(--surface);
@@ -356,6 +357,9 @@
   <span class="progress-label">Season</span>
   <div class="progress-track" id="progress-track"></div>
   <span id="progress-text" class="progress-label"></span>
+  <svg class="progress-trophy" width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path fill="#f5c518" d="M5 3h14v7a7 7 0 0 1-5.47 6.85V19h2.5a1 1 0 0 1 0 2h-8a1 1 0 0 1 0-2h2.47v-2.15A7 7 0 0 1 5 10V3zm2 2v5a5 5 0 0 0 10 0V5H7zM3 5h2v5a7.01 7.01 0 0 1-2-4.9V5zm16 0h2v.1A7.01 7.01 0 0 1 19 10V5z"/>
+  </svg>
 </div>
 
 <nav class="tab-nav">
