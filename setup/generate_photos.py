@@ -21,7 +21,7 @@ def main():
 
     resources, next_cursor = [], None
     while True:
-        kwargs = dict(type='upload', prefix='golf-league/', max_results=100, resource_type='image')
+        kwargs = dict(type='upload', asset_folder='golf-league', max_results=100, resource_type='image')
         if next_cursor:
             kwargs['next_cursor'] = next_cursor
         result      = cloudinary.api.resources(**kwargs)
