@@ -68,11 +68,11 @@
       gap: 12px;
     }
     .progress-label { font-size: 0.72rem; color: var(--text); font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; }
-    .progress-track { flex: 1; display: flex; gap: 4px; }
-    .progress-seg   { flex: 1; height: 12px; border-radius: 3px; background: #2a2a2a; }
+    .progress-track { flex: 1; display: flex; gap: 4px; overflow: visible; }
+    .progress-seg   { flex: 1; height: 12px; border-radius: 3px; background: #2a2a2a; position: relative; overflow: visible; }
     .progress-seg.complete    { background: var(--green); box-shadow: 0 0 6px rgba(90,170,53,0.45); }
     .progress-seg.in-progress { background: var(--orange); }
-    .progress-trophy { font-size: 1.1rem; line-height: 1; flex-shrink: 0; }
+    .progress-cart  { position: absolute; right: -14px; top: 50%; transform: translateY(-50%); z-index: 10; pointer-events: none; }
     /* ── Tabs ── */
     .tab-nav {
       background: var(--surface);
@@ -332,13 +332,6 @@
   <span class="progress-label">Season</span>
   <div class="progress-track" id="progress-track"></div>
   <span id="progress-text" class="progress-label"></span>
-  <svg width="28" height="28" viewBox="-0.08 0 20.163 20.163" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0">
-    <g transform="translate(-2 -1.837)">
-      <path fill="#e87722" d="M20,13H9l-.72-1.45a1,1,0,0,0-.9-.55H4a1,1,0,0,0-1,1v6a1,1,0,0,0,1,1H5a2,2,0,0,1,4,0h6a2,2,0,0,1,4,0h1a1,1,0,0,0,1-1V14A1,1,0,0,0,20,13Z"/>
-      <path d="M5,19H4a1,1,0,0,1-1-1V12a1,1,0,0,1,1-1H7.38a1,1,0,0,1,.9.55L9,13H20a1,1,0,0,1,1,1v4a1,1,0,0,1-1,1H19" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-      <path d="M6,3v8M17,3l1.82,10M15,19H9m5.82-6-.55-3M7,17a2,2,0,1,0,2,2A2,2,0,0,0,7,17Zm10,0a2,2,0,1,0,2,2A2,2,0,0,0,17,17ZM4,3H19" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-    </g>
-  </svg>
 </div>
 
 <nav class="tab-nav">
@@ -405,11 +398,23 @@
   }
 
   /* ── Season Progress Bar ── */
+  const CART_SVG = `<svg class="progress-cart" width="28" height="28" viewBox="-0.08 0 20.163 20.163" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g transform="translate(-2 -1.837)">
+      <path fill="#e87722" d="M20,13H9l-.72-1.45a1,1,0,0,0-.9-.55H4a1,1,0,0,0-1,1v6a1,1,0,0,0,1,1H5a2,2,0,0,1,4,0h6a2,2,0,0,1,4,0h1a1,1,0,0,0,1-1V14A1,1,0,0,0,20,13Z"/>
+      <path d="M5,19H4a1,1,0,0,1-1-1V12a1,1,0,0,1,1-1H7.38a1,1,0,0,1,.9.55L9,13H20a1,1,0,0,1,1,1v4a1,1,0,0,1-1,1H19" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path d="M6,3v8M17,3l1.82,10M15,19H9m5.82-6-.55-3M7,17a2,2,0,1,0,2,2A2,2,0,0,0,7,17Zm10,0a2,2,0,1,0,2,2A2,2,0,0,0,17,17ZM4,3H19" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+  </svg>`;
+
   function renderSeasonProgress() {
     const complete = leagueData.rounds.filter(r => r.status === 'complete').length;
-    const segs = leagueData.rounds.map(r =>
-      `<div class="progress-seg ${r.status === 'complete' ? 'complete' : r.status === 'in_progress' ? 'in-progress' : ''}"></div>`
-    ).join('');
+    const lastActiveIdx = leagueData.rounds.reduce((last, r, i) =>
+      (r.status === 'complete' || r.status === 'in_progress') ? i : last, -1);
+    const segs = leagueData.rounds.map((r, i) => {
+      const cls = r.status === 'complete' ? 'complete' : r.status === 'in_progress' ? 'in-progress' : '';
+      const cart = i === lastActiveIdx ? CART_SVG : '';
+      return `<div class="progress-seg ${cls}">${cart}</div>`;
+    }).join('');
     document.getElementById('progress-track').innerHTML = segs;
     document.getElementById('progress-text').textContent = complete + '/' + leagueData.rounds.length;
     document.getElementById('season-progress').style.display = 'flex';
