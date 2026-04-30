@@ -896,13 +896,14 @@
   const CLOUD_NAME    = 'drt2wzgmx';
   const UPLOAD_PRESET = 'golf-league-uploads';
   const PHOTO_TAG     = 'imi-golf-2026';
+  let sessionPhotos   = [];
 
   async function fetchPhotos() {
     try {
       const res = await fetch(`https://res.cloudinary.com/${CLOUD_NAME}/image/list/${PHOTO_TAG}.json`);
       if (!res.ok) return [];
       const data = await res.json();
-      return data.resources || [];
+      return (data.resources || []).map(r => ({ url: r.secure_url, public_id: r.public_id, created_at: r.created_at, width: r.width, height: r.height }));
     } catch (e) { return []; }
   }
 
@@ -921,16 +922,19 @@
   async function refreshPhotoGrid() {
     const grid = document.getElementById('photo-grid');
     if (!grid) return;
-    grid.innerHTML = '<p style="color:#555;text-align:center;padding:40px 0;width:100%">Loading photos...</p>';
-    const photos = await fetchPhotos();
-    if (!photos.length) {
+    if (!sessionPhotos.length) {
+      grid.innerHTML = '<p style="color:#555;text-align:center;padding:40px 0;width:100%">Loading photos...</p>';
+    }
+    const stored    = await fetchPhotos();
+    const storedIds = new Set(stored.map(p => p.public_id));
+    const all       = [...sessionPhotos.filter(p => !storedIds.has(p.public_id)), ...stored];
+    if (!all.length) {
       grid.innerHTML = '<p style="color:#555;text-align:center;padding:40px 0;width:100%">No photos yet — be the first to upload!</p>';
       return;
     }
-    photos.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-    grid.innerHTML = photos.map(p =>
-      `<div class="photo-item" onclick="openLightbox('${p.secure_url}')">
-        <img src="${thumbUrl(p.secure_url)}" alt="League photo" loading="lazy">
+    grid.innerHTML = all.map(p =>
+      `<div class="photo-item" onclick="openLightbox('${p.url}')">
+        <img src="${thumbUrl(p.url)}" alt="League photo" loading="lazy">
       </div>`
     ).join('');
   }
@@ -941,6 +945,7 @@
     const btn    = document.getElementById('upload-btn');
     const status = document.getElementById('upload-status');
     btn.disabled = true;
+    const newPhotos = [];
     for (let i = 0; i < files.length; i++) {
       status.textContent = `Uploading ${i + 1} of ${files.length}...`;
       const form = new FormData();
@@ -948,13 +953,20 @@
       form.append('upload_preset', UPLOAD_PRESET);
       form.append('tags', PHOTO_TAG);
       try {
-        await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: form });
+        const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: form });
+        const data = await res.json();
+        if (data.secure_url) newPhotos.push({ url: data.secure_url, public_id: data.public_id, created_at: data.created_at, width: data.width, height: data.height });
       } catch (e) { console.error('Upload error:', e); }
     }
     btn.disabled = false;
     input.value  = '';
-    status.textContent = `${files.length} photo${files.length > 1 ? 's' : ''} uploaded!`;
-    setTimeout(() => { if (status) status.textContent = ''; }, 3000);
+    if (newPhotos.length) {
+      sessionPhotos.unshift(...newPhotos);
+      status.textContent = `${newPhotos.length} photo${newPhotos.length > 1 ? 's' : ''} uploaded!`;
+    } else {
+      status.textContent = 'Upload failed — please try again.';
+    }
+    setTimeout(() => { if (status) status.textContent = ''; }, 4000);
     await refreshPhotoGrid();
   }
 
