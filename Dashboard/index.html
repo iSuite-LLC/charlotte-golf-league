@@ -293,8 +293,15 @@
     .stats-view-toggle { display: flex; gap: 4px; margin-left: auto; }
     .stats-view-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); border-radius: 4px; padding: 5px 11px; font-size: 0.75rem; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em; transition: background 0.15s, color 0.15s; }
     .stats-view-btn.active { background: var(--orange); color: #000; border-color: var(--orange); }
-    .dist-chart { display: flex; gap: 3px; align-items: flex-end; height: 110px; }
-    .dist-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; }
+    .dist-chart-wrap { overflow-x: auto; }
+    .dist-chart { display: flex; gap: 3px; align-items: flex-end; height: 110px; min-width: 260px; }
+    .dist-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; cursor: pointer; }
+    .dist-tooltip { position: fixed; background: #1a1a1a; border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-size: 0.78rem; z-index: 600; min-width: 170px; box-shadow: 0 4px 16px rgba(0,0,0,0.6); pointer-events: none; }
+    .dist-tooltip-title { font-weight: 700; margin-bottom: 7px; font-size: 0.82rem; }
+    .dist-tooltip-row { display: flex; align-items: center; gap: 8px; padding: 2px 0; }
+    .dist-tooltip-swatch { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+    .dist-tooltip-label { color: #888; flex: 1; }
+    .dist-tooltip-count { color: #fff; font-weight: 700; }
     .dist-stack { width: 100%; flex: 1; display: flex; flex-direction: column; border-radius: 3px 3px 0 0; overflow: hidden; min-height: 0; }
     .dist-seg { width: 100%; min-height: 1px; }
     .dist-hlabel { font-size: 0.6rem; color: var(--muted); font-weight: 600; line-height: 1; }
@@ -868,6 +875,45 @@
     return result;
   }
 
+  const DIST_CATS = [
+    { key: 'eagle',  label: 'Eagle or Better', color: '#22c55e' },
+    { key: 'birdie', label: 'Birdie',           color: '#5aaa35' },
+    { key: 'par',    label: 'Par',              color: '#555566' },
+    { key: 'bogey',  label: 'Bogey',            color: '#e87722' },
+    { key: 'double', label: 'Double',           color: '#cc2027' },
+    { key: 'triple', label: 'Triple+',          color: '#7a0f0f' },
+  ];
+
+  function showDistTooltip(event, el) {
+    event.stopPropagation();
+    document.getElementById('dist-tooltip')?.remove();
+    const h       = JSON.parse(el.getAttribute('data-hole'));
+    const holeNum = el.dataset.holeNum;
+    const par     = el.dataset.par;
+    const rows = DIST_CATS.map(c => {
+      const cnt = h[c.key] || 0;
+      return `<div class="dist-tooltip-row">
+        <div class="dist-tooltip-swatch" style="background:${c.color}"></div>
+        <span class="dist-tooltip-label">${c.label}</span>
+        <span class="dist-tooltip-count">${cnt}</span>
+      </div>`;
+    }).join('');
+    const tip = document.createElement('div');
+    tip.id        = 'dist-tooltip';
+    tip.className = 'dist-tooltip';
+    tip.innerHTML = `<div class="dist-tooltip-title">Hole ${holeNum} &mdash; Par ${par}</div>${rows}`;
+    document.body.appendChild(tip);
+    const tw = tip.offsetWidth, th = tip.offsetHeight;
+    const cx = event.clientX, cy = event.clientY;
+    let left = cx - tw / 2;
+    let top  = cy - th - 12;
+    left = Math.max(8, Math.min(left, window.innerWidth  - tw - 8));
+    top  = top < 8 ? cy + 20 : top;
+    tip.style.left = left + 'px';
+    tip.style.top  = top  + 'px';
+    setTimeout(() => document.addEventListener('click', () => document.getElementById('dist-tooltip')?.remove(), { once: true }), 0);
+  }
+
   function buildScoringDistribution(playerFilter) {
     const courses = {};
     for (const round of leagueData.rounds) {
@@ -922,18 +968,10 @@
         if (!byCourse[course]) byCourse[course] = [];
         byCourse[course].push({ nine, data });
       }
-      const CATS = [
-        { key: 'eagle',  label: 'Eagle or Better', color: '#22c55e' },
-        { key: 'birdie', label: 'Birdie',           color: '#5aaa35' },
-        { key: 'par',    label: 'Par',              color: '#555566' },
-        { key: 'bogey',  label: 'Bogey',            color: '#e87722' },
-        { key: 'double', label: 'Double',           color: '#cc2027' },
-        { key: 'triple', label: 'Triple+',          color: '#7a0f0f' },
-      ];
       function distNineSection(nine, data) {
         const isBack = nine === 'Back 9';
         const n = data ? Object.values(data.holes[0]).reduce((a, b) => a + b, 0) : 0;
-        const legend = CATS.map(c =>
+        const legend = DIST_CATS.map(c =>
           `<div class="dist-legend-item"><div class="dist-swatch" style="background:${c.color}"></div>${c.label}</div>`
         ).join('');
         let cols;
@@ -944,17 +982,19 @@
         } else {
           cols = data.holes.map((h, i) => {
             const holeNum = isBack ? i + 10 : i + 1;
-            const segs    = CATS.map(c => {
+            const par     = data.par[i];
+            const segs    = DIST_CATS.map(c => {
               const cnt = h[c.key] || 0;
               if (!cnt) return '';
-              return `<div class="dist-seg" style="flex:${cnt};background:${c.color}" title="${c.label}: ${cnt}"></div>`;
+              return `<div class="dist-seg" style="flex:${cnt};background:${c.color}"></div>`;
             }).join('');
-            return `<div class="dist-col"><div class="dist-stack">${segs || `<div class="dist-seg" style="flex:1;background:#1e1e1e"></div>`}</div><div class="dist-hlabel">${holeNum}</div></div>`;
+            const hJson = JSON.stringify(h).replace(/"/g, '&quot;');
+            return `<div class="dist-col" onclick="showDistTooltip(event,this)" data-hole="${hJson}" data-hole-num="${holeNum}" data-par="${par}"><div class="dist-stack">${segs || `<div class="dist-seg" style="flex:1;background:#1e1e1e"></div>`}</div><div class="dist-hlabel">${holeNum}</div></div>`;
           }).join('');
         }
         return `<div class="stats-section">
           <div class="stats-heading">${nine} <span style="font-weight:400;color:#555;font-size:0.65rem">(${n} ${n === 1 ? 'round' : 'rounds'})</span></div>
-          <div class="dist-chart">${cols}</div>
+          <div class="dist-chart-wrap"><div class="dist-chart">${cols}</div></div>
           <div class="dist-legend">${legend}</div>
         </div>`;
       }
