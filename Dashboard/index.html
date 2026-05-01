@@ -587,7 +587,14 @@
   function renderStandings() {
     const ranked   = leagueData.players
       .filter(p => p.rounds.length > 0)
-      .sort((a, b) => b.totalPts - a.totalPts || (a.avgNet || 999) - (b.avgNet || 999));
+      .sort((a, b) => {
+        if (b.totalPts !== a.totalPts) return b.totalPts - a.totalPts;
+        const [aW, aL] = (a.record || '0-0-0').split('-').map(Number);
+        const [bW, bL] = (b.record || '0-0-0').split('-').map(Number);
+        if (bW !== aW) return bW - aW;
+        if (aL !== bL) return aL - bL;
+        return (a.avgNet || 999) - (b.avgNet || 999);
+      });
     const unranked = leagueData.players.filter(p => p.rounds.length === 0);
 
     const hcp = p => (p.handicap != null ? p.handicap : '—');
