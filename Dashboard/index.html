@@ -934,7 +934,7 @@
         }).join('');
       }
       return `<div class="stats-section">
-        <div class="stats-heading">${nine} <span style="font-weight:400;color:#555;font-size:0.65rem">(${n} rounds)</span></div>
+        <div class="stats-heading">${nine} <span style="font-weight:400;color:#555;font-size:0.65rem">(${n} ${n === 1 ? 'round' : 'rounds'})</span></div>
         <div class="hole-grid">${cards}</div>
       </div>`;
     }
