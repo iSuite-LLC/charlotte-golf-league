@@ -290,6 +290,17 @@
     .stats-filter label { font-size: 0.78rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
     .stats-filter select { background: var(--surface); border: 1px solid var(--border); color: #fff; border-radius: 4px; padding: 6px 28px 6px 10px; font-size: 0.82rem; cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
     .stats-filter select:focus { outline: none; border-color: var(--orange); }
+    .stats-view-toggle { display: flex; gap: 4px; margin-left: auto; }
+    .stats-view-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); border-radius: 4px; padding: 5px 11px; font-size: 0.75rem; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em; transition: background 0.15s, color 0.15s; }
+    .stats-view-btn.active { background: var(--orange); color: #000; border-color: var(--orange); }
+    .dist-chart { display: flex; gap: 3px; align-items: flex-end; height: 110px; }
+    .dist-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; }
+    .dist-stack { width: 100%; flex: 1; display: flex; flex-direction: column; border-radius: 3px 3px 0 0; overflow: hidden; min-height: 0; }
+    .dist-seg { width: 100%; min-height: 1px; }
+    .dist-hlabel { font-size: 0.6rem; color: var(--muted); font-weight: 600; line-height: 1; }
+    .dist-legend { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border); }
+    .dist-legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.7rem; color: #888; }
+    .dist-swatch { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
     /* ── Photos ── */
     .upload-bar   { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
     .upload-btn   { background: var(--orange); color: #000; border: none; border-radius: 4px; padding: 8px 18px; font-size: 0.82rem; font-weight: 700; cursor: pointer; letter-spacing: 0.05em; text-transform: uppercase; transition: opacity 0.15s; }
@@ -857,23 +868,115 @@
     return result;
   }
 
-  function renderStats(playerFilter) {
-    const difficulty = buildHoleDifficulty(playerFilter || null);
+  function buildScoringDistribution(playerFilter) {
+    const courses = {};
+    for (const round of leagueData.rounds) {
+      for (const pairing of (round.pairings || [])) {
+        if (!pairing.played) continue;
+        const scorecards = [];
+        if (!playerFilter || pairing.p1 === playerFilter) scorecards.push(pairing.p1Scorecard);
+        if (!playerFilter || pairing.p2 === playerFilter) scorecards.push(pairing.p2Scorecard);
+        for (const sc of scorecards) {
+          if (!sc || !sc.gross || !sc.par) continue;
+          const key = [sc.course, sc.nine].filter(Boolean).join(' · ');
+          if (!courses[key]) courses[key] = { par: sc.par.slice(), holes: Array.from({ length: 9 }, () => ({ eagle: 0, birdie: 0, par: 0, bogey: 0, double: 0, triple: 0 })) };
+          sc.gross.forEach((g, i) => {
+            if (g == null || sc.par[i] == null) return;
+            const d = g - sc.par[i];
+            const h = courses[key].holes[i];
+            if (d <= -2) h.eagle++; else if (d === -1) h.birdie++; else if (d === 0) h.par++; else if (d === 1) h.bogey++; else if (d === 2) h.double++; else h.triple++;
+          });
+        }
+      }
+    }
+    return courses;
+  }
+
+  function renderStats(playerFilter, view) {
+    view = view || 'avg';
     const playerNames = (leagueData.players || []).map(p => p.name).sort();
-    const dropdownHtml = `<div class="stats-filter">
+    const filterBar = `<div class="stats-filter">
       <label for="stats-player-select">Player</label>
-      <select id="stats-player-select" onchange="renderStats(this.value || null)">
+      <select id="stats-player-select" onchange="renderStats(this.value||null,'${view}')">
         <option value="">All</option>
         ${playerNames.map(n => `<option value="${n}"${playerFilter === n ? ' selected' : ''}>${n}</option>`).join('')}
       </select>
+      <div class="stats-view-toggle">
+        <button class="stats-view-btn${view !== 'dist' ? ' active' : ''}" onclick="renderStats(document.getElementById('stats-player-select').value||null,'avg')">Avg Score</button>
+        <button class="stats-view-btn${view === 'dist' ? ' active' : ''}" onclick="renderStats(document.getElementById('stats-player-select').value||null,'dist')">Distribution</button>
+      </div>
     </div>`;
-    if (!Object.keys(difficulty).length) {
-      document.getElementById('tab-stats').innerHTML = dropdownHtml +
-        '<p style="color:#555;text-align:center;padding:60px 0">No scorecard data yet.</p>';
+
+    if (view === 'dist') {
+      const distData = buildScoringDistribution(playerFilter || null);
+      if (!Object.keys(distData).length) {
+        document.getElementById('tab-stats').innerHTML = filterBar +
+          '<p style="color:#555;text-align:center;padding:60px 0">No scorecard data yet.</p>';
+        return;
+      }
+      const byCourse = {};
+      for (const [key, data] of Object.entries(distData)) {
+        const sep    = key.lastIndexOf(' · ');
+        const course = sep >= 0 ? key.slice(0, sep) : key;
+        const nine   = sep >= 0 ? key.slice(sep + 3) : '';
+        if (!byCourse[course]) byCourse[course] = [];
+        byCourse[course].push({ nine, data });
+      }
+      const CATS = [
+        { key: 'eagle',  label: 'Eagle or Better', color: '#22c55e' },
+        { key: 'birdie', label: 'Birdie',           color: '#5aaa35' },
+        { key: 'par',    label: 'Par',              color: '#555566' },
+        { key: 'bogey',  label: 'Bogey',            color: '#e87722' },
+        { key: 'double', label: 'Double',           color: '#cc2027' },
+        { key: 'triple', label: 'Triple+',          color: '#7a0f0f' },
+      ];
+      function distNineSection(nine, data) {
+        const isBack = nine === 'Back 9';
+        const n = data ? Object.values(data.holes[0]).reduce((a, b) => a + b, 0) : 0;
+        const legend = CATS.map(c =>
+          `<div class="dist-legend-item"><div class="dist-swatch" style="background:${c.color}"></div>${c.label}</div>`
+        ).join('');
+        let cols;
+        if (!data) {
+          cols = Array.from({ length: 9 }, (_, i) =>
+            `<div class="dist-col"><div class="dist-stack"><div class="dist-seg" style="flex:1;background:#1e1e1e"></div></div><div class="dist-hlabel">${isBack ? i + 10 : i + 1}</div></div>`
+          ).join('');
+        } else {
+          cols = data.holes.map((h, i) => {
+            const holeNum = isBack ? i + 10 : i + 1;
+            const segs    = CATS.map(c => {
+              const cnt = h[c.key] || 0;
+              if (!cnt) return '';
+              return `<div class="dist-seg" style="flex:${cnt};background:${c.color}" title="${c.label}: ${cnt}"></div>`;
+            }).join('');
+            return `<div class="dist-col"><div class="dist-stack">${segs || `<div class="dist-seg" style="flex:1;background:#1e1e1e"></div>`}</div><div class="dist-hlabel">${holeNum}</div></div>`;
+          }).join('');
+        }
+        return `<div class="stats-section">
+          <div class="stats-heading">${nine} <span style="font-weight:400;color:#555;font-size:0.65rem">(${n} ${n === 1 ? 'round' : 'rounds'})</span></div>
+          <div class="dist-chart">${cols}</div>
+          <div class="dist-legend">${legend}</div>
+        </div>`;
+      }
+      let html = filterBar;
+      for (const [course, sections] of Object.entries(byCourse).sort((a, b) => a[0].localeCompare(b[0]))) {
+        for (const nine of ['Front 9', 'Back 9']) {
+          if (!sections.find(s => s.nine === nine)) sections.push({ nine, data: null });
+        }
+        sections.sort((a, b) => a.nine === 'Front 9' ? -1 : 1);
+        html += `<div class="course-box"><div class="course-box-title">${course}</div>${sections.map(s => distNineSection(s.nine, s.data)).join('')}</div>`;
+      }
+      document.getElementById('tab-stats').innerHTML = html;
       return;
     }
 
-    // Group by course name, preserve front/back as sub-sections
+    // ── Avg Score view ──
+    const difficulty = buildHoleDifficulty(playerFilter || null);
+    if (!Object.keys(difficulty).length) {
+      document.getElementById('tab-stats').innerHTML = filterBar +
+        '<p style="color:#555;text-align:center;padding:60px 0">No scorecard data yet.</p>';
+      return;
+    }
     const byCourse = {};
     for (const [key, data] of Object.entries(difficulty)) {
       const sep    = key.lastIndexOf(' · ');
@@ -882,7 +985,6 @@
       if (!byCourse[course]) byCourse[course] = [];
       byCourse[course].push({ nine, data });
     }
-
     function nineSection(nine, data) {
       const isBack = nine === 'Back 9';
       let cards, n;
@@ -920,10 +1022,8 @@
         <div class="hole-grid">${cards}</div>
       </div>`;
     }
-
-    let html = dropdownHtml;
+    let html = filterBar;
     for (const [course, sections] of Object.entries(byCourse).sort((a, b) => a[0].localeCompare(b[0]))) {
-      // Ensure both nines exist; Front 9 always on top
       for (const nine of ['Front 9', 'Back 9']) {
         if (!sections.find(s => s.nine === nine)) sections.push({ nine, data: null });
       }
