@@ -286,6 +286,10 @@
     .diff-even   { color: var(--muted); }
     .diff-bogey  { color: var(--orange); }
     .diff-hard   { color: var(--red); }
+    .stats-filter { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .stats-filter label { font-size: 0.78rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+    .stats-filter select { background: var(--surface); border: 1px solid var(--border); color: #fff; border-radius: 4px; padding: 6px 10px; font-size: 0.82rem; cursor: pointer; appearance: none; -webkit-appearance: none; }
+    .stats-filter select:focus { outline: none; border-color: var(--orange); }
     /* ── Photos ── */
     .upload-bar   { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
     .upload-btn   { background: var(--orange); color: #000; border: none; border-radius: 4px; padding: 8px 18px; font-size: 0.82rem; font-weight: 700; cursor: pointer; letter-spacing: 0.05em; text-transform: uppercase; transition: opacity 0.15s; }
@@ -837,12 +841,15 @@
   }
 
   /* ── Stats ── */
-  function buildHoleDifficulty() {
+  function buildHoleDifficulty(playerFilter) {
     const courses = {};
     for (const round of leagueData.rounds) {
       for (const pairing of (round.pairings || [])) {
         if (!pairing.played) continue;
-        for (const sc of [pairing.p1Scorecard, pairing.p2Scorecard]) {
+        const scorecards = [];
+        if (!playerFilter || pairing.p1 === playerFilter) scorecards.push(pairing.p1Scorecard);
+        if (!playerFilter || pairing.p2 === playerFilter) scorecards.push(pairing.p2Scorecard);
+        for (const sc of scorecards) {
           if (!sc || !sc.gross || !sc.par) continue;
           const key = [sc.course, sc.nine].filter(Boolean).join(' · ');
           if (!courses[key]) courses[key] = { par: sc.par.slice(), totals: new Array(9).fill(0), counts: new Array(9).fill(0) };
@@ -861,10 +868,18 @@
     return result;
   }
 
-  function renderStats() {
-    const difficulty = buildHoleDifficulty();
+  function renderStats(playerFilter) {
+    const difficulty = buildHoleDifficulty(playerFilter || null);
+    const playerNames = (leagueData.players || []).map(p => p.name).sort();
+    const dropdownHtml = `<div class="stats-filter">
+      <label for="stats-player-select">Player</label>
+      <select id="stats-player-select" onchange="renderStats(this.value || null)">
+        <option value="">All</option>
+        ${playerNames.map(n => `<option value="${n}"${playerFilter === n ? ' selected' : ''}>${n}</option>`).join('')}
+      </select>
+    </div>`;
     if (!Object.keys(difficulty).length) {
-      document.getElementById('tab-stats').innerHTML =
+      document.getElementById('tab-stats').innerHTML = dropdownHtml +
         '<p style="color:#555;text-align:center;padding:60px 0">No scorecard data yet.</p>';
       return;
     }
@@ -917,7 +932,7 @@
       </div>`;
     }
 
-    let html = '';
+    let html = dropdownHtml;
     for (const [course, sections] of Object.entries(byCourse).sort((a, b) => a[0].localeCompare(b[0]))) {
       // Ensure both nines exist; Front 9 always on top
       for (const nine of ['Front 9', 'Back 9']) {
