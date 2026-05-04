@@ -16,7 +16,7 @@ Round detection from tab name (case-insensitive):
 """
 
 import sys, os, re, io, json, openpyxl
-from datetime import date as _date
+from datetime import date as _date, datetime as _datetime
 if __name__ == '__main__':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
@@ -351,7 +351,7 @@ def write_dashboard_json(rnd, name_to_num):
                                 rd['opponent'] = m['p1']
 
         n      = len(matches)
-        status = 'upcoming' if n == 0 else ('complete' if n >= expected else 'in_progress')
+        status = round_status(sched['dates'], n, expected)
 
         # Build full pairings list (played + unplayed) from the known schedule
         pairings = []
@@ -403,6 +403,25 @@ def write_dashboard_json(rnd, name_to_num):
         json.dump(data, f, indent=2, ensure_ascii=False)
 
     print(f"Dashboard JSON: {DASHBOARD_JSON}")
+
+
+def parse_round_dates(dates_str):
+    """Return (start_date, end_date) from a string like 'Apr 20 – May 1'."""
+    parts = re.split(r'\s*[–—-]\s*', dates_str.strip())
+    start = _datetime.strptime(parts[0].strip() + ' 2026', '%b %d %Y').date()
+    end   = _datetime.strptime(parts[1].strip() + ' 2026', '%b %d %Y').date()
+    return start, end
+
+
+def round_status(dates_str, match_count, expected):
+    """Determine round status using calendar dates, not just match count."""
+    today         = _date.today()
+    start, end    = parse_round_dates(dates_str)
+    if today > end:
+        return 'complete'
+    if today >= start:
+        return 'in_progress'
+    return 'upcoming'
 
 
 def outcome(pts):
