@@ -21,12 +21,12 @@ BYE: Nick Coglianese
 | 1 | Bruce Atkins | 8 | 1-0-0 | 33.0 |
 | 2 | Carson Bass | 7 | 1-0-0 | 38.0 |
 | 2 | Curtis Lynn | 7 | 1-0-0 | 37.0 |
+| 4 | Charlotte Hayes | 6 | 1-0-0 | 35.0 |
 | 4 | Ethan High | 6 | 1-0-0 | 39.0 |
-| 5 | Charlotte Hayes | 5 | 1-0-0 | 35.0 |
 | 6 | Jerome Martin | 4 | 0-0-1 | 54.0 |
 | 6 | Kaylan Adams | 4 | 0-0-1 | 54.0 |
-| 8 | Ben Linck | 3 | 0-1-0 | 39.0 |
-| 9 | Brian Wojcio | 2 | 0-1-0 | 43.0 |
+| 8 | Brian Wojcio | 2 | 0-1-0 | 43.0 |
+| 8 | Ben Linck | 2 | 0-1-0 | 39.0 |
 | 10 | Alex Palmer | 1 | 0-1-0 | 48.0 |
 | 10 | Rob Bass | 1 | 0-1-0 | 43.0 |
 | 12 | Michael McHugh | 0 | 0-1-0 | 46.0 |
