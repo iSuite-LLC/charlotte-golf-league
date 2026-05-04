@@ -290,10 +290,13 @@
     .stats-filter label { font-size: 0.78rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
     .stats-filter select { background: var(--surface); border: 1px solid var(--border); color: #fff; border-radius: 4px; padding: 6px 28px 6px 10px; font-size: 0.82rem; cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
     .stats-filter select:focus { outline: none; border-color: var(--orange); }
-    .stats-view-toggle { display: flex; gap: 4px; margin-left: auto; }
-    .stats-view-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); border-radius: 4px; padding: 5px 11px; font-size: 0.75rem; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.05em; transition: background 0.15s, color 0.15s; }
-    .stats-view-btn.active { background: var(--orange); color: #000; border-color: var(--orange); }
-    .dist-chart-wrap { overflow-x: auto; }
+    .dist-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 10px 0; border-top: 1px solid var(--border); margin-top: 4px; user-select: none; -webkit-user-select: none; }
+    .dist-toggle-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); flex: 1; }
+    .dist-toggle-chevron { font-size: 0.7rem; color: var(--muted); transition: transform 0.2s; display: inline-block; }
+    .dist-toggle.open .dist-toggle-chevron { transform: rotate(90deg); }
+    .dist-body { display: none; overflow: hidden; }
+    .dist-body.open { display: block; }
+    .dist-chart-wrap { overflow-x: auto; width: 100%; }
     .dist-chart { display: flex; gap: 3px; align-items: flex-end; height: 110px; min-width: 260px; }
     .dist-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; height: 100%; cursor: pointer; }
     .dist-tooltip { position: fixed; background: #1a1a1a; border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-size: 0.78rem; z-index: 600; min-width: 170px; box-shadow: 0 4px 16px rgba(0,0,0,0.6); pointer-events: none; }
@@ -938,93 +941,37 @@
     return courses;
   }
 
-  function renderStats(playerFilter, view) {
-    view = view || 'avg';
+  function renderStats(playerFilter) {
     const playerNames = (leagueData.players || []).map(p => p.name).sort();
     const filterBar = `<div class="stats-filter">
       <label for="stats-player-select">Player</label>
-      <select id="stats-player-select" onchange="renderStats(this.value||null,'${view}')">
+      <select id="stats-player-select" onchange="renderStats(this.value||null)">
         <option value="">All</option>
         ${playerNames.map(n => `<option value="${n}"${playerFilter === n ? ' selected' : ''}>${n}</option>`).join('')}
       </select>
-      <div class="stats-view-toggle">
-        <button class="stats-view-btn${view !== 'dist' ? ' active' : ''}" onclick="renderStats(document.getElementById('stats-player-select').value||null,'avg')">Avg Score</button>
-        <button class="stats-view-btn${view === 'dist' ? ' active' : ''}" onclick="renderStats(document.getElementById('stats-player-select').value||null,'dist')">Distribution</button>
-      </div>
     </div>`;
 
-    if (view === 'dist') {
-      const distData = buildScoringDistribution(playerFilter || null);
-      if (!Object.keys(distData).length) {
-        document.getElementById('tab-stats').innerHTML = filterBar +
-          '<p style="color:#555;text-align:center;padding:60px 0">No scorecard data yet.</p>';
-        return;
-      }
-      const byCourse = {};
-      for (const [key, data] of Object.entries(distData)) {
-        const sep    = key.lastIndexOf(' · ');
-        const course = sep >= 0 ? key.slice(0, sep) : key;
-        const nine   = sep >= 0 ? key.slice(sep + 3) : '';
-        if (!byCourse[course]) byCourse[course] = [];
-        byCourse[course].push({ nine, data });
-      }
-      function distNineSection(nine, data) {
-        const isBack = nine === 'Back 9';
-        const n = data ? Object.values(data.holes[0]).reduce((a, b) => a + b, 0) : 0;
-        const legend = DIST_CATS.map(c =>
-          `<div class="dist-legend-item"><div class="dist-swatch" style="background:${c.color}"></div>${c.label}</div>`
-        ).join('');
-        let cols;
-        if (!data) {
-          cols = Array.from({ length: 9 }, (_, i) =>
-            `<div class="dist-col"><div class="dist-stack"><div class="dist-seg" style="flex:1;background:#1e1e1e"></div></div><div class="dist-hlabel">${isBack ? i + 10 : i + 1}</div></div>`
-          ).join('');
-        } else {
-          cols = data.holes.map((h, i) => {
-            const holeNum = isBack ? i + 10 : i + 1;
-            const par     = data.par[i];
-            const segs    = DIST_CATS.map(c => {
-              const cnt = h[c.key] || 0;
-              if (!cnt) return '';
-              return `<div class="dist-seg" style="flex:${cnt};background:${c.color}"></div>`;
-            }).join('');
-            const hJson = JSON.stringify(h).replace(/"/g, '&quot;');
-            return `<div class="dist-col" onclick="showDistTooltip(event,this)" data-hole="${hJson}" data-hole-num="${holeNum}" data-par="${par}"><div class="dist-stack">${segs || `<div class="dist-seg" style="flex:1;background:#1e1e1e"></div>`}</div><div class="dist-hlabel">${holeNum}</div></div>`;
-          }).join('');
-        }
-        return `<div class="stats-section">
-          <div class="stats-heading">${nine} <span style="font-weight:400;color:#555;font-size:0.65rem">(${n} ${n === 1 ? 'round' : 'rounds'})</span></div>
-          <div class="dist-chart-wrap"><div class="dist-chart">${cols}</div></div>
-          <div class="dist-legend">${legend}</div>
-        </div>`;
-      }
-      let html = filterBar;
-      for (const [course, sections] of Object.entries(byCourse).sort((a, b) => a[0].localeCompare(b[0]))) {
-        for (const nine of ['Front 9', 'Back 9']) {
-          if (!sections.find(s => s.nine === nine)) sections.push({ nine, data: null });
-        }
-        sections.sort((a, b) => a.nine === 'Front 9' ? -1 : 1);
-        html += `<div class="course-box"><div class="course-box-title">${course}</div>${sections.map(s => distNineSection(s.nine, s.data)).join('')}</div>`;
-      }
-      document.getElementById('tab-stats').innerHTML = html;
-      return;
-    }
-
-    // ── Avg Score view ──
     const difficulty = buildHoleDifficulty(playerFilter || null);
-    if (!Object.keys(difficulty).length) {
+    const distData   = buildScoringDistribution(playerFilter || null);
+
+    if (!Object.keys(difficulty).length && !Object.keys(distData).length) {
       document.getElementById('tab-stats').innerHTML = filterBar +
         '<p style="color:#555;text-align:center;padding:60px 0">No scorecard data yet.</p>';
       return;
     }
-    const byCourse = {};
-    for (const [key, data] of Object.entries(difficulty)) {
-      const sep    = key.lastIndexOf(' · ');
-      const course = sep >= 0 ? key.slice(0, sep) : key;
-      const nine   = sep >= 0 ? key.slice(sep + 3) : '';
-      if (!byCourse[course]) byCourse[course] = [];
-      byCourse[course].push({ nine, data });
+
+    function parseByCourse(raw) {
+      const bc = {};
+      for (const [key, data] of Object.entries(raw)) {
+        const sep    = key.lastIndexOf(' · ');
+        const course = sep >= 0 ? key.slice(0, sep) : key;
+        const nine   = sep >= 0 ? key.slice(sep + 3) : '';
+        if (!bc[course]) bc[course] = [];
+        bc[course].push({ nine, data });
+      }
+      return bc;
     }
+
     function nineSection(nine, data) {
       const isBack = nine === 'Back 9';
       let cards, n;
@@ -1062,18 +1009,74 @@
         <div class="hole-grid">${cards}</div>
       </div>`;
     }
-    let html = filterBar;
-    for (const [course, sections] of Object.entries(byCourse).sort((a, b) => a[0].localeCompare(b[0]))) {
-      for (const nine of ['Front 9', 'Back 9']) {
-        if (!sections.find(s => s.nine === nine)) sections.push({ nine, data: null });
+
+    function distNineSection(nine, data) {
+      const isBack = nine === 'Back 9';
+      const n = data ? Object.values(data.holes[0]).reduce((a, b) => a + b, 0) : 0;
+      const legend = DIST_CATS.map(c =>
+        `<div class="dist-legend-item"><div class="dist-swatch" style="background:${c.color}"></div>${c.label}</div>`
+      ).join('');
+      let cols;
+      if (!data) {
+        cols = Array.from({ length: 9 }, (_, i) =>
+          `<div class="dist-col"><div class="dist-stack"><div class="dist-seg" style="flex:1;background:#1e1e1e"></div></div><div class="dist-hlabel">${isBack ? i + 10 : i + 1}</div></div>`
+        ).join('');
+      } else {
+        cols = data.holes.map((h, i) => {
+          const holeNum = isBack ? i + 10 : i + 1;
+          const par     = data.par[i];
+          const segs    = DIST_CATS.map(c => {
+            const cnt = h[c.key] || 0;
+            if (!cnt) return '';
+            return `<div class="dist-seg" style="flex:${cnt};background:${c.color}"></div>`;
+          }).join('');
+          const hJson = JSON.stringify(h).replace(/"/g, '&quot;');
+          return `<div class="dist-col" onclick="showDistTooltip(event,this)" data-hole="${hJson}" data-hole-num="${holeNum}" data-par="${par}"><div class="dist-stack">${segs || `<div class="dist-seg" style="flex:1;background:#1e1e1e"></div>`}</div><div class="dist-hlabel">${holeNum}</div></div>`;
+        }).join('');
       }
-      sections.sort((a, b) => a.nine === 'Front 9' ? -1 : 1);
+      return `<div class="stats-section">
+        <div class="stats-heading">${nine} <span style="font-weight:400;color:#555;font-size:0.65rem">(${n} ${n === 1 ? 'round' : 'rounds'})</span></div>
+        <div class="dist-chart-wrap"><div class="dist-chart">${cols}</div></div>
+        <div class="dist-legend">${legend}</div>
+      </div>`;
+    }
+
+    const avgByCourse  = parseByCourse(difficulty);
+    const distByCourse = parseByCourse(distData);
+    const allCourses   = [...new Set([...Object.keys(avgByCourse), ...Object.keys(distByCourse)])].sort();
+
+    let html = filterBar;
+    let distIdx = 0;
+    for (const course of allCourses) {
+      const avgSecs  = avgByCourse[course]  ? [...avgByCourse[course]]  : [];
+      const distSecs = distByCourse[course] ? [...distByCourse[course]] : [];
+      for (const nine of ['Front 9', 'Back 9']) {
+        if (!avgSecs.find(s => s.nine === nine))  avgSecs.push({ nine, data: null });
+        if (!distSecs.find(s => s.nine === nine)) distSecs.push({ nine, data: null });
+      }
+      avgSecs.sort((a, b) => a.nine === 'Front 9' ? -1 : 1);
+      distSecs.sort((a, b) => a.nine === 'Front 9' ? -1 : 1);
+      const distId = 'dist-body-' + distIdx++;
       html += `<div class="course-box">
         <div class="course-box-title">${course}</div>
-        ${sections.map(s => nineSection(s.nine, s.data)).join('')}
+        ${avgSecs.map(s => nineSection(s.nine, s.data)).join('')}
+        <div class="dist-toggle" onclick="toggleDistSection('${distId}')">
+          <span class="dist-toggle-label">Scoring Distribution</span>
+          <span class="dist-toggle-chevron">&#9658;</span>
+        </div>
+        <div class="dist-body" id="${distId}">
+          ${distSecs.map(s => distNineSection(s.nine, s.data)).join('')}
+        </div>
       </div>`;
     }
     document.getElementById('tab-stats').innerHTML = html;
+  }
+
+  function toggleDistSection(id) {
+    const body   = document.getElementById(id);
+    const toggle = body.previousElementSibling;
+    body.classList.toggle('open');
+    toggle.classList.toggle('open');
   }
 
   /* ── Photos ── */
