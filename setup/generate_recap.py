@@ -189,180 +189,202 @@ def load_data(round_num):
     return data
 
 
+def _h(text):
+    """Minimal HTML-escape for cell content."""
+    return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def _sec(icon, label):
+    """Red section header bar."""
+    return (
+        f'<div style="background:#cc2027;color:#fff;padding:9px 14px;'
+        f'font-family:Arial,sans-serif;font-size:14px;font-weight:bold;'
+        f'margin-top:22px;">{icon}&nbsp;&nbsp;{_h(label)}</div>'
+    )
+
+
 def generate_email(round_num, today=None):
     if today is None:
         today = datetime.date.today()
 
-    r_info     = ROUNDS[round_num]
-    bye_set    = set(r_info["bye_players"])
-    has_next   = (round_num + 1) in ROUNDS
-    rng        = random.Random(round_num * 13337)   # deterministic per round
+    r_info   = ROUNDS[round_num]
+    bye_set  = set(r_info["bye_players"])
+    has_next = (round_num + 1) in ROUNDS
+    rng      = random.Random(round_num * 13337)
 
     data = load_data(round_num)
 
-    # Classify players
-    played        = [p for p in data if p["round_mp"] is not None and p["name"] not in bye_set]
-    bye_players   = [p for p in data if p["name"] in bye_set]
-    missing       = [p for p in data if p["round_mp"] is None and p["name"] not in bye_set]
+    played  = [p for p in data if p["round_mp"] is not None and p["name"] not in bye_set]
+    missing = [p for p in data if p["round_mp"] is None and p["name"] not in bye_set]
 
-    # Best / worst this round
     best  = max(played, key=lambda x: x["round_mp"]) if played else None
     worst = min(played, key=lambda x: x["round_mp"]) if played else None
     if best and worst and best["name"] == worst["name"]:
-        worst = None   # only one player with scores
+        worst = None
 
-    # Standings: sort by total desc, then name asc
     standings = sorted(data, key=lambda x: (-x["total"], x["name"]))
 
-    # ── Build email text ───────────────────────────────────────────────────────
-    W   = 58
-    SEP = "━" * W
-    sep = "─" * W
-    out = []
-
-    # Subject line (top of file for easy copy)
-    out.append(
-        f"SUBJECT: 🏌️ IMI Golf League — Round {round_num} Recap | "
+    subject = (
+        f"&#127949;&#65039; IMI Golf League — Round {round_num} Recap | "
         f"{fmt_date(r_info['start'])} – {fmt_date(r_info['end'])}"
     )
-    out.append("")
 
-    # Header banner
-    out.append(SEP)
-    title = f"  🏌️  IMI GOLF LEAGUE — ROUND {round_num} RECAP"
-    sub   = f"  {fmt_date(r_info['start'])} – {fmt_date(r_info['end'])}  |  Round {round_num} of 9"
-    out.append(title)
-    out.append(sub)
-    out.append(SEP)
-    out.append("")
+    BASE = "font-family:Arial,sans-serif;font-size:14px;color:#222;"
+    TD   = "padding:7px 10px;border-bottom:1px solid #e0e0e0;"
+    TH   = "padding:7px 10px;border-bottom:2px solid #cc2027;text-align:{a};font-weight:bold;background:#f5f5f5;"
 
-    # Opening
+    H = []  # html lines
+
+    H.append("<!DOCTYPE html>")
+    H.append('<html><head><meta charset="utf-8"></head>')
+    H.append(f'<body style="{BASE}margin:0;padding:0;">')
+    H.append(f'<div style="max-width:600px;margin:0 auto;padding:0 8px;">')
+
+    # ── Instructions block (not part of email body) ───────────────────────────
+    H.append(
+        '<div style="background:#fff8dc;border:1px solid #e6c700;padding:10px 14px;'
+        'margin-bottom:16px;font-size:12px;color:#555;">'
+        '<strong>HOW TO SEND:</strong> Open this file in your browser &rarr; '
+        'select everything <em>below this box</em> &rarr; Ctrl+C &rarr; paste into Outlook.<br>'
+        f'<strong>SUBJECT:</strong> {subject}'
+        '</div>'
+    )
+
+    # ── Header banner ─────────────────────────────────────────────────────────
+    H.append(
+        '<div style="background:#cc2027;color:#fff;padding:18px 20px;text-align:center;">'
+        f'<div style="font-size:20px;font-weight:bold;">&#127949;&#65039;&nbsp;'
+        f'IMI GOLF LEAGUE &mdash; ROUND {round_num} RECAP</div>'
+        f'<div style="font-size:13px;margin-top:5px;opacity:0.9;">'
+        f'{fmt_date(r_info["start"])} &ndash; {fmt_date(r_info["end"])}'
+        f'&nbsp;&nbsp;|&nbsp;&nbsp;Round {round_num} of 9</div>'
+        '</div>'
+    )
+
+    # ── Opening ───────────────────────────────────────────────────────────────
     opening = rng.choice(OPENINGS).format(r=round_num)
-    out.append(opening)
-    out.append("")
+    H.append(f'<p style="margin:16px 0 0;">{_h(opening)}</p>')
 
-    # ── Standings ──────────────────────────────────────────────────────────────
-    out.append(SEP)
-    out.append(f"📊  OVERALL STANDINGS  (After Round {round_num} of 9)")
-    out.append(SEP)
-    out.append("")
-    out.append(f"  {'':>3}  {'Player':<20}  {'Total':>6}  {'Record':<9}  {'Avg NET':>7}")
-    out.append(f"  {sep}")
+    # ── Standings ─────────────────────────────────────────────────────────────
+    H.append(_sec("📊", f"OVERALL STANDINGS  (After Round {round_num} of 9)"))
+    H.append('<table style="width:100%;border-collapse:collapse;margin-top:0;">')
+    H.append(
+        f'<tr>'
+        f'<th style="{TH.format(a="center")}">#</th>'
+        f'<th style="{TH.format(a="left")}">Player</th>'
+        f'<th style="{TH.format(a="center")}">Total Pts</th>'
+        f'<th style="{TH.format(a="center")}">Record</th>'
+        f'<th style="{TH.format(a="center")}">Avg NET</th>'
+        f'</tr>'
+    )
     for i, p in enumerate(standings, 1):
-        pts_str = f"{p['total']:.1f}" if p["total"] != int(p["total"]) else f"{int(p['total'])}"
-        avg_str = f"{p['avg_net']:.1f}" if p["avg_net"] is not None else "  —  "
-        out.append(
-            f"  {i:>3}. {p['name']:<20}  {pts_str:>6}  {p['record']:<9}  {avg_str:>7}"
+        pts_str = f"{p['total']:.1f}" if p["total"] != int(p["total"]) else str(int(p["total"]))
+        avg_str = f"{p['avg_net']:.1f}" if p["avg_net"] is not None else "&mdash;"
+        bg = "background:#fafafa;" if i % 2 == 0 else ""
+        H.append(
+            f'<tr style="{bg}">'
+            f'<td style="{TD}text-align:center;">{i}</td>'
+            f'<td style="{TD}">{_h(p["name"])}</td>'
+            f'<td style="{TD}text-align:center;font-weight:bold;">{pts_str}</td>'
+            f'<td style="{TD}text-align:center;">{_h(p["record"])}</td>'
+            f'<td style="{TD}text-align:center;">{avg_str}</td>'
+            f'</tr>'
         )
-    out.append("")
+    H.append('</table>')
 
-    # ── Round snapshot ─────────────────────────────────────────────────────────
-    out.append(SEP)
-    out.append(f"⛳  ROUND {round_num} SCORES")
-    out.append(SEP)
-    out.append("")
-    out.append(f"  {'Player':<20}  {'Match Pts':>10}  {'Net Score':>10}")
-    out.append(f"  {sep}")
+    # ── Round scores ──────────────────────────────────────────────────────────
+    H.append(_sec("⛳", f"ROUND {round_num} SCORES"))
+    H.append('<table style="width:100%;border-collapse:collapse;margin-top:0;">')
+    H.append(
+        f'<tr>'
+        f'<th style="{TH.format(a="left")}">Player</th>'
+        f'<th style="{TH.format(a="center")}">Match Pts</th>'
+        f'<th style="{TH.format(a="center")}">Net Score</th>'
+        f'</tr>'
+    )
 
-    # Sort by round_mp desc (BYE at bottom, missing at very bottom)
     def sort_key(p):
-        if p["name"] in bye_set:     return (-0.5, p["name"])
-        if p["round_mp"] is None:    return (-0.1, p["name"])
+        if p["name"] in bye_set:  return (-0.5, p["name"])
+        if p["round_mp"] is None: return (-0.1, p["name"])
         return (-p["round_mp"], p["name"])
 
-    for p in sorted(data, key=sort_key):
+    for i, p in enumerate(sorted(data, key=sort_key), 1):
         if p["name"] in bye_set:
-            mp_str  = "     BYE"
-            net_str = "     BYE"
+            mp_str  = '<em style="color:#888;">BYE</em>'
+            net_str = '<em style="color:#888;">BYE</em>'
         elif p["round_mp"] is None:
-            mp_str  = " MISSING"
-            net_str = " MISSING"
+            mp_str  = '<span style="color:#cc2027;font-weight:bold;">MISSING</span>'
+            net_str = '<span style="color:#cc2027;font-weight:bold;">MISSING</span>'
         else:
             mp_str  = f"{p['round_mp']:.1f}"
-            net_str = f"{int(p['round_net'])}" if p["round_net"] is not None else "  —"
-        out.append(f"  {p['name']:<20}  {mp_str:>10}  {net_str:>10}")
-    out.append("")
+            net_str = str(int(p["round_net"])) if p["round_net"] is not None else "&mdash;"
+        bg = "background:#fafafa;" if i % 2 == 0 else ""
+        H.append(
+            f'<tr style="{bg}">'
+            f'<td style="{TD}">{_h(p["name"])}</td>'
+            f'<td style="{TD}text-align:center;font-weight:bold;">{mp_str}</td>'
+            f'<td style="{TD}text-align:center;">{net_str}</td>'
+            f'</tr>'
+        )
+    H.append('</table>')
 
-    # ── MVP ────────────────────────────────────────────────────────────────────
+    # ── MVP ───────────────────────────────────────────────────────────────────
     if best:
-        out.append(SEP)
-        out.append(
-            f"🏆  ROUND {round_num} MVP — {best['name'].upper()}   "
-            f"({best['round_mp']:.1f} pts)"
-        )
-        out.append(SEP)
-        out.append("")
+        H.append(_sec("🏆", f"ROUND {round_num} MVP — {best['name'].upper()}  ({best['round_mp']:.1f} pts)"))
         quip = rng.choice(BEST_QUIPS).format(first=best["first"])
-        out.append(f"  {quip}")
-        out.append("")
+        H.append(f'<p style="margin:10px 0 0;">{_h(quip)}</p>')
 
-    # ── Participation award ────────────────────────────────────────────────────
+    # ── Participation award ───────────────────────────────────────────────────
     if worst:
-        out.append(SEP)
-        out.append(
-            f"🪣  ROUND {round_num} PARTICIPATION AWARD — {worst['name'].upper()}   "
-            f"({worst['round_mp']:.1f} pts)"
-        )
-        out.append(SEP)
-        out.append("")
+        H.append(_sec("🪣", f"ROUND {round_num} PARTICIPATION AWARD — {worst['name'].upper()}  ({worst['round_mp']:.1f} pts)"))
         quip = rng.choice(WORST_QUIPS).format(first=worst["first"])
-        out.append(f"  {quip}")
-        out.append("")
+        H.append(f'<p style="margin:10px 0 0;">{_h(quip)}</p>')
 
-    # ── Missing scores ─────────────────────────────────────────────────────────
-    out.append(SEP)
-    out.append("⚠️   MISSING SCORES")
-    out.append(SEP)
-    out.append("")
+    # ── Missing scores ────────────────────────────────────────────────────────
+    H.append(_sec("⚠️", "MISSING SCORES"))
     if missing:
-        for p in missing:
-            out.append(f"  • {p['name']}")
-        out.append("")
+        names_html = "".join(f'<li>{_h(p["name"])}</li>' for p in missing)
         quip = rng.choice(MISSING_QUIPS)
-        out.append(f"  {quip}")
+        H.append(f'<ul style="margin:8px 0 4px 20px;">{names_html}</ul>')
+        H.append(f'<p style="margin:6px 0 0;">{_h(quip)}</p>')
     else:
-        out.append("  None — everyone submitted their scores. This is historic.")
-        out.append("  Frame this email. Put it in the trophy case.")
-    out.append("")
+        H.append(
+            '<p style="margin:10px 0 0;">None &mdash; everyone submitted their scores. '
+            'This is historic. Frame this email. Put it in the trophy case.</p>'
+        )
 
-    # ── BYE notice ─────────────────────────────────────────────────────────────
-    bye_label = " & ".join(r_info["bye_players"])
-    out.append(sep)
-    out.append(f"  BYE this round: {bye_label}")
-    out.append(sep)
-    out.append("")
+    # ── BYE notice ────────────────────────────────────────────────────────────
+    bye_label = " &amp; ".join(_h(b) for b in r_info["bye_players"])
+    H.append(
+        f'<p style="margin:18px 0 0;padding:8px 12px;background:#f5f5f5;'
+        f'border-left:4px solid #cc2027;">'
+        f'<strong>BYE this round:</strong> {bye_label}</p>'
+    )
 
-    # ── Next round / closing ───────────────────────────────────────────────────
-    out.append(SEP)
+    # ── Next round / closing ──────────────────────────────────────────────────
     if has_next:
         nr     = round_num + 1
         nr_inf = ROUNDS[nr]
-        nr_bye = " & ".join(nr_inf["bye_players"])
-        out.append(
-            f"📅  UP NEXT: ROUND {nr}  "
-            f"({fmt_date(nr_inf['start'])} – {fmt_date(nr_inf['end'])})"
+        nr_bye = " &amp; ".join(_h(b) for b in nr_inf["bye_players"])
+        H.append(_sec("📅", f"UP NEXT: ROUND {nr}  ({fmt_date(nr_inf['start'])} – {fmt_date(nr_inf['end'])})"))
+        closing = rng.choice(CLOSINGS).format(nr=nr, end=fmt_date(nr_inf["end"]))
+        H.append(
+            f'<p style="margin:10px 0 0;">{_h(closing)}</p>'
+            f'<p style="margin:6px 0 0;"><strong>BYE:</strong> {nr_bye}</p>'
         )
-        out.append(f"    BYE: {nr_bye}")
-        out.append(SEP)
-        out.append("")
-        closing = rng.choice(CLOSINGS).format(
-            nr=nr, end=fmt_date(nr_inf["end"])
-        )
-        out.append(closing)
     else:
-        out.append("🏁  THAT'S A WRAP ON THE 2026 SEASON!")
-        out.append(SEP)
-        out.append("")
-        out.append(
-            "Season final standings are above. Trophy ceremony details to follow.\n"
-            "Someone is about to be very proud — and someone else is going to pretend\n"
-            "they're fine with where they finished. We see you. Great season, everyone."
+        H.append(_sec("🏁", "THAT'S A WRAP ON THE 2026 SEASON!"))
+        H.append(
+            '<p style="margin:10px 0 0;">Season final standings are above. '
+            'Trophy ceremony details to follow. Someone is about to be very proud &mdash; '
+            'and someone else is going to pretend they\'re fine with where they finished. '
+            'We see you. Great season, everyone.</p>'
         )
-    out.append("")
-    out.append("— Your League Manager")
-    out.append("")
 
-    return "\n".join(out)
+    H.append('<p style="margin:22px 0 16px;color:#555;">&mdash; Your League Manager</p>')
+    H.append('</div></body></html>')
+
+    return "\n".join(H)
 
 
 # ── Entry point ───────────────────────────────────────────────────────────────
@@ -390,7 +412,7 @@ def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     text     = generate_email(round_num, today)
-    filename = f"Round_{round_num:02d}_Recap_Draft_{today.isoformat()}.txt"
+    filename = f"Round_{round_num:02d}_Recap_Draft_{today.isoformat()}.htm"
     filepath = os.path.join(OUTPUT_DIR, filename)
 
     with open(filepath, "w", encoding="utf-8") as f:
