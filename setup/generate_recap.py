@@ -175,7 +175,7 @@ def load_data(round_num):
         net   = ws.cell(row=net_row, column=col).value
         total = ws.cell(row=mp_row,  column=COL_TOTAL).value
         rec   = ws.cell(row=mp_row,  column=COL_REC).value
-        avg   = ws.cell(row=net_row, column=COL_AVG).value
+        avg   = ws.cell(row=mp_row,  column=COL_AVG).value
         data.append({
             "name":      name,
             "first":     name.split()[0],

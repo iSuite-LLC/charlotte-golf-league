@@ -220,19 +220,35 @@
       "id": 14,
       "name": "Megan Serian",
       "handicap": 36,
-      "totalPts": 0,
-      "record": "0-0-0",
-      "avgNet": null,
-      "rounds": []
+      "totalPts": 7,
+      "record": "1-0-0",
+      "avgNet": 50.0,
+      "rounds": [
+        {
+          "round": 1,
+          "matchPts": 7,
+          "net": 50,
+          "opponent": "Nick Coglianese",
+          "result": "W"
+        }
+      ]
     },
     {
       "id": 15,
       "name": "Nick Coglianese",
       "handicap": 36,
-      "totalPts": 0,
-      "record": "0-0-0",
-      "avgNet": null,
-      "rounds": []
+      "totalPts": 1,
+      "record": "0-1-0",
+      "avgNet": 53.0,
+      "rounds": [
+        {
+          "round": 1,
+          "matchPts": 1,
+          "net": 53,
+          "opponent": "Megan Serian",
+          "result": "L"
+        }
+      ]
     }
   ],
   "rounds": [
@@ -295,6 +311,15 @@
           "p2Pts": 1,
           "p2Net": 48,
           "winner": "Curtis Lynn"
+        },
+        {
+          "p1": "Megan Serian",
+          "p1Pts": 7,
+          "p1Net": 50,
+          "p2": "Nick Coglianese",
+          "p2Pts": 1,
+          "p2Net": 53,
+          "winner": "Megan Serian"
         }
       ],
       "pairings": [
@@ -852,13 +877,95 @@
         },
         {
           "p1": "Megan Serian",
-          "p1Pts": null,
-          "p1Net": null,
+          "p1Pts": 7,
+          "p1Net": 50,
           "p2": "Nick Coglianese",
-          "p2Pts": null,
-          "p2Net": null,
-          "winner": null,
-          "played": false
+          "p2Pts": 1,
+          "p2Net": 53,
+          "winner": "Megan Serian",
+          "played": true,
+          "p1Scorecard": {
+            "course": "Skybrook",
+            "nine": "Front 9",
+            "handicap": 36,
+            "par": [
+              4,
+              3,
+              4,
+              5,
+              4,
+              4,
+              3,
+              5,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              6,
+              6,
+              8,
+              9,
+              8,
+              8,
+              6,
+              9,
+              8
+            ],
+            "grossTotal": 68,
+            "net": [
+              4,
+              4,
+              6,
+              7,
+              6,
+              6,
+              4,
+              7,
+              6
+            ],
+            "netTotal": 50
+          },
+          "p2Scorecard": {
+            "course": "Skybrook",
+            "nine": "Front 9",
+            "handicap": 36,
+            "par": [
+              4,
+              3,
+              4,
+              5,
+              4,
+              4,
+              3,
+              5,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              8,
+              6,
+              8,
+              10,
+              8,
+              8,
+              6,
+              9,
+              8
+            ],
+            "grossTotal": 71,
+            "net": [
+              6,
+              4,
+              6,
+              8,
+              6,
+              6,
+              4,
+              7,
+              6
+            ],
+            "netTotal": 53
+          }
         }
       ]
     },
