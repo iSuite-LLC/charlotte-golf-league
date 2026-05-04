@@ -874,19 +874,19 @@
         if (!playerFilter || pairing.p1 === playerFilter) scorecards.push(pairing.p1Scorecard);
         if (!playerFilter || pairing.p2 === playerFilter) scorecards.push(pairing.p2Scorecard);
         for (const sc of scorecards) {
-          if (!sc || !sc.net || !sc.par) continue;
+          if (!sc || !sc.gross || !sc.par) continue;
           const key = [sc.course, sc.nine].filter(Boolean).join(' · ');
           if (!courses[key]) courses[key] = { par: sc.par.slice(), totals: new Array(9).fill(0), counts: new Array(9).fill(0) };
-          sc.net.forEach((n, i) => { if (n != null) { courses[key].totals[i] += n; courses[key].counts[i]++; } });
+          sc.gross.forEach((g, i) => { if (g != null) { courses[key].totals[i] += g; courses[key].counts[i]++; } });
         }
       }
     }
     const result = {};
     for (const [key, d] of Object.entries(courses)) {
       result[key] = {
-        par:    d.par,
-        avgNet: d.totals.map((t, i) => d.counts[i] > 0 ? t / d.counts[i] : null),
-        counts: d.counts,
+        par:      d.par,
+        avgGross: d.totals.map((t, i) => d.counts[i] > 0 ? t / d.counts[i] : null),
+        counts:   d.counts,
       };
     }
     return result;
@@ -940,12 +940,12 @@
         if (!playerFilter || pairing.p1 === playerFilter) scorecards.push(pairing.p1Scorecard);
         if (!playerFilter || pairing.p2 === playerFilter) scorecards.push(pairing.p2Scorecard);
         for (const sc of scorecards) {
-          if (!sc || !sc.net || !sc.par) continue;
+          if (!sc || !sc.gross || !sc.par) continue;
           const key = [sc.course, sc.nine].filter(Boolean).join(' · ');
           if (!courses[key]) courses[key] = { par: sc.par.slice(), holes: Array.from({ length: 9 }, () => ({ eagle: 0, birdie: 0, par: 0, bogey: 0, double: 0, triple: 0 })) };
-          sc.net.forEach((n, i) => {
-            if (n == null || sc.par[i] == null) return;
-            const d = n - sc.par[i];
+          sc.gross.forEach((g, i) => {
+            if (g == null || sc.par[i] == null) return;
+            const d = g - sc.par[i];
             const h = courses[key].holes[i];
             if (d <= -2) h.eagle++; else if (d === -1) h.birdie++; else if (d === 0) h.par++; else if (d === 1) h.bogey++; else if (d === 2) h.double++; else h.triple++;
           });
@@ -1002,7 +1002,7 @@
         n = data.counts[0] || 0;
         cards = data.par.map((par, i) => {
           const holeNum = isBack ? i + 10 : i + 1;
-          const avg = data.avgNet[i];
+          const avg = data.avgGross[i];
           if (avg == null || par == null) return `<div class="hole-card"><div class="hole-card-num">Hole ${holeNum}</div><div class="hole-card-par">—</div></div>`;
           const diff     = avg - par;
           const diffStr  = diff === 0 ? 'E' : (diff > 0 ? '+' : '') + diff.toFixed(1);
