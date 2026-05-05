@@ -1089,7 +1089,7 @@
           doubles[name] = doubles[name] || 0;
           sc.gross.forEach((g, i) => {
             if (g == null || sc.par[i] == null) return;
-            if (g === sc.par[i] - 1) birdies[name]++;
+            if (g <= sc.par[i])      birdies[name]++;
             if (g === sc.par[i] * 2)  doubles[name]++;
           });
         }
@@ -1240,7 +1240,7 @@
            </div>` : '';
       const birdieCard = spec.topBirdie
         ? `<div class="record-card birdie-card">
-             <div class="record-label">Most Birdies</div>
+             <div class="record-label">Most Pars or Better</div>
              <div class="record-value">${spec.topBirdie.count}</div>
              <div class="record-who">${spec.topBirdie.name}</div>
            </div>` : '';
