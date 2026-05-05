@@ -418,9 +418,9 @@
     .final-spacer  { height: 78px; flex-shrink: 0; }
     .third-spacer  { height: 20px; flex-shrink: 0; }
     /* ── Season Records ── */
-    .records-strip { display: flex; gap: 10px; margin-bottom: 16px; }
+    .records-strip { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
     .record-card {
-      flex: 1; background: var(--surface); border: 1px solid var(--border);
+      flex: 1; min-width: 0; background: var(--surface); border: 1px solid var(--border);
       border-radius: 5px; padding: 12px 14px; text-align: center;
     }
     .record-card.low-card  { border-top: 2px solid var(--green); }
@@ -431,6 +431,10 @@
     .record-card.high-card .record-value { color: var(--red); }
     .record-who  { font-size: 0.72rem; color: var(--muted); }
     .record-unit { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; color: var(--muted); margin-left: 4px; vertical-align: middle; }
+    .record-card.birdie-card { border-top: 2px solid var(--blue); }
+    .record-card.birdie-card .record-value { color: var(--blue); }
+    .record-card.double-card { border-top: 2px solid var(--orange); }
+    .record-card.double-card .record-value { color: var(--orange); }
     .playoff-format-note {
       margin-top: 20px; font-size: 0.73rem; color: var(--muted);
       border-top: 1px solid var(--border); padding-top: 12px; line-height: 1.6;
@@ -445,6 +449,7 @@
       .podium-card { padding: 10px 8px 14px; }
       .podium-pts  { font-size: 1.2rem; }
       .hole-grid   { grid-template-columns: repeat(3, 1fr); }
+      .record-card { flex: 0 0 calc(50% - 5px); }
       .playoff-bracket { flex-direction: column; }
       .bracket-conn { display: none; }
       .final-spacer { height: 16px; }
@@ -1068,6 +1073,39 @@
     return courses;
   }
 
+  function buildBirdiesAndDoublePars(playerFilter) {
+    const birdies = {}, doubles = {};
+    for (const round of (leagueData.rounds || [])) {
+      for (const match of (round.matches || [])) {
+        for (const pairing of (match.pairings || [])) {
+          const entries = [
+            { name: pairing.p1, sc: pairing.p1Scorecard },
+            { name: pairing.p2, sc: pairing.p2Scorecard }
+          ];
+          for (const { name, sc } of entries) {
+            if (!name || !sc || !sc.gross || !sc.par) continue;
+            if (playerFilter && name !== playerFilter) continue;
+            birdies[name] = birdies[name] || 0;
+            doubles[name] = doubles[name] || 0;
+            sc.gross.forEach((g, i) => {
+              if (g == null || sc.par[i] == null) return;
+              if (g === sc.par[i] - 1) birdies[name]++;
+              if (g === sc.par[i] * 2)  doubles[name]++;
+            });
+          }
+        }
+      }
+    }
+    let topBirdie = null, topDouble = null;
+    for (const [name, count] of Object.entries(birdies)) {
+      if (!topBirdie || count > topBirdie.count) topBirdie = { name, count };
+    }
+    for (const [name, count] of Object.entries(doubles)) {
+      if (!topDouble || count > topDouble.count) topDouble = { name, count };
+    }
+    return { topBirdie, topDouble };
+  }
+
   function buildSeasonRecords(playerFilter) {
     let low = null, high = null;
     for (const p of leagueData.players) {
@@ -1185,9 +1223,10 @@
     const distByCourse = parseByCourse(distData);
     const allCourses   = [...new Set([...Object.keys(avgByCourse), ...Object.keys(distByCourse)])].sort();
 
-    const rec = buildSeasonRecords(playerFilter || null);
+    const rec  = buildSeasonRecords(playerFilter || null);
+    const spec = buildBirdiesAndDoublePars(playerFilter || null);
     let recordsHtml = '';
-    if (rec.low || rec.high) {
+    if (rec.low || rec.high || spec.topBirdie || spec.topDouble) {
       const lowCard = rec.low
         ? `<div class="record-card low-card">
              <div class="record-label">Low Round</div>
@@ -1200,7 +1239,19 @@
              <div class="record-value">${rec.high.net}<span class="record-unit">NET</span></div>
              <div class="record-who">${rec.high.name} &middot; R${rec.high.round}</div>
            </div>` : '';
-      recordsHtml = `<div class="records-strip">${lowCard}${highCard}</div>`;
+      const birdieCard = spec.topBirdie
+        ? `<div class="record-card birdie-card">
+             <div class="record-label">Most Birdies</div>
+             <div class="record-value">${spec.topBirdie.count}</div>
+             <div class="record-who">${spec.topBirdie.name}</div>
+           </div>` : '';
+      const doubleCard = spec.topDouble
+        ? `<div class="record-card double-card">
+             <div class="record-label">Most Double Pars</div>
+             <div class="record-value">${spec.topDouble.count}</div>
+             <div class="record-who">${spec.topDouble.name}</div>
+           </div>` : '';
+      recordsHtml = `<div class="records-strip">${lowCard}${highCard}${birdieCard}${doubleCard}</div>`;
     }
 
     let html = filterBar + recordsHtml;
