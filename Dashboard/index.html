@@ -15,6 +15,7 @@
       --red:          #cc2027;
       --blue:         #1a6fc4;
       --green:        #5aaa35;
+      --gold:         #FFD700;
       --orange:       #e87722;
       --silver:       #aaaaaa;
       --bronze:       #cd7f32;
@@ -115,11 +116,11 @@
       cursor: pointer; transition: background 0.1s;
     }
     .podium-card:hover { background: var(--surface-hover); }
-    .podium-card.first  { border-top-color: var(--orange); padding-bottom: 28px; }
+    .podium-card.first  { border-top-color: var(--gold); padding-bottom: 28px; }
     .podium-card.second { border-top-color: var(--silver); }
     .podium-card.third  { border-top-color: var(--bronze); }
     .podium-rank { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
-    .podium-card.first  .podium-rank { color: var(--orange); }
+    .podium-card.first  .podium-rank { color: var(--gold); }
     .podium-card.second .podium-rank { color: var(--silver); }
     .podium-card.third  .podium-rank { color: var(--bronze); }
     .podium-name { font-weight: 700; font-size: 0.92rem; margin-bottom: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -161,7 +162,7 @@
       color: var(--muted); font-size: 0.75rem; font-weight: 700;
       line-height: 26px; text-align: center;
     }
-    .rank-badge.gold   { background: var(--orange); color: #000; }
+    .rank-badge.gold   { background: var(--gold); color: #000; }
     .rank-badge.silver { background: var(--silver);  color: #000; }
     .rank-badge.bronze { background: var(--bronze);  color: #fff; }
     .player-name { font-weight: 600; }
@@ -197,7 +198,7 @@
       transition: background 0.1s;
     }
     .player-card:hover { background: var(--surface-hover); }
-    .player-card.rank-1 { border-left-color: var(--orange); }
+    .player-card.rank-1 { border-left-color: var(--gold); }
     .player-card.rank-2 { border-left-color: var(--silver); }
     .player-card.rank-3 { border-left-color: var(--bronze); }
     .card-top    { display: flex; align-items: center; gap: 10px; }
@@ -405,7 +406,7 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 10px; font-weight: 700; flex-shrink: 0;
     }
-    .seed-1 { background: var(--orange); color: #000; }
+    .seed-1 { background: var(--gold); color: #000; }
     .seed-2 { background: var(--silver); color: #000; }
     .seed-3 { background: var(--bronze); color: #fff; }
     .seed-4 { background: #2a2a2a; color: var(--muted); border: 1px solid #333; }
