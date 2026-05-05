@@ -417,6 +417,19 @@
     .sf-spacer     { height: 36px; flex-shrink: 0; }
     .final-spacer  { height: 78px; flex-shrink: 0; }
     .third-spacer  { height: 20px; flex-shrink: 0; }
+    /* ── Season Records ── */
+    .records-strip { display: flex; gap: 10px; margin-bottom: 16px; }
+    .record-card {
+      flex: 1; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 5px; padding: 12px 14px; text-align: center;
+    }
+    .record-card.low-card  { border-top: 2px solid var(--green); }
+    .record-card.high-card { border-top: 2px solid var(--red); }
+    .record-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+    .record-value { font-size: 1.6rem; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+    .record-card.low-card  .record-value { color: var(--green); }
+    .record-card.high-card .record-value { color: var(--red); }
+    .record-who { font-size: 0.72rem; color: var(--muted); }
     .playoff-format-note {
       margin-top: 20px; font-size: 0.73rem; color: var(--muted);
       border-top: 1px solid var(--border); padding-top: 12px; line-height: 1.6;
@@ -1054,6 +1067,19 @@
     return courses;
   }
 
+  function buildSeasonRecords(playerFilter) {
+    let low = null, high = null;
+    for (const p of leagueData.players) {
+      if (playerFilter && p.name !== playerFilter) continue;
+      for (const r of p.rounds) {
+        if (r.net == null) continue;
+        if (low  === null || r.net < low.net)  low  = { net: r.net,  name: p.name, round: r.round };
+        if (high === null || r.net > high.net) high = { net: r.net, name: p.name, round: r.round };
+      }
+    }
+    return { low, high };
+  }
+
   function renderStats(playerFilter) {
     const playerNames = (leagueData.players || []).map(p => p.name).sort();
     const filterBar = `<div class="stats-filter">
@@ -1158,7 +1184,25 @@
     const distByCourse = parseByCourse(distData);
     const allCourses   = [...new Set([...Object.keys(avgByCourse), ...Object.keys(distByCourse)])].sort();
 
-    let html = filterBar;
+    const rec = buildSeasonRecords(playerFilter || null);
+    let recordsHtml = '';
+    if (rec.low || rec.high) {
+      const lowCard = rec.low
+        ? `<div class="record-card low-card">
+             <div class="record-label">Low Round</div>
+             <div class="record-value">${rec.low.net}</div>
+             <div class="record-who">${rec.low.name} &middot; R${rec.low.round}</div>
+           </div>` : '';
+      const highCard = rec.high
+        ? `<div class="record-card high-card">
+             <div class="record-label">High Round</div>
+             <div class="record-value">${rec.high.net}</div>
+             <div class="record-who">${rec.high.name} &middot; R${rec.high.round}</div>
+           </div>` : '';
+      recordsHtml = `<div class="records-strip">${lowCard}${highCard}</div>`;
+    }
+
+    let html = filterBar + recordsHtml;
     let distIdx = 0;
     for (const course of allCourses) {
       const avgSecs  = avgByCourse[course]  ? [...avgByCourse[course]]  : [];
