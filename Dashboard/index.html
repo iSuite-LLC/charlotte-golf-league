@@ -329,6 +329,97 @@
     /* ── H2H ── */
     .h2h-section { margin-top: 12px; padding-top: 10px; border-top: 1px solid #2a2a2a; }
     .h2h-heading { font-size: 0.67rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; padding: 0 10px; margin-bottom: 4px; }
+    /* ── Playoffs Bracket ── */
+    .playoff-wrap { padding: 0 0 32px; }
+    .playoff-header {
+      background: linear-gradient(135deg, #1a1a1a 0%, #111 100%);
+      border: 1px solid var(--orange);
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 4px;
+    }
+    .playoff-title { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+    .playoff-subtitle { font-size: 0.75rem; color: var(--muted); }
+    .playoff-notice {
+      font-size: 0.75rem; font-weight: 600;
+      padding: 6px 12px; border-radius: 4px;
+      margin-bottom: 20px; text-align: center;
+      background: rgba(232,119,34,0.12); border: 1px solid rgba(232,119,34,0.35);
+      color: var(--orange);
+    }
+    .playoff-bracket {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+    }
+    .bracket-semis, .bracket-finals {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 0;
+    }
+    .bracket-conn {
+      flex-shrink: 0;
+      width: 48px;
+      display: flex;
+      align-items: flex-start;
+    }
+    .bracket-svg .conn-path {
+      stroke: #444;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .bracket-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .bracket-card.final-card { border-color: var(--orange); }
+    .bc-title {
+      font-size: 10px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--muted);
+      padding: 7px 12px;
+      height: 28px;
+      display: flex; align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .bc-player {
+      height: 46px;
+      display: flex; align-items: center;
+      padding: 0 10px; gap: 8px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    .bc-player:last-child { border-bottom: none; }
+    .bc-player.bc-winner { background: rgba(90,170,53,0.1); }
+    .bc-player.bc-winner .bc-name { color: var(--green); font-weight: 700; }
+    .bc-seed {
+      width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700; flex-shrink: 0;
+    }
+    .seed-1 { background: var(--orange); color: #000; }
+    .seed-2 { background: var(--silver); color: #000; }
+    .seed-3 { background: var(--bronze); color: #fff; }
+    .seed-4 { background: #2a2a2a; color: var(--muted); border: 1px solid #333; }
+    .bc-name { flex: 1; font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .bc-tbd  { color: var(--muted); font-style: italic; }
+    .bc-score { font-size: 0.82rem; font-weight: 700; color: var(--muted); flex-shrink: 0; min-width: 24px; text-align: right; }
+    .bc-player.bc-winner .bc-score { color: var(--green); }
+    .sf-spacer     { height: 36px; flex-shrink: 0; }
+    .final-spacer  { height: 78px; flex-shrink: 0; }
+    .third-spacer  { height: 20px; flex-shrink: 0; }
+    .playoff-format-note {
+      margin-top: 20px; font-size: 0.73rem; color: var(--muted);
+      border-top: 1px solid var(--border); padding-top: 12px; line-height: 1.6;
+    }
     /* ── Responsive ── */
     @media (max-width: 600px) {
       .site-header { flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -339,6 +430,10 @@
       .podium-card { padding: 10px 8px 14px; }
       .podium-pts  { font-size: 1.2rem; }
       .hole-grid   { grid-template-columns: repeat(3, 1fr); }
+      .playoff-bracket { flex-direction: column; }
+      .bracket-conn { display: none; }
+      .final-spacer { height: 16px; }
+      .third-spacer { height: 16px; }
     }
   </style>
 </head>
@@ -378,6 +473,7 @@
   <button class="tab-btn"        onclick="showTab('schedule', this)">Schedule</button>
   <button class="tab-btn"        onclick="showTab('stats', this)">Stats</button>
   <button class="tab-btn"        onclick="showTab('photos', this)">Photos</button>
+  <button class="tab-btn"        onclick="showTab('playoffs', this)">Playoffs</button>
 </nav>
 
 <main class="content">
@@ -385,7 +481,8 @@
   <div id="tab-results"   class="tab-pane hidden"></div>
   <div id="tab-schedule"  class="tab-pane hidden"></div>
   <div id="tab-stats"     class="tab-pane hidden"></div>
-  <div id="tab-photos"   class="tab-pane hidden"></div>
+  <div id="tab-photos"    class="tab-pane hidden"></div>
+  <div id="tab-playoffs"  class="tab-pane hidden"></div>
 </main>
 
 <script>
@@ -411,6 +508,7 @@
     renderSchedule();
     renderStats();
     renderPhotos();
+    renderPlayoffs();
   }
 
   function showTab(name, btn) {
@@ -1183,6 +1281,117 @@
       </div>
       <div id="photo-grid" class="photo-grid"></div>`;
     refreshPhotoGrid();
+  }
+
+  function renderPlayoffs() {
+    const pd = leagueData.playoffs || {};
+    const status = pd.status || 'pending';
+
+    // Standings sort — same logic as renderStandings
+    const ranked = leagueData.players
+      .filter(p => p.rounds.length > 0)
+      .sort((a, b) => {
+        if (b.totalPts !== a.totalPts) return b.totalPts - a.totalPts;
+        const [aW, aL] = (a.record || '0-0-0').split('-').map(Number);
+        const [bW, bL] = (b.record || '0-0-0').split('-').map(Number);
+        if (bW !== aW) return bW - aW;
+        if (aL !== bL) return aL - bL;
+        return (a.avgNet || 999) - (b.avgNet || 999);
+      });
+
+    // Seeds: locked once playoffs start, otherwise live top-4
+    let seeds;
+    if (status === 'pending') {
+      seeds = ranked.slice(0, 4);
+    } else {
+      seeds = (pd.seeds || []).map(name =>
+        leagueData.players.find(p => p.name === name) || { name, totalPts: 0, record: '', avgNet: null }
+      );
+    }
+    while (seeds.length < 4) seeds.push(null);
+
+    const sf1d = pd.semi1 || {};
+    const sf2d = pd.semi2 || {};
+    const find = pd.final || {};
+    const thdd = pd.third || {};
+
+    function seedBadge(n) {
+      return `<span class="bc-seed seed-${n}">${n}</span>`;
+    }
+
+    function playerRow(player, score, seedNum, isWin) {
+      const badge = seedNum ? seedBadge(seedNum) : '';
+      const nameHtml = player
+        ? `<span class="bc-name">${player.name}</span>`
+        : `<span class="bc-name bc-tbd">TBD</span>`;
+      const sc = (score !== null && score !== undefined) ? score : '—';
+      return `<div class="bc-player${isWin ? ' bc-winner' : ''}">${badge}${nameHtml}<span class="bc-score">${sc}</span></div>`;
+    }
+
+    function matchCard(title, p1, p1seed, p2, p2seed, scores, winner, extraClass) {
+      const isWin1 = winner && p1 && p1.name === winner;
+      const isWin2 = winner && p2 && p2.name === winner;
+      return `<div class="bracket-card${extraClass ? ' ' + extraClass : ''}">
+        <div class="bc-title">${title}</div>
+        ${playerRow(p1, scores ? scores[0] : null, p1seed, isWin1)}
+        ${playerRow(p2, scores ? scores[1] : null, p2seed, isWin2)}
+      </div>`;
+    }
+
+    // Semis
+    const [s1, s2, s3, s4] = seeds;
+    const sf1Card = matchCard('Semifinal 1 &middot; Front 9', s1, 1, s4, 4, sf1d.scores, sf1d.winner);
+    const sf2Card = matchCard('Semifinal 2 &middot; Front 9', s2, 2, s3, 3, sf2d.scores, sf2d.winner);
+
+    // Finals — derive players from semi results (or null if TBD)
+    const finP1 = sf1d.winner ? (leagueData.players.find(p => p.name === sf1d.winner) || { name: sf1d.winner }) : null;
+    const finP2 = sf2d.winner ? (leagueData.players.find(p => p.name === sf2d.winner) || { name: sf2d.winner }) : null;
+    const finalCard = matchCard('Championship &middot; Back 9', finP1, null, finP2, null, find.scores, find.winner, 'final-card');
+
+    // 3rd place — losers of semis
+    let thd1 = null, thd2 = null;
+    if (sf1d.winner && s1 && s4) thd1 = sf1d.winner === s1.name ? s4 : s1;
+    if (sf2d.winner && s2 && s3) thd2 = sf2d.winner === s2.name ? s3 : s2;
+    const thirdCard = matchCard('3rd Place &middot; Back 9', thd1, null, thd2, null, thdd.scores, thdd.winner);
+
+    const noticeHtml = status === 'pending'
+      ? `<div class="playoff-notice">⚡ Projected seeds — updates each round and locks in after Round 9</div>`
+      : status === 'in_progress'
+      ? `<div class="playoff-notice" style="background:rgba(26,111,196,0.12);border-color:rgba(26,111,196,0.35);color:var(--blue);">🏌️ Playoffs Underway</div>`
+      : '';
+
+    document.getElementById('tab-playoffs').innerHTML = `
+      <div class="playoff-wrap">
+        <div class="playoff-header">
+          <div class="playoff-title">🏆 2026 Playoffs</div>
+          <div class="playoff-subtitle">Date: TBD &nbsp;&middot;&nbsp; Following Round 9 &nbsp;&middot;&nbsp; Single Elimination</div>
+        </div>
+        ${noticeHtml}
+        <div class="playoff-bracket">
+          <div class="bracket-semis">
+            ${sf1Card}
+            <div class="sf-spacer"></div>
+            ${sf2Card}
+          </div>
+          <div class="bracket-conn">
+            <svg height="276" width="48" class="bracket-svg">
+              <path class="conn-path" d="M0,60 H24 V138 H48" fill="none"/>
+              <path class="conn-path" d="M0,216 H24 V138" fill="none"/>
+            </svg>
+          </div>
+          <div class="bracket-finals">
+            <div class="final-spacer"></div>
+            ${finalCard}
+            <div class="third-spacer"></div>
+            ${thirdCard}
+          </div>
+        </div>
+        <p class="playoff-format-note">
+          <strong>Format:</strong> Front 9 — Semifinal 1 (1 vs 4) and Semifinal 2 (2 vs 3) played simultaneously.
+          Back 9 — Championship (winners) and 3rd Place match (losers) played simultaneously.
+          Lower net score wins each matchup.
+        </p>
+      </div>`;
   }
 
   init();

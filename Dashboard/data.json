@@ -1618,5 +1618,38 @@
       "dates": "Aug 10 – Aug 21",
       "bye": "Megan Serian"
     }
-  ]
+  ],
+  "playoffs": {
+    "status": "pending",
+    "date": "TBD",
+    "seeds": [],
+    "semi1": {
+      "scores": [
+        null,
+        null
+      ],
+      "winner": null
+    },
+    "semi2": {
+      "scores": [
+        null,
+        null
+      ],
+      "winner": null
+    },
+    "final": {
+      "scores": [
+        null,
+        null
+      ],
+      "winner": null
+    },
+    "third": {
+      "scores": [
+        null,
+        null
+      ],
+      "winner": null
+    }
+  }
 }
