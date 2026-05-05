@@ -429,7 +429,8 @@
     .record-value { font-size: 1.6rem; font-weight: 700; line-height: 1; margin-bottom: 4px; }
     .record-card.low-card  .record-value { color: var(--green); }
     .record-card.high-card .record-value { color: var(--red); }
-    .record-who { font-size: 0.72rem; color: var(--muted); }
+    .record-who  { font-size: 0.72rem; color: var(--muted); }
+    .record-unit { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; color: var(--muted); margin-left: 4px; vertical-align: middle; }
     .playoff-format-note {
       margin-top: 20px; font-size: 0.73rem; color: var(--muted);
       border-top: 1px solid var(--border); padding-top: 12px; line-height: 1.6;
@@ -1190,13 +1191,13 @@
       const lowCard = rec.low
         ? `<div class="record-card low-card">
              <div class="record-label">Low Round</div>
-             <div class="record-value">${rec.low.net}</div>
+             <div class="record-value">${rec.low.net}<span class="record-unit">NET</span></div>
              <div class="record-who">${rec.low.name} &middot; R${rec.low.round}</div>
            </div>` : '';
       const highCard = rec.high
         ? `<div class="record-card high-card">
              <div class="record-label">High Round</div>
-             <div class="record-value">${rec.high.net}</div>
+             <div class="record-value">${rec.high.net}<span class="record-unit">NET</span></div>
              <div class="record-who">${rec.high.name} &middot; R${rec.high.round}</div>
            </div>` : '';
       recordsHtml = `<div class="records-strip">${lowCard}${highCard}</div>`;
