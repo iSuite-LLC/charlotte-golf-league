@@ -1076,23 +1076,22 @@
   function buildBirdiesAndDoublePars(playerFilter) {
     const birdies = {}, doubles = {};
     for (const round of (leagueData.rounds || [])) {
-      for (const match of (round.matches || [])) {
-        for (const pairing of (match.pairings || [])) {
-          const entries = [
-            { name: pairing.p1, sc: pairing.p1Scorecard },
-            { name: pairing.p2, sc: pairing.p2Scorecard }
-          ];
-          for (const { name, sc } of entries) {
-            if (!name || !sc || !sc.gross || !sc.par) continue;
-            if (playerFilter && name !== playerFilter) continue;
-            birdies[name] = birdies[name] || 0;
-            doubles[name] = doubles[name] || 0;
-            sc.gross.forEach((g, i) => {
-              if (g == null || sc.par[i] == null) return;
-              if (g === sc.par[i] - 1) birdies[name]++;
-              if (g === sc.par[i] * 2)  doubles[name]++;
-            });
-          }
+      for (const pairing of (round.pairings || [])) {
+        if (!pairing.played) continue;
+        const entries = [
+          { name: pairing.p1, sc: pairing.p1Scorecard },
+          { name: pairing.p2, sc: pairing.p2Scorecard }
+        ];
+        for (const { name, sc } of entries) {
+          if (!name || !sc || !sc.gross || !sc.par) continue;
+          if (playerFilter && name !== playerFilter) continue;
+          birdies[name] = birdies[name] || 0;
+          doubles[name] = doubles[name] || 0;
+          sc.gross.forEach((g, i) => {
+            if (g == null || sc.par[i] == null) return;
+            if (g === sc.par[i] - 1) birdies[name]++;
+            if (g === sc.par[i] * 2)  doubles[name]++;
+          });
         }
       }
     }
