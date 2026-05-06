@@ -366,10 +366,11 @@
     }
     .bracket-conn {
       flex-shrink: 0;
-      width: 48px;
+      width: 40px;
       display: flex;
       align-items: flex-start;
     }
+    .bracket-svg { width: 100%; height: 276px; }
     .bracket-svg .conn-path {
       stroke: #444;
       stroke-width: 2;
@@ -450,10 +451,15 @@
       .podium-pts  { font-size: 1.2rem; }
       .hole-grid   { grid-template-columns: repeat(3, 1fr); }
       .record-card { flex: 0 0 calc(50% - 5px); }
-      .playoff-bracket { flex-direction: column; }
-      .bracket-conn { display: none; }
-      .final-spacer { height: 16px; }
-      .third-spacer { height: 16px; }
+      .bracket-conn { width: 24px; }
+      .bracket-svg { height: 244px; }
+      .bc-title { font-size: 9px; padding: 5px 8px; height: 24px; }
+      .bc-player { height: 40px; padding: 0 7px; gap: 5px; }
+      .bc-name { font-size: 0.72rem; }
+      .bc-score { font-size: 0.72rem; min-width: 18px; }
+      .bc-seed { width: 16px; height: 16px; font-size: 9px; }
+      .final-spacer { height: 70px; }
+      .sf-spacer { height: 36px; }
     }
   </style>
 </head>
@@ -1474,7 +1480,7 @@
             ${sf2Card}
           </div>
           <div class="bracket-conn">
-            <svg height="276" width="48" class="bracket-svg">
+            <svg viewBox="0 0 48 276" preserveAspectRatio="none" class="bracket-svg">
               <path class="conn-path" d="M0,60 H24 V138 H48" fill="none"/>
               <path class="conn-path" d="M0,216 H24 V138" fill="none"/>
             </svg>
