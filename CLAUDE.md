@@ -58,7 +58,7 @@ Each player = 2 consecutive rows: match points row then NET score row directly b
 | Bruce Atkins | 13 | 14 |
 | Alex Palmer | 15 | 16 |
 | Curtis Lynn | 17 | 18 |
-| Ben Link | 19 | 20 |
+| Ben Linck | 19 | 20 |
 | Charlotte Hayes | 21 | 22 |
 | David Maddox | 23 | 24 |
 | Jerome Martin | 25 | 26 |
@@ -78,7 +78,7 @@ Each player = 2 consecutive rows: match points row then NET score row directly b
 | 6 | Bruce Atkins | 24 |
 | 7 | Alex Palmer | 27 |
 | 8 | Curtis Lynn | 28 |
-| 9 | Ben Link | 30 |
+| 9 | Ben Linck | 30 |
 | 10 | Charlotte Hayes | 36 |
 | 11 | David Maddox | 36 |
 | 12 | Jerome Martin | 36 |

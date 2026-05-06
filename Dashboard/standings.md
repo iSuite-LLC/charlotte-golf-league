@@ -46,6 +46,6 @@ BYE: Nick Coglianese
 | 4 | Jun 1 – Jun 12 | Jerome Martin |
 | 5 | Jun 15 – Jun 26 | Wojcio / High / R. Bass |
 | 6 | Jun 29 – Jul 10 | C. Bass / McHugh / Atkins |
-| 7 | Jul 13 – Jul 24 | Palmer / Lynn / Link |
+| 7 | Jul 13 – Jul 24 | Palmer / Lynn / Linck |
 | 8 | Jul 27 – Aug 7 | Kaylan Adams |
 | 9 | Aug 10 – Aug 21 | Megan Serian |

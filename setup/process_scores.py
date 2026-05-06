@@ -38,7 +38,7 @@ SCHEDULE = [
     {'round': 4, 'dates': 'Jun 1 – Jun 12',  'bye': 'Jerome Martin'},
     {'round': 5, 'dates': 'Jun 15 – Jun 26', 'bye': 'Wojcio / High / R. Bass'},
     {'round': 6, 'dates': 'Jun 29 – Jul 10', 'bye': 'C. Bass / McHugh / Atkins'},
-    {'round': 7, 'dates': 'Jul 13 – Jul 24', 'bye': 'Palmer / Lynn / Link'},
+    {'round': 7, 'dates': 'Jul 13 – Jul 24', 'bye': 'Palmer / Lynn / Linck'},
     {'round': 8, 'dates': 'Jul 27 – Aug 7',  'bye': 'Kaylan Adams'},
     {'round': 9, 'dates': 'Aug 10 – Aug 21', 'bye': 'Megan Serian'},
 ]
