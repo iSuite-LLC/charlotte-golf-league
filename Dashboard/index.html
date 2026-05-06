@@ -1089,33 +1089,37 @@
           doubles[name] = doubles[name] || 0;
           sc.gross.forEach((g, i) => {
             if (g == null || sc.par[i] == null) return;
-            if (g <= sc.par[i])      birdies[name]++;
-            if (g === sc.par[i] * 2)  doubles[name]++;
+            if (g <= sc.par[i])     birdies[name]++;
+            if (g === sc.par[i] * 2) doubles[name]++;
           });
         }
       }
     }
-    let topBirdie = null, topDouble = null;
-    for (const [name, count] of Object.entries(birdies)) {
-      if (!topBirdie || count > topBirdie.count) topBirdie = { name, count };
+    function topEntries(map) {
+      if (!Object.keys(map).length) return null;
+      const best = Math.max(...Object.values(map));
+      const names = Object.entries(map).filter(([, c]) => c === best).map(([n]) => n);
+      return { count: best, names };
     }
-    for (const [name, count] of Object.entries(doubles)) {
-      if (!topDouble || count > topDouble.count) topDouble = { name, count };
-    }
-    return { topBirdie, topDouble };
+    return { topBirdie: topEntries(birdies), topDouble: topEntries(doubles) };
   }
 
   function buildSeasonRecords(playerFilter) {
-    let low = null, high = null;
+    let minNet = null, maxNet = null, low = [], high = [];
     for (const p of leagueData.players) {
       if (playerFilter && p.name !== playerFilter) continue;
       for (const r of p.rounds) {
         if (r.net == null) continue;
-        if (low  === null || r.net < low.net)  low  = { net: r.net,  name: p.name, round: r.round };
-        if (high === null || r.net > high.net) high = { net: r.net, name: p.name, round: r.round };
+        if (minNet === null || r.net < minNet) { minNet = r.net; low  = [{ name: p.name, round: r.round }]; }
+        else if (r.net === minNet) low.push({ name: p.name, round: r.round });
+        if (maxNet === null || r.net > maxNet) { maxNet = r.net; high = [{ name: p.name, round: r.round }]; }
+        else if (r.net === maxNet) high.push({ name: p.name, round: r.round });
       }
     }
-    return { low, high };
+    return {
+      low:  low.length  ? { net: minNet, entries: low  } : null,
+      high: high.length ? { net: maxNet, entries: high } : null
+    };
   }
 
   function renderStats(playerFilter) {
@@ -1230,25 +1234,25 @@
         ? `<div class="record-card low-card">
              <div class="record-label">Low Round</div>
              <div class="record-value">${rec.low.net}<span class="record-unit">NET</span></div>
-             <div class="record-who">${rec.low.name} &middot; R${rec.low.round}</div>
+             <div class="record-who">${rec.low.entries.map(e => `${e.name} &middot; R${e.round}`).join('<br>')}</div>
            </div>` : '';
       const highCard = rec.high
         ? `<div class="record-card high-card">
              <div class="record-label">High Round</div>
              <div class="record-value">${rec.high.net}<span class="record-unit">NET</span></div>
-             <div class="record-who">${rec.high.name} &middot; R${rec.high.round}</div>
+             <div class="record-who">${rec.high.entries.map(e => `${e.name} &middot; R${e.round}`).join('<br>')}</div>
            </div>` : '';
       const birdieCard = spec.topBirdie
         ? `<div class="record-card birdie-card">
              <div class="record-label">Most Pars or Better</div>
              <div class="record-value">${spec.topBirdie.count}</div>
-             <div class="record-who">${spec.topBirdie.name}</div>
+             <div class="record-who">${spec.topBirdie.names.join('<br>')}</div>
            </div>` : '';
       const doubleCard = spec.topDouble
         ? `<div class="record-card double-card">
              <div class="record-label">Most Double Pars</div>
              <div class="record-value">${spec.topDouble.count}</div>
-             <div class="record-who">${spec.topDouble.name}</div>
+             <div class="record-who">${spec.topDouble.names.join('<br>')}</div>
            </div>` : '';
       recordsHtml = `<div class="records-strip">${lowCard}${highCard}${birdieCard}${doubleCard}</div>`;
     }
