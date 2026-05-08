@@ -877,6 +877,69 @@
     </div>`;
   }
 
+  /* ── Points Breakdown ── */
+  function breakdownHTML(match) {
+    const sc1 = match.p1Scorecard, sc2 = match.p2Scorecard;
+    if (!sc1 || !sc2 || !sc1.net || !sc2.net) return '';
+    for (let i = 0; i < 9; i++) {
+      if (sc1.net[i] == null || sc2.net[i] == null) return '';
+    }
+
+    // Holes 1-3, 4-6, 7-9, all (indices 0-8 ↔ holes 1-9)
+    const GROUPS = [[0,1,2], [3,4,5], [6,7,8], [0,1,2,3,4,5,6,7,8]];
+    const GROUP_PTS_WIN = [2, 2, 2, 1];
+    const GROUP_PTS_TIE = [1, 1, 1, 0.5];
+
+    const p1Pts = [0, 0, 0, 0, 0];
+    const p2Pts = [0, 0, 0, 0, 0];
+
+    for (let g = 0; g < 4; g++) {
+      let p1Won = 0, p2Won = 0;
+      for (const i of GROUPS[g]) {
+        if (sc1.net[i] < sc2.net[i]) p1Won++;
+        else if (sc1.net[i] > sc2.net[i]) p2Won++;
+      }
+      if (p1Won > p2Won)      p1Pts[g] = GROUP_PTS_WIN[g];
+      else if (p2Won > p1Won) p2Pts[g] = GROUP_PTS_WIN[g];
+      else { p1Pts[g] = GROUP_PTS_TIE[g]; p2Pts[g] = GROUP_PTS_TIE[g]; }
+    }
+
+    if (sc1.netTotal < sc2.netTotal)      p1Pts[4] = 1;
+    else if (sc2.netTotal < sc1.netTotal) p2Pts[4] = 1;
+    else { p1Pts[4] = 0.5; p2Pts[4] = 0.5; }
+
+    const p1Total = p1Pts.reduce((a, b) => a + b, 0);
+    const p2Total = p2Pts.reduce((a, b) => a + b, 0);
+
+    if (p1Total !== match.p1Pts || p2Total !== match.p2Pts) {
+      console.warn(`[breakdown mismatch] ${match.p1} vs ${match.p2}: computed ${p1Total}-${p2Total}, persisted ${match.p1Pts}-${match.p2Pts}`);
+    }
+
+    const fmt = v => v === 0.5 ? '½' : String(v);
+    const p1First = match.p1.split(' ')[0];
+    const p2First = match.p2.split(' ')[0];
+    const headers = ['First 3', 'Middle 3', 'Final 3', 'Overall', 'Net'];
+
+    function playerRow(firstName, myPts, oppPts, myTotal, oppTotal) {
+      const cells = myPts.map((v, i) => {
+        const isWin = v > oppPts[i];
+        return `<td${isWin ? ' class="sc-bd-winner"' : ''}>${fmt(v)}</td>`;
+      }).join('');
+      const totalIsWin = myTotal > oppTotal;
+      const totalClass = 'sc-bd-total' + (totalIsWin ? ' sc-bd-winner' : '');
+      return `<tr><td class="sc-td-label">${firstName}</td>${cells}<td class="${totalClass}">${fmt(myTotal)}</td></tr>`;
+    }
+
+    const headerCols = headers.map(h => `<th>${h}</th>`).join('');
+    return `<table class="sc-breakdown">
+      <thead><tr><th class="sc-th-label">&nbsp;</th>${headerCols}<th class="sc-bd-total">TOTAL</th></tr></thead>
+      <tbody>
+        ${playerRow(p1First, p1Pts, p2Pts, p1Total, p2Total)}
+        ${playerRow(p2First, p2Pts, p1Pts, p2Total, p1Total)}
+      </tbody>
+    </table>`;
+  }
+
   /* ── Results ── */
   function renderResults() {
     const html = leagueData.rounds.map(r => {
