@@ -398,6 +398,19 @@ def write_dashboard_json(rnd, name_to_num):
         'schedule':     SCHEDULE,
     }
 
+    # Carry forward keys this writer doesn't know about (e.g. 'playoffs'
+    # which is maintained manually) so a watcher-triggered rewrite doesn't
+    # silently strip them.
+    if os.path.exists(DASHBOARD_JSON):
+        try:
+            with open(DASHBOARD_JSON, 'r', encoding='utf-8') as f:
+                existing = json.load(f)
+            for key, value in existing.items():
+                if key not in data:
+                    data[key] = value
+        except (json.JSONDecodeError, OSError):
+            pass
+
     os.makedirs(os.path.dirname(DASHBOARD_JSON), exist_ok=True)
     with open(DASHBOARD_JSON, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
