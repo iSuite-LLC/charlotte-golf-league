@@ -237,6 +237,7 @@
     .scorecard-panel { background: #141414; padding: 10px 16px 14px; }
     .sc-meta { font-size: 0.7rem; color: var(--muted); margin-bottom: 8px; letter-spacing: 0.02em; }
     .sc-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .sc-stack { display: inline-block; min-width: 100%; }
     .sc-table { border-collapse: collapse; font-size: 0.8rem; white-space: nowrap; }
     .sc-table th, .sc-table td { padding: 4px 7px; text-align: center; }
     .sc-th-label, .sc-td-label { text-align: left !important; font-size: 0.7rem; color: var(--muted); font-weight: 600; min-width: 52px; }
@@ -252,7 +253,7 @@
     .sc-bogey  .sc-note { border: 1.5px solid #fff; }
     .sc-double .sc-note { border: 1.5px solid #fff; box-shadow: 0 0 0 2.5px #141414, 0 0 0 4px #fff; }
     .sc-table td { padding: 5px 9px; }
-    .sc-breakdown { border-collapse: collapse; font-size: 0.78rem; margin-top: 12px; white-space: nowrap; }
+    .sc-breakdown { border-collapse: collapse; font-size: 0.78rem; margin-top: 12px; white-space: nowrap; width: 100%; }
     .sc-breakdown th, .sc-breakdown td { padding: 5px 10px; text-align: center; }
     .sc-breakdown thead th { color: var(--muted); font-size: 0.66rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding-bottom: 4px; border-bottom: 1px solid #222; }
     .sc-breakdown .sc-th-label, .sc-breakdown .sc-td-label { text-align: left !important; font-size: 0.7rem; color: var(--muted); font-weight: 600; min-width: 52px; }
@@ -873,7 +874,7 @@
 
     return `<div id="${id}" class="scorecard-panel hidden">
       <div class="sc-meta">${metaLine}</div>
-      <div class="sc-scroll"><table class="sc-table">
+      <div class="sc-scroll"><div class="sc-stack"><table class="sc-table">
         <thead>
           <tr><th class="sc-th-label">Hole</th>${holeHdrs}<th class="sc-hole-num sc-total-col">TOT</th></tr>
           ${parHTML}
@@ -882,8 +883,7 @@
           ${playerRowsHTML(p1First, sc1, match.winner === match.p1)}
           ${playerRowsHTML(p2First, sc2, match.winner === match.p2)}
         </tbody>
-      </table></div>
-      ${breakdownHTML(match)}
+      </table>${breakdownHTML(match)}</div></div>
     </div>`;
   }
 
