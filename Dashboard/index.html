@@ -1346,7 +1346,10 @@
         ? `<div class="record-card birdie-card">
              <div class="record-label">Most Pars or Better</div>
              <div class="record-value">${spec.topBirdie.count}</div>
-             <div class="record-who">${spec.topBirdie.names.join('<br>')}</div>
+             <div class="record-who">${spec.topBirdie.names.map(n => {
+               const b = spec.topBirdie.breakdowns[n];
+               return `${n}<div class="record-breakdown">${b.e}E &middot; ${b.b}B &middot; ${b.p}P</div>`;
+             }).join('')}</div>
            </div>` : '';
       const doubleCard = spec.topDouble
         ? `<div class="record-card double-card">
