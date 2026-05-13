@@ -1154,6 +1154,7 @@
 
   function buildBirdiesAndDoublePars(playerFilter) {
     const birdies = {}, doubles = {};
+    const eagles = {}, birdieOnly = {}, parOnly = {};
     for (const round of (leagueData.rounds || [])) {
       for (const pairing of (round.pairings || [])) {
         if (!pairing.played) continue;
@@ -1164,23 +1165,43 @@
         for (const { name, sc } of entries) {
           if (!name || !sc || !sc.gross || !sc.par) continue;
           if (playerFilter && name !== playerFilter) continue;
-          birdies[name] = birdies[name] || 0;
-          doubles[name] = doubles[name] || 0;
+          birdies[name]    = birdies[name]    || 0;
+          doubles[name]    = doubles[name]    || 0;
+          eagles[name]     = eagles[name]     || 0;
+          birdieOnly[name] = birdieOnly[name] || 0;
+          parOnly[name]    = parOnly[name]    || 0;
           sc.gross.forEach((g, i) => {
             if (g == null || sc.par[i] == null) return;
-            if (g <= sc.par[i])     birdies[name]++;
+            const d = g - sc.par[i];
+            if (d <= -2)       { birdies[name]++; eagles[name]++; }
+            else if (d === -1) { birdies[name]++; birdieOnly[name]++; }
+            else if (d === 0)  { birdies[name]++; parOnly[name]++; }
             if (g === sc.par[i] * 2) doubles[name]++;
           });
         }
       }
     }
-    function topEntries(map) {
+    function topEntries(map, subMaps) {
       if (!Object.keys(map).length) return null;
-      const best = Math.max(...Object.values(map));
+      const best  = Math.max(...Object.values(map));
       const names = Object.entries(map).filter(([, c]) => c === best).map(([n]) => n);
-      return { count: best, names };
+      const result = { count: best, names };
+      if (subMaps) {
+        result.breakdowns = {};
+        for (const n of names) {
+          result.breakdowns[n] = {
+            e: subMaps.eagles[n]     || 0,
+            b: subMaps.birdieOnly[n] || 0,
+            p: subMaps.parOnly[n]    || 0,
+          };
+        }
+      }
+      return result;
     }
-    return { topBirdie: topEntries(birdies), topDouble: topEntries(doubles) };
+    return {
+      topBirdie: topEntries(birdies, { eagles, birdieOnly, parOnly }),
+      topDouble: topEntries(doubles)
+    };
   }
 
   function buildSeasonRecords(playerFilter) {
