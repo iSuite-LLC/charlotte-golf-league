@@ -16,23 +16,25 @@ BYE: Nick Coglianese
 
 *R1 complete. R2 underway — 3 of 7 matches recorded.*
 
-| Rank | Player | Total Pts | Record | Avg NET |
+| Seed | Player | Total Pts | Record | Avg NET |
 |------|--------|-----------|--------|---------|
 | 1 | Charlotte Hayes | 14 | 2-0-0 | 38.5 |
 | 2 | Ethan High | 13 | 2-0-0 | 37.5 |
 | 3 | Bruce Atkins | 8 | 1-0-0 | 33.0 |
-| 3 | Carson Bass | 8 | 1-1-0 | 42.5 |
+| 4 | Carson Bass | 8 | 1-1-0 | 42.5 |
 | 5 | Curtis Lynn | 7 | 1-0-0 | 37.0 |
-| 5 | Megan Serian | 7 | 1-0-0 | 50.0 |
+| 6 | Megan Serian | 7 | 1-0-0 | 50.0 |
 | 7 | Brian Wojcio | 6 | 0-1-1 | 41.5 |
 | 8 | Rob Bass | 5 | 0-1-1 | 41.0 |
 | 9 | Jerome Martin | 4 | 0-0-1 | 54.0 |
-| 9 | Kaylan Adams | 4 | 0-1-1 | 52.5 |
+| 10 | Kaylan Adams | 4 | 0-1-1 | 52.5 |
 | 11 | Ben Linck | 2 | 0-1-0 | 39.0 |
 | 12 | Alex Palmer | 1 | 0-1-0 | 48.0 |
-| 12 | Nick Coglianese | 1 | 0-1-0 | 53.0 |
+| 13 | Nick Coglianese | 1 | 0-1-0 | 53.0 |
 | 14 | Michael McHugh | 0 | 0-1-0 | 46.0 |
 | — | David Maddox (BYE R1) | 0 | 0-0-0 | — |
+
+*Ties broken by: best record (most W, fewest L) → lowest avg NET → name. David Maddox listed separately — has not yet played a scored match.*
 
 ---
 
