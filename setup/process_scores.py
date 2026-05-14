@@ -391,7 +391,7 @@ def write_dashboard_json(rnd, name_to_num):
 
     data = {
         'season':       2026,
-        'lastUpdated':  _date.today().isoformat(),
+        'lastUpdated':  _datetime.now().strftime('%Y-%m-%d ') + _datetime.now().strftime('%I:%M %p').lstrip('0') + ' ET',
         'currentRound': rnd,
         'players':      players,
         'rounds':       rounds_out,
