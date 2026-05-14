@@ -4,10 +4,19 @@ This folder is the working directory for the 2026 IMI Golf League. Claude acts a
 
 ## Standing Instructions
 
-When the user asks for standings, reports scores, or requests a refresh:
-1. Read `2026 IMI Golf League.xlsx` → `Scores 2026` tab using openpyxl (`data_only=True, read_only=True`)
-2. Rewrite `Dashboard/standings.md` in full with current standings
-3. Commit and push the updated file
+When the user reports that new scores are in the Scores folder (or otherwise asks for a refresh), follow these steps **every time, in order**:
+
+1. **Identify the round** — figure out which round tab the new scores are on (e.g., `R2 Scores`). Ask the user if unclear.
+2. **Run the processor** — `python setup/process_scores.py "Scores/Scores.xlsx" "R{n} Scores"`. This is the only thing that syncs `Scores 2026` tab and `Dashboard/data.json`. Never skip this step — do not assume the watcher has already run.
+3. **Read the round tab** — open `Scores/Scores.xlsx` → `R{n} Scores` and note the actual matchups (paired by adjacent player blocks). Needed so the commit/recap text describes results accurately instead of guessing.
+4. **Read the master totals** — open `2026 IMI Golf League.xlsx` → `Scores 2026` tab (`data_only=True, read_only=True`) and pull every player's total points, W-L-D record, and avg NET.
+5. **Rewrite `Dashboard/standings.md` in full** — sort by:
+   1. Total points descending
+   2. Best record (most wins, then fewest losses) — ties for playoff seeding break here
+   3. Lowest average NET score
+   4. Name ascending (final tiebreaker only)
+6. **Commit and push** — stage `2026 IMI Golf League.xlsx`, `Dashboard/standings.md`, `Dashboard/data.json`, `Scores/Scores.xlsx`, `Score Calculator.xlsx`, `setup/processed_files.json`. Commit message must list the actual matchups from step 3, then push.
+7. **Website** — GitHub Pages auto-deploys from `Dashboard/` on push. No extra action needed.
 
 Do not modify `setup/watcher.py`, `setup/process_scores.py`, `setup/generate_recap.py`, `start_watcher.bat`, or `run_recap.bat` unless explicitly asked.
 
@@ -119,4 +128,8 @@ Each player = 2 consecutive rows: match points row then NET score row directly b
 - **Format:** Each round = 7 matches + 1 BYE. Max 8 pts per match across: First 3 holes, Middle 3, Final 3, Overall, Net Score.
 - **Win:** 4.5+ pts | **Draw:** 4.0 pts | **Loss:** < 4.0 pts
 - **Record format:** W-L-D
-- **Standings sort:** Total pts descending, then name ascending for ties
+- **Standings sort (playoff seeding order):**
+  1. Total pts descending
+  2. Best record (most wins, then fewest losses)
+  3. Lowest average NET score
+  4. Name ascending (final tiebreaker only)
