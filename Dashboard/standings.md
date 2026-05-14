@@ -1,7 +1,7 @@
 # IMI Golf League 2026 — Standings
 
 **Season:** 2026 | **Rounds:** 9 | **Players:** 15
-**Last updated:** 2026-05-13 via Claude (R2: 2 of 7 matches — in progress)
+**Last updated:** 2026-05-14 via Claude (R2: 3 of 7 matches — in progress)
 
 ---
 
@@ -14,20 +14,20 @@ BYE: Nick Coglianese
 
 ## Standings
 
-*R1 complete. R2 underway — 2 of 7 matches recorded.*
+*R1 complete. R2 underway — 3 of 7 matches recorded.*
 
 | Rank | Player | Total Pts | Record | Avg NET |
 |------|--------|-----------|--------|---------|
-| 1 | Ethan High | 13 | 2-0-0 | 37.5 |
-| 2 | Bruce Atkins | 8 | 1-0-0 | 33.0 |
-| 2 | Carson Bass | 8 | 1-1-0 | 42.5 |
-| 4 | Curtis Lynn | 7 | 1-0-0 | 37.0 |
-| 4 | Megan Serian | 7 | 1-0-0 | 50.0 |
-| 6 | Brian Wojcio | 6 | 0-1-1 | 41.5 |
-| 6 | Charlotte Hayes | 6 | 1-0-0 | 35.0 |
+| 1 | Charlotte Hayes | 14 | 2-0-0 | 38.5 |
+| 2 | Ethan High | 13 | 2-0-0 | 37.5 |
+| 3 | Bruce Atkins | 8 | 1-0-0 | 33.0 |
+| 3 | Carson Bass | 8 | 1-1-0 | 42.5 |
+| 5 | Curtis Lynn | 7 | 1-0-0 | 37.0 |
+| 5 | Megan Serian | 7 | 1-0-0 | 50.0 |
+| 7 | Brian Wojcio | 6 | 0-1-1 | 41.5 |
 | 8 | Rob Bass | 5 | 0-1-1 | 41.0 |
 | 9 | Jerome Martin | 4 | 0-0-1 | 54.0 |
-| 9 | Kaylan Adams | 4 | 0-0-1 | 54.0 |
+| 9 | Kaylan Adams | 4 | 0-1-1 | 52.5 |
 | 11 | Ben Linck | 2 | 0-1-0 | 39.0 |
 | 12 | Alex Palmer | 1 | 0-1-0 | 48.0 |
 | 12 | Nick Coglianese | 1 | 0-1-0 | 53.0 |

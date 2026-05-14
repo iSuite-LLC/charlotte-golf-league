@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-05-13",
+  "lastUpdated": "2026-05-14",
   "currentRound": 2,
   "players": [
     {
@@ -188,15 +188,22 @@
       "id": 10,
       "name": "Charlotte Hayes",
       "handicap": 20,
-      "totalPts": 6,
-      "record": "1-0-0",
-      "avgNet": 35.0,
+      "totalPts": 14,
+      "record": "2-0-0",
+      "avgNet": 38.5,
       "rounds": [
         {
           "round": 1,
           "matchPts": 6,
           "net": 35,
           "opponent": "Ben Linck",
+          "result": "W"
+        },
+        {
+          "round": 2,
+          "matchPts": 8,
+          "net": 42,
+          "opponent": "Kaylan Adams",
           "result": "W"
         }
       ]
@@ -232,8 +239,8 @@
       "name": "Kaylan Adams",
       "handicap": 36,
       "totalPts": 4,
-      "record": "0-0-1",
-      "avgNet": 54.0,
+      "record": "0-1-1",
+      "avgNet": 52.5,
       "rounds": [
         {
           "round": 1,
@@ -241,6 +248,13 @@
           "net": 54,
           "opponent": "Jerome Martin",
           "result": "D"
+        },
+        {
+          "round": 2,
+          "matchPts": 0,
+          "net": 51,
+          "opponent": "Charlotte Hayes",
+          "result": "L"
         }
       ]
     },
@@ -1020,6 +1034,15 @@
           "p2Pts": 4,
           "p2Net": 39,
           "winner": null
+        },
+        {
+          "p1": "Charlotte Hayes",
+          "p1Pts": 8,
+          "p1Net": 42,
+          "p2": "Kaylan Adams",
+          "p2Pts": 0,
+          "p2Net": 51,
+          "winner": "Charlotte Hayes"
         }
       ],
       "pairings": [
@@ -1239,13 +1262,95 @@
         },
         {
           "p1": "Charlotte Hayes",
-          "p1Pts": null,
-          "p1Net": null,
+          "p1Pts": 8,
+          "p1Net": 42,
           "p2": "Kaylan Adams",
-          "p2Pts": null,
-          "p2Net": null,
-          "winner": null,
-          "played": false
+          "p2Pts": 0,
+          "p2Net": 51,
+          "winner": "Charlotte Hayes",
+          "played": true,
+          "p1Scorecard": {
+            "course": "Highland Creek",
+            "nine": "Front 9",
+            "handicap": 20,
+            "par": [
+              4,
+              5,
+              3,
+              4,
+              4,
+              3,
+              5,
+              4,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              6,
+              6,
+              3,
+              6,
+              5,
+              5,
+              8,
+              7,
+              6
+            ],
+            "grossTotal": 52,
+            "net": [
+              5,
+              5,
+              2,
+              4,
+              4,
+              4,
+              7,
+              6,
+              5
+            ],
+            "netTotal": 42
+          },
+          "p2Scorecard": {
+            "course": "Highland Creek",
+            "nine": "Front 9",
+            "handicap": 36,
+            "par": [
+              4,
+              5,
+              3,
+              4,
+              4,
+              3,
+              5,
+              4,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              8,
+              10,
+              4,
+              8,
+              8,
+              6,
+              9,
+              8,
+              8
+            ],
+            "grossTotal": 69,
+            "net": [
+              6,
+              8,
+              2,
+              6,
+              6,
+              4,
+              7,
+              6,
+              6
+            ],
+            "netTotal": 51
+          }
         },
         {
           "p1": "David Maddox",
