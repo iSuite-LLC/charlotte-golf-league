@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-05-14 1:03 PM ET",
+  "lastUpdated": "2026-05-17 3:28 PM ET",
   "currentRound": 2,
   "players": [
     {
@@ -120,9 +120,9 @@
       "id": 6,
       "name": "Bruce Atkins",
       "handicap": 24,
-      "totalPts": 8,
-      "record": "1-0-0",
-      "avgNet": 33.0,
+      "totalPts": 10,
+      "record": "1-1-0",
+      "avgNet": 36.0,
       "rounds": [
         {
           "round": 1,
@@ -130,6 +130,13 @@
           "net": 33,
           "opponent": "Michael McHugh",
           "result": "W"
+        },
+        {
+          "round": 2,
+          "matchPts": 2,
+          "net": 39,
+          "opponent": "Curtis Lynn",
+          "result": "L"
         }
       ]
     },
@@ -154,15 +161,22 @@
       "id": 8,
       "name": "Curtis Lynn",
       "handicap": 28,
-      "totalPts": 7,
-      "record": "1-0-0",
-      "avgNet": 37.0,
+      "totalPts": 13,
+      "record": "2-0-0",
+      "avgNet": 37.5,
       "rounds": [
         {
           "round": 1,
           "matchPts": 7,
           "net": 37,
           "opponent": "Alex Palmer",
+          "result": "W"
+        },
+        {
+          "round": 2,
+          "matchPts": 6,
+          "net": 38,
+          "opponent": "Bruce Atkins",
           "result": "W"
         }
       ]
@@ -212,10 +226,18 @@
       "id": 11,
       "name": "David Maddox",
       "handicap": 36,
-      "totalPts": 0,
-      "record": "0-0-0",
-      "avgNet": null,
-      "rounds": []
+      "totalPts": 8,
+      "record": "1-0-0",
+      "avgNet": 43.0,
+      "rounds": [
+        {
+          "round": 2,
+          "matchPts": 8,
+          "net": 43,
+          "opponent": "Megan Serian",
+          "result": "W"
+        }
+      ]
     },
     {
       "id": 12,
@@ -263,8 +285,8 @@
       "name": "Megan Serian",
       "handicap": 36,
       "totalPts": 7,
-      "record": "1-0-0",
-      "avgNet": 50.0,
+      "record": "1-1-0",
+      "avgNet": 51.0,
       "rounds": [
         {
           "round": 1,
@@ -272,6 +294,13 @@
           "net": 50,
           "opponent": "Nick Coglianese",
           "result": "W"
+        },
+        {
+          "round": 2,
+          "matchPts": 0,
+          "net": 52,
+          "opponent": "David Maddox",
+          "result": "L"
         }
       ]
     },
@@ -1015,7 +1044,7 @@
       "round": 2,
       "dates": "May 4 – May 15",
       "bye": "Nick Coglianese",
-      "status": "in_progress",
+      "status": "complete",
       "matches": [
         {
           "p1": "Ethan High",
@@ -1043,6 +1072,24 @@
           "p2Pts": 0,
           "p2Net": 51,
           "winner": "Charlotte Hayes"
+        },
+        {
+          "p1": "Curtis Lynn",
+          "p1Pts": 6,
+          "p1Net": 38,
+          "p2": "Bruce Atkins",
+          "p2Pts": 2,
+          "p2Net": 39,
+          "winner": "Curtis Lynn"
+        },
+        {
+          "p1": "David Maddox",
+          "p1Pts": 8,
+          "p1Net": 43,
+          "p2": "Megan Serian",
+          "p2Pts": 0,
+          "p2Net": 52,
+          "winner": "David Maddox"
         }
       ],
       "pairings": [
@@ -1241,14 +1288,96 @@
           "played": false
         },
         {
-          "p1": "Bruce Atkins",
-          "p1Pts": null,
-          "p1Net": null,
-          "p2": "Curtis Lynn",
-          "p2Pts": null,
-          "p2Net": null,
-          "winner": null,
-          "played": false
+          "p1": "Curtis Lynn",
+          "p1Pts": 6,
+          "p1Net": 38,
+          "p2": "Bruce Atkins",
+          "p2Pts": 2,
+          "p2Net": 39,
+          "winner": "Curtis Lynn",
+          "played": true,
+          "p1Scorecard": {
+            "course": "Skybrook",
+            "nine": "Front 9",
+            "handicap": 28,
+            "par": [
+              4,
+              3,
+              4,
+              5,
+              4,
+              4,
+              3,
+              5,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              5,
+              4,
+              8,
+              7,
+              5,
+              5,
+              5,
+              5,
+              8
+            ],
+            "grossTotal": 52,
+            "net": [
+              3,
+              3,
+              6,
+              6,
+              3,
+              4,
+              4,
+              3,
+              6
+            ],
+            "netTotal": 38
+          },
+          "p2Scorecard": {
+            "course": "Skybrook",
+            "nine": "Front 9",
+            "handicap": 24,
+            "par": [
+              4,
+              3,
+              4,
+              5,
+              4,
+              4,
+              3,
+              5,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              6,
+              4,
+              5,
+              6,
+              7,
+              6,
+              5,
+              7,
+              5
+            ],
+            "grossTotal": 51,
+            "net": [
+              5,
+              3,
+              3,
+              5,
+              5,
+              5,
+              4,
+              6,
+              3
+            ],
+            "netTotal": 39
+          }
         },
         {
           "p1": "Ben Linck",
@@ -1354,13 +1483,95 @@
         },
         {
           "p1": "David Maddox",
-          "p1Pts": null,
-          "p1Net": null,
+          "p1Pts": 8,
+          "p1Net": 43,
           "p2": "Megan Serian",
-          "p2Pts": null,
-          "p2Net": null,
-          "winner": null,
-          "played": false
+          "p2Pts": 0,
+          "p2Net": 52,
+          "winner": "David Maddox",
+          "played": true,
+          "p1Scorecard": {
+            "course": "Skybrook",
+            "nine": "Front 9",
+            "handicap": 36,
+            "par": [
+              4,
+              3,
+              4,
+              5,
+              4,
+              4,
+              3,
+              5,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              8,
+              5,
+              7,
+              8,
+              7,
+              5,
+              6,
+              7,
+              8
+            ],
+            "grossTotal": 61,
+            "net": [
+              6,
+              3,
+              5,
+              6,
+              5,
+              3,
+              4,
+              5,
+              6
+            ],
+            "netTotal": 43
+          },
+          "p2Scorecard": {
+            "course": "Skybrook",
+            "nine": "Front 9",
+            "handicap": 36,
+            "par": [
+              4,
+              3,
+              4,
+              5,
+              4,
+              4,
+              3,
+              5,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              8,
+              6,
+              8,
+              10,
+              8,
+              6,
+              6,
+              10,
+              8
+            ],
+            "grossTotal": 70,
+            "net": [
+              6,
+              4,
+              6,
+              8,
+              6,
+              4,
+              4,
+              8,
+              6
+            ],
+            "netTotal": 52
+          }
         }
       ]
     },
