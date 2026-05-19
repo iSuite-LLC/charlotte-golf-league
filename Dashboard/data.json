@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-05-17 3:28 PM ET",
+  "lastUpdated": "2026-05-19 11:30 AM ET",
   "currentRound": 2,
   "players": [
     {
@@ -185,9 +185,9 @@
       "id": 9,
       "name": "Ben Linck",
       "handicap": 30,
-      "totalPts": 2,
-      "record": "0-1-0",
-      "avgNet": 39.0,
+      "totalPts": 10,
+      "record": "1-1-0",
+      "avgNet": 37.5,
       "rounds": [
         {
           "round": 1,
@@ -195,6 +195,13 @@
           "net": 39,
           "opponent": "Charlotte Hayes",
           "result": "L"
+        },
+        {
+          "round": 2,
+          "matchPts": 8,
+          "net": 36,
+          "opponent": "Jerome Martin",
+          "result": "W"
         }
       ]
     },
@@ -244,7 +251,7 @@
       "name": "Jerome Martin",
       "handicap": 36,
       "totalPts": 4,
-      "record": "0-0-1",
+      "record": "0-1-1",
       "avgNet": 54.0,
       "rounds": [
         {
@@ -253,6 +260,13 @@
           "net": 54,
           "opponent": "Kaylan Adams",
           "result": "D"
+        },
+        {
+          "round": 2,
+          "matchPts": 0,
+          "net": 54,
+          "opponent": "Ben Linck",
+          "result": "L"
         }
       ]
     },
@@ -1090,6 +1104,15 @@
           "p2Pts": 0,
           "p2Net": 52,
           "winner": "David Maddox"
+        },
+        {
+          "p1": "Ben Linck",
+          "p1Pts": 8,
+          "p1Net": 36,
+          "p2": "Jerome Martin",
+          "p2Pts": 0,
+          "p2Net": 54,
+          "winner": "Ben Linck"
         }
       ],
       "pairings": [
@@ -1381,13 +1404,95 @@
         },
         {
           "p1": "Ben Linck",
-          "p1Pts": null,
-          "p1Net": null,
+          "p1Pts": 8,
+          "p1Net": 36,
           "p2": "Jerome Martin",
-          "p2Pts": null,
-          "p2Net": null,
-          "winner": null,
-          "played": false
+          "p2Pts": 0,
+          "p2Net": 54,
+          "winner": "Ben Linck",
+          "played": true,
+          "p1Scorecard": {
+            "course": "Skybrook",
+            "nine": "Front 9",
+            "handicap": 30,
+            "par": [
+              4,
+              3,
+              4,
+              5,
+              4,
+              4,
+              3,
+              5,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              6,
+              5,
+              6,
+              6,
+              6,
+              6,
+              4,
+              6,
+              6
+            ],
+            "grossTotal": 51,
+            "net": [
+              4,
+              4,
+              4,
+              5,
+              4,
+              4,
+              3,
+              4,
+              4
+            ],
+            "netTotal": 36
+          },
+          "p2Scorecard": {
+            "course": "Skybrook",
+            "nine": "Front 9",
+            "handicap": 36,
+            "par": [
+              4,
+              3,
+              4,
+              5,
+              4,
+              4,
+              3,
+              5,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              8,
+              6,
+              8,
+              10,
+              8,
+              8,
+              6,
+              10,
+              8
+            ],
+            "grossTotal": 72,
+            "net": [
+              6,
+              4,
+              6,
+              8,
+              6,
+              6,
+              4,
+              8,
+              6
+            ],
+            "netTotal": 54
+          }
         },
         {
           "p1": "Charlotte Hayes",
@@ -1579,7 +1684,7 @@
       "round": 3,
       "dates": "May 18 – May 29",
       "bye": "Charlotte Hayes",
-      "status": "upcoming",
+      "status": "in_progress",
       "matches": [],
       "pairings": [
         {
