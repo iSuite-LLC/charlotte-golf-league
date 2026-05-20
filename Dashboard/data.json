@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-05-19 11:30 AM ET",
+  "lastUpdated": "2026-05-20 8:42 AM ET",
   "currentRound": 2,
   "players": [
     {
@@ -103,9 +103,9 @@
       "id": 5,
       "name": "Michael McHugh",
       "handicap": 22,
-      "totalPts": 0,
-      "record": "0-1-0",
-      "avgNet": 46.0,
+      "totalPts": 6,
+      "record": "1-1-0",
+      "avgNet": 44.5,
       "rounds": [
         {
           "round": 1,
@@ -113,6 +113,13 @@
           "net": 46,
           "opponent": "Bruce Atkins",
           "result": "L"
+        },
+        {
+          "round": 2,
+          "matchPts": 6,
+          "net": 43,
+          "opponent": "Alex Palmer",
+          "result": "W"
         }
       ]
     },
@@ -144,15 +151,22 @@
       "id": 7,
       "name": "Alex Palmer",
       "handicap": 27,
-      "totalPts": 1,
-      "record": "0-1-0",
-      "avgNet": 48.0,
+      "totalPts": 3,
+      "record": "0-2-0",
+      "avgNet": 48.5,
       "rounds": [
         {
           "round": 1,
           "matchPts": 1,
           "net": 48,
           "opponent": "Curtis Lynn",
+          "result": "L"
+        },
+        {
+          "round": 2,
+          "matchPts": 2,
+          "net": 49,
+          "opponent": "Michael McHugh",
           "result": "L"
         }
       ]
@@ -1113,6 +1127,15 @@
           "p2Pts": 0,
           "p2Net": 54,
           "winner": "Ben Linck"
+        },
+        {
+          "p1": "Michael McHugh",
+          "p1Pts": 6,
+          "p1Net": 43,
+          "p2": "Alex Palmer",
+          "p2Pts": 2,
+          "p2Net": 49,
+          "winner": "Michael McHugh"
         }
       ],
       "pairings": [
@@ -1302,13 +1325,95 @@
         },
         {
           "p1": "Michael McHugh",
-          "p1Pts": null,
-          "p1Net": null,
+          "p1Pts": 6,
+          "p1Net": 43,
           "p2": "Alex Palmer",
-          "p2Pts": null,
-          "p2Net": null,
-          "winner": null,
-          "played": false
+          "p2Pts": 2,
+          "p2Net": 49,
+          "winner": "Michael McHugh",
+          "played": true,
+          "p1Scorecard": {
+            "course": "Skybrook",
+            "nine": "Back 9",
+            "handicap": 22,
+            "par": [
+              4,
+              5,
+              4,
+              4,
+              3,
+              4,
+              3,
+              4,
+              5
+            ],
+            "parTotal": 36,
+            "gross": [
+              6,
+              9,
+              5,
+              5,
+              5,
+              4,
+              4,
+              8,
+              8
+            ],
+            "grossTotal": 54,
+            "net": [
+              4,
+              8,
+              4,
+              4,
+              4,
+              3,
+              3,
+              6,
+              7
+            ],
+            "netTotal": 43
+          },
+          "p2Scorecard": {
+            "course": "Skybrook",
+            "nine": "Back 9",
+            "handicap": 27,
+            "par": [
+              4,
+              5,
+              4,
+              4,
+              3,
+              4,
+              3,
+              4,
+              5
+            ],
+            "parTotal": 36,
+            "gross": [
+              8,
+              9,
+              8,
+              7,
+              5,
+              7,
+              5,
+              7,
+              6
+            ],
+            "grossTotal": 62,
+            "net": [
+              6,
+              8,
+              7,
+              5,
+              4,
+              5,
+              4,
+              5,
+              5
+            ],
+            "netTotal": 49
+          }
         },
         {
           "p1": "Curtis Lynn",
