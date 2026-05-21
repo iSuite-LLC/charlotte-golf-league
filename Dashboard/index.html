@@ -340,6 +340,37 @@
     .schedule-search-option:hover { background: var(--surface-hover); }
     .schedule-search-option.empty { color: var(--muted); cursor: default; font-style: italic; }
     .schedule-search-option.empty:hover { background: transparent; }
+    /* Per-player schedule view */
+    .player-schedule-summary {
+      margin: 0 16px 12px;
+      padding: 10px 14px;
+      background: var(--surface);
+      border-left: 3px solid var(--orange);
+      border-radius: 3px;
+      font-size: 0.9rem;
+    }
+    .player-schedule-summary .name  { font-weight: 700; color: var(--text); }
+    .player-schedule-summary .stats { color: var(--muted); margin-left: 8px; }
+    .player-schedule-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    .player-schedule-table thead th {
+      text-align: left;
+      padding: 9px 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .player-schedule-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); }
+    .player-schedule-table tr.current td { background: #1e1e1e; }
+    .player-schedule-table tr.bye td     { color: var(--muted); }
+    .ps-status              { font-weight: 700; }
+    .ps-status.W            { color: var(--green); }
+    .ps-status.L            { color: var(--red); }
+    .ps-status.D            { color: var(--silver); }
+    .ps-status.upcoming     { color: var(--muted); font-weight: 400; }
+    .ps-status.bye          { color: var(--muted); font-weight: 400; }
     /* ── Stats ── */
     .course-box       { background: var(--surface); border-radius: 6px; padding: 16px; margin-bottom: 20px; border: 1px solid var(--border); }
     .course-box-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; }
@@ -1200,7 +1231,56 @@
   }
 
   function renderPlayerScheduleHTML(name) {
-    return renderSeasonScheduleHTML();
+    const schedule = getPlayerSchedule(name);
+
+    const playerObj    = (leagueData.players || []).find(p => p.name === name) || {};
+    const record       = playerObj.record  ?? '';
+    const totalPts     = playerObj.totalPts ?? '';
+    const avgNet       = playerObj.avgNet  ?? '';
+    const summaryStats = [
+      record,
+      totalPts !== '' ? `${totalPts} pts`   : '',
+      avgNet   !== '' ? `${avgNet} avg NET` : '',
+    ].filter(Boolean).join(' · ');
+
+    const summary = `<div class="player-schedule-summary">
+      <span class="name">${name}</span>
+      <span class="stats">${summaryStats}</span>
+    </div>`;
+
+    const rows = schedule.map(s => {
+      const rowCls = [s.isCurrent ? 'current' : '', s.isBye ? 'bye' : ''].filter(Boolean).join(' ');
+      if (s.isBye) {
+        return `<tr class="${rowCls}">
+          <td>R${s.round}</td>
+          <td>${s.dates}</td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="ps-status bye">BYE</span></td>
+        </tr>`;
+      }
+      if (!s.played) {
+        return `<tr class="${rowCls}">
+          <td>R${s.round}</td>
+          <td>${s.dates}</td>
+          <td>vs ${s.opponent}</td>
+          <td>—</td>
+          <td><span class="ps-status upcoming">Upcoming</span></td>
+        </tr>`;
+      }
+      return `<tr class="${rowCls}">
+        <td>R${s.round}</td>
+        <td>${s.dates}</td>
+        <td>vs ${s.opponent}</td>
+        <td>${s.playerPts} – ${s.opponentPts}</td>
+        <td><span class="ps-status ${s.status}">${s.status}</span></td>
+      </tr>`;
+    }).join('');
+
+    return summary + `<table class="player-schedule-table">
+      <thead><tr><th>Round</th><th>Dates</th><th>Matchup</th><th>Result</th><th>Status</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
   }
 
   // Returns 9 entries (one per round) shaped:
