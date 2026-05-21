@@ -1033,7 +1033,16 @@
     </div>`;
   }
 
+  let selectedPlayer = null;
+
   function renderSchedule() {
+    const bodyHTML = selectedPlayer
+      ? renderPlayerScheduleHTML(selectedPlayer)
+      : renderSeasonScheduleHTML();
+    document.getElementById('tab-schedule').innerHTML = bodyHTML;
+  }
+
+  function renderSeasonScheduleHTML() {
     const rows = leagueData.schedule.map(s => {
       const rd     = leagueData.rounds.find(r => r.round === s.round);
       const status = rd ? rd.status : 'upcoming';
@@ -1055,11 +1064,14 @@
           <td colspan="4">${renderRoundDetail(s.round)}</td>
         </tr>`;
     }).join('');
-    document.getElementById('tab-schedule').innerHTML = `
-      <table class="schedule-table">
+    return `<table class="schedule-table">
         <thead><tr><th>Round</th><th>Dates</th><th>BYE</th><th>Status</th></tr></thead>
         <tbody>${rows}</tbody>
       </table>`;
+  }
+
+  function renderPlayerScheduleHTML(name) {
+    return renderSeasonScheduleHTML();
   }
 
   /* ── Stats ── */
