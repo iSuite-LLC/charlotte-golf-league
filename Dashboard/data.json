@@ -1,7 +1,7 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-05-20 8:42 AM ET",
-  "currentRound": 2,
+  "lastUpdated": "2026-05-21 8:42 AM ET",
+  "currentRound": 3,
   "players": [
     {
       "id": 1,
@@ -151,9 +151,9 @@
       "id": 7,
       "name": "Alex Palmer",
       "handicap": 27,
-      "totalPts": 3,
-      "record": "0-2-0",
-      "avgNet": 48.5,
+      "totalPts": 10,
+      "record": "1-2-0",
+      "avgNet": 45.3,
       "rounds": [
         {
           "round": 1,
@@ -168,6 +168,13 @@
           "net": 49,
           "opponent": "Michael McHugh",
           "result": "L"
+        },
+        {
+          "round": 3,
+          "matchPts": 7,
+          "net": 39,
+          "opponent": "Kaylan Adams",
+          "result": "W"
         }
       ]
     },
@@ -175,9 +182,9 @@
       "id": 8,
       "name": "Curtis Lynn",
       "handicap": 28,
-      "totalPts": 13,
-      "record": "2-0-0",
-      "avgNet": 37.5,
+      "totalPts": 21,
+      "record": "3-0-0",
+      "avgNet": 37.3,
       "rounds": [
         {
           "round": 1,
@@ -191,6 +198,13 @@
           "matchPts": 6,
           "net": 38,
           "opponent": "Bruce Atkins",
+          "result": "W"
+        },
+        {
+          "round": 3,
+          "matchPts": 8,
+          "net": 37,
+          "opponent": "Nick Coglianese",
           "result": "W"
         }
       ]
@@ -288,9 +302,9 @@
       "id": 13,
       "name": "Kaylan Adams",
       "handicap": 36,
-      "totalPts": 4,
-      "record": "0-1-1",
-      "avgNet": 52.5,
+      "totalPts": 5,
+      "record": "0-2-1",
+      "avgNet": 53.0,
       "rounds": [
         {
           "round": 1,
@@ -304,6 +318,13 @@
           "matchPts": 0,
           "net": 51,
           "opponent": "Charlotte Hayes",
+          "result": "L"
+        },
+        {
+          "round": 3,
+          "matchPts": 1,
+          "net": 54,
+          "opponent": "Alex Palmer",
           "result": "L"
         }
       ]
@@ -337,14 +358,21 @@
       "name": "Nick Coglianese",
       "handicap": 36,
       "totalPts": 1,
-      "record": "0-1-0",
-      "avgNet": 53.0,
+      "record": "0-2-0",
+      "avgNet": 53.5,
       "rounds": [
         {
           "round": 1,
           "matchPts": 1,
           "net": 53,
           "opponent": "Megan Serian",
+          "result": "L"
+        },
+        {
+          "round": 3,
+          "matchPts": 0,
+          "net": 54,
+          "opponent": "Curtis Lynn",
           "result": "L"
         }
       ]
@@ -1790,7 +1818,26 @@
       "dates": "May 18 – May 29",
       "bye": "Charlotte Hayes",
       "status": "in_progress",
-      "matches": [],
+      "matches": [
+        {
+          "p1": "Curtis Lynn",
+          "p1Pts": 8,
+          "p1Net": 37,
+          "p2": "Nick Coglianese",
+          "p2Pts": 0,
+          "p2Net": 54,
+          "winner": "Curtis Lynn"
+        },
+        {
+          "p1": "Alex Palmer",
+          "p1Pts": 7,
+          "p1Net": 39,
+          "p2": "Kaylan Adams",
+          "p2Pts": 1,
+          "p2Net": 54,
+          "winner": "Alex Palmer"
+        }
+      ],
       "pairings": [
         {
           "p1": "Brian Wojcio",
@@ -1824,23 +1871,187 @@
         },
         {
           "p1": "Alex Palmer",
-          "p1Pts": null,
-          "p1Net": null,
+          "p1Pts": 7,
+          "p1Net": 39,
           "p2": "Kaylan Adams",
-          "p2Pts": null,
-          "p2Net": null,
-          "winner": null,
-          "played": false
+          "p2Pts": 1,
+          "p2Net": 54,
+          "winner": "Alex Palmer",
+          "played": true,
+          "p1Scorecard": {
+            "course": "Highland Creek",
+            "nine": "Front 9",
+            "handicap": 27,
+            "par": [
+              4,
+              5,
+              3,
+              4,
+              4,
+              3,
+              5,
+              4,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              4,
+              7,
+              5,
+              4,
+              8,
+              6,
+              7,
+              4,
+              8
+            ],
+            "grossTotal": 53,
+            "net": [
+              2,
+              6,
+              4,
+              2,
+              7,
+              4,
+              6,
+              2,
+              6
+            ],
+            "netTotal": 39
+          },
+          "p2Scorecard": {
+            "course": "Highland Creek",
+            "nine": "Front 9",
+            "handicap": 36,
+            "par": [
+              4,
+              5,
+              3,
+              4,
+              4,
+              3,
+              5,
+              4,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              8,
+              10,
+              6,
+              8,
+              8,
+              6,
+              10,
+              8,
+              8
+            ],
+            "grossTotal": 72,
+            "net": [
+              6,
+              8,
+              4,
+              6,
+              6,
+              4,
+              8,
+              6,
+              6
+            ],
+            "netTotal": 54
+          }
         },
         {
           "p1": "Curtis Lynn",
-          "p1Pts": null,
-          "p1Net": null,
+          "p1Pts": 8,
+          "p1Net": 37,
           "p2": "Nick Coglianese",
-          "p2Pts": null,
-          "p2Net": null,
-          "winner": null,
-          "played": false
+          "p2Pts": 0,
+          "p2Net": 54,
+          "winner": "Curtis Lynn",
+          "played": true,
+          "p1Scorecard": {
+            "course": "Highland Creek",
+            "nine": "Front 9",
+            "handicap": 28,
+            "par": [
+              4,
+              5,
+              3,
+              4,
+              4,
+              3,
+              5,
+              4,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              5,
+              5,
+              6,
+              7,
+              5,
+              4,
+              5,
+              8,
+              6
+            ],
+            "grossTotal": 51,
+            "net": [
+              3,
+              4,
+              5,
+              5,
+              4,
+              2,
+              4,
+              6,
+              4
+            ],
+            "netTotal": 37
+          },
+          "p2Scorecard": {
+            "course": "Highland Creek",
+            "nine": "Front 9",
+            "handicap": 36,
+            "par": [
+              4,
+              5,
+              3,
+              4,
+              4,
+              3,
+              5,
+              4,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              8,
+              10,
+              6,
+              8,
+              8,
+              6,
+              10,
+              8,
+              8
+            ],
+            "grossTotal": 72,
+            "net": [
+              6,
+              8,
+              4,
+              6,
+              6,
+              4,
+              8,
+              6,
+              6
+            ],
+            "netTotal": 54
+          }
         },
         {
           "p1": "Ben Linck",
