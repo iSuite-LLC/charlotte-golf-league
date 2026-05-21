@@ -282,6 +282,64 @@
     .status-complete { color: var(--green);  font-weight: 600; }
     .status-current  { color: var(--orange); font-weight: 600; }
     .status-upcoming { color: #555; }
+    /* Player search control */
+    .schedule-search {
+      display: flex;
+      align-items: center;
+      margin: 14px 16px 12px;
+      position: relative;
+      max-width: 320px;
+    }
+    .schedule-search-input {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.92rem;
+      padding: 9px 56px 9px 12px;
+      border-radius: 4px;
+      outline: none;
+      font-family: inherit;
+    }
+    .schedule-search-input:focus { border-color: var(--orange); }
+    .schedule-search-chevron,
+    .schedule-search-clear {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 4px;
+      font-size: 0.85rem;
+    }
+    .schedule-search-chevron { right: 8px; }
+    .schedule-search-clear   { right: 30px; display: none; }
+    .schedule-search.has-value .schedule-search-clear { display: block; }
+    .schedule-search-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 4px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      max-height: 280px;
+      overflow-y: auto;
+      z-index: 50;
+      display: none;
+    }
+    .schedule-search-dropdown.open { display: block; }
+    .schedule-search-option {
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .schedule-search-option:hover { background: var(--surface-hover); }
+    .schedule-search-option.empty { color: var(--muted); cursor: default; font-style: italic; }
+    .schedule-search-option.empty:hover { background: transparent; }
     /* ── Stats ── */
     .course-box       { background: var(--surface); border-radius: 6px; padding: 16px; margin-bottom: 20px; border: 1px solid var(--border); }
     .course-box-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; }
@@ -1036,11 +1094,81 @@
   let selectedPlayer = null;
 
   function renderSchedule() {
+    const searchHTML = renderScheduleSearchBar();
     const bodyHTML = selectedPlayer
       ? renderPlayerScheduleHTML(selectedPlayer)
       : renderSeasonScheduleHTML();
-    document.getElementById('tab-schedule').innerHTML = bodyHTML;
+    document.getElementById('tab-schedule').innerHTML = searchHTML + bodyHTML;
   }
+
+  function renderScheduleSearchBar() {
+    const value       = selectedPlayer || '';
+    const hasValueCls = value ? 'has-value' : '';
+    return `<div class="schedule-search ${hasValueCls}" id="schedule-search">
+      <input type="text" class="schedule-search-input" id="schedule-search-input"
+             placeholder="Search player..." value="${value}"
+             oninput="filterPlayerDropdown(this.value)"
+             onfocus="openPlayerDropdown()"
+             onkeydown="if(event.key==='Escape'){closePlayerDropdown();this.blur();}">
+      <button class="schedule-search-clear" onclick="clearPlayer()" title="Clear">✕</button>
+      <button class="schedule-search-chevron" onclick="togglePlayerDropdown()" title="Browse players">▾</button>
+      <div class="schedule-search-dropdown" id="schedule-search-dropdown"></div>
+    </div>`;
+  }
+
+  function getPlayerNames() {
+    return (leagueData.players || [])
+      .map(p => p.name)
+      .sort((a, b) => a.localeCompare(b));
+  }
+
+  function openPlayerDropdown() {
+    const input = document.getElementById('schedule-search-input');
+    filterPlayerDropdown(input ? input.value : '');
+    document.getElementById('schedule-search-dropdown').classList.add('open');
+  }
+
+  function closePlayerDropdown() {
+    document.getElementById('schedule-search-dropdown')?.classList.remove('open');
+  }
+
+  function togglePlayerDropdown() {
+    const dd = document.getElementById('schedule-search-dropdown');
+    if (dd.classList.contains('open')) closePlayerDropdown();
+    else openPlayerDropdown();
+  }
+
+  function filterPlayerDropdown(text) {
+    const search  = (text || '').toLowerCase();
+    const matches = getPlayerNames().filter(n => n.toLowerCase().includes(search));
+    const html = matches.length
+      ? matches.map(n => {
+          const safe = n.replace(/'/g, "\\'");
+          return `<div class="schedule-search-option" onclick="selectPlayer('${safe}')">${n}</div>`;
+        }).join('')
+      : '<div class="schedule-search-option empty">No players match</div>';
+    document.getElementById('schedule-search-dropdown').innerHTML = html;
+
+    const wrap = document.getElementById('schedule-search');
+    if (text) wrap.classList.add('has-value');
+    else      wrap.classList.remove('has-value');
+  }
+
+  function selectPlayer(name) {
+    console.log('selectPlayer:', name); // wired in Task 4
+    closePlayerDropdown();
+  }
+
+  function clearPlayer() {
+    document.getElementById('schedule-search-input').value = '';
+    document.getElementById('schedule-search').classList.remove('has-value');
+    closePlayerDropdown();
+  }
+
+  document.addEventListener('click', (e) => {
+    const wrap = document.getElementById('schedule-search');
+    if (wrap && !wrap.contains(e.target)) closePlayerDropdown();
+  });
 
   function renderSeasonScheduleHTML() {
     const rows = leagueData.schedule.map(s => {
