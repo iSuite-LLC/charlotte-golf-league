@@ -1074,6 +1074,35 @@
     return renderSeasonScheduleHTML();
   }
 
+  // Returns 9 entries (one per round) shaped:
+  //   { round, dates, isBye, isCurrent, opponent?, played?, playerPts?, opponentPts?, status }
+  // status: 'W' | 'L' | 'D' | 'Upcoming' | 'BYE'
+  function getPlayerSchedule(name) {
+    return leagueData.schedule.map(s => {
+      const rd      = leagueData.rounds.find(r => r.round === s.round);
+      const pairing = rd && rd.pairings
+        ? rd.pairings.find(p => p.p1 === name || p.p2 === name)
+        : null;
+      const isCurrent = !!(rd && rd.status === 'in_progress');
+
+      if (!pairing) {
+        return { round: s.round, dates: s.dates, isBye: true, isCurrent, status: 'BYE' };
+      }
+
+      const isP1        = pairing.p1 === name;
+      const opponent    = isP1 ? pairing.p2    : pairing.p1;
+      const playerPts   = isP1 ? pairing.p1Pts : pairing.p2Pts;
+      const opponentPts = isP1 ? pairing.p2Pts : pairing.p1Pts;
+
+      if (!pairing.played) {
+        return { round: s.round, dates: s.dates, isBye: false, isCurrent, opponent, played: false, status: 'Upcoming' };
+      }
+      const status = pairing.winner === null ? 'D'
+                   : pairing.winner === name  ? 'W' : 'L';
+      return { round: s.round, dates: s.dates, isBye: false, isCurrent, opponent, played: true, playerPts, opponentPts, status };
+    });
+  }
+
   /* ── Stats ── */
   function buildHoleDifficulty(playerFilter) {
     const courses = {};
