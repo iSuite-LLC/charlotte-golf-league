@@ -1155,14 +1155,15 @@
   }
 
   function selectPlayer(name) {
-    console.log('selectPlayer:', name); // wired in Task 4
+    selectedPlayer = name;
     closePlayerDropdown();
+    renderSchedule();
   }
 
   function clearPlayer() {
-    document.getElementById('schedule-search-input').value = '';
-    document.getElementById('schedule-search').classList.remove('has-value');
+    selectedPlayer = null;
     closePlayerDropdown();
+    renderSchedule();
   }
 
   document.addEventListener('click', (e) => {
