@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-05-21 8:42 AM ET",
+  "lastUpdated": "2026-05-26 2:04 PM ET",
   "currentRound": 3,
   "players": [
     {
@@ -213,9 +213,9 @@
       "id": 9,
       "name": "Ben Linck",
       "handicap": 30,
-      "totalPts": 10,
-      "record": "1-1-0",
-      "avgNet": 37.5,
+      "totalPts": 14.5,
+      "record": "2-1-0",
+      "avgNet": 39.0,
       "rounds": [
         {
           "round": 1,
@@ -229,6 +229,13 @@
           "matchPts": 8,
           "net": 36,
           "opponent": "Jerome Martin",
+          "result": "W"
+        },
+        {
+          "round": 3,
+          "matchPts": 4.5,
+          "net": 42,
+          "opponent": "Megan Serian",
           "result": "W"
         }
       ]
@@ -333,9 +340,9 @@
       "id": 14,
       "name": "Megan Serian",
       "handicap": 36,
-      "totalPts": 7,
-      "record": "1-1-0",
-      "avgNet": 51.0,
+      "totalPts": 10.5,
+      "record": "1-2-0",
+      "avgNet": 48.3,
       "rounds": [
         {
           "round": 1,
@@ -349,6 +356,13 @@
           "matchPts": 0,
           "net": 52,
           "opponent": "David Maddox",
+          "result": "L"
+        },
+        {
+          "round": 3,
+          "matchPts": 3.5,
+          "net": 43,
+          "opponent": "Ben Linck",
           "result": "L"
         }
       ]
@@ -1836,6 +1850,15 @@
           "p2Pts": 1,
           "p2Net": 54,
           "winner": "Alex Palmer"
+        },
+        {
+          "p1": "Ben Linck",
+          "p1Pts": 4.5,
+          "p1Net": 42,
+          "p2": "Megan Serian",
+          "p2Pts": 3.5,
+          "p2Net": 43,
+          "winner": "Ben Linck"
         }
       ],
       "pairings": [
@@ -2055,13 +2078,95 @@
         },
         {
           "p1": "Ben Linck",
-          "p1Pts": null,
-          "p1Net": null,
+          "p1Pts": 4.5,
+          "p1Net": 42,
           "p2": "Megan Serian",
-          "p2Pts": null,
-          "p2Net": null,
-          "winner": null,
-          "played": false
+          "p2Pts": 3.5,
+          "p2Net": 43,
+          "winner": "Ben Linck",
+          "played": true,
+          "p1Scorecard": {
+            "course": "Highland Creek",
+            "nine": "Back 9",
+            "handicap": 30,
+            "par": [
+              4,
+              3,
+              5,
+              4,
+              4,
+              4,
+              4,
+              3,
+              5
+            ],
+            "parTotal": 36,
+            "gross": [
+              5,
+              4,
+              10,
+              4,
+              8,
+              7,
+              8,
+              6,
+              5
+            ],
+            "grossTotal": 57,
+            "net": [
+              4,
+              2,
+              8,
+              2,
+              7,
+              5,
+              6,
+              4,
+              4
+            ],
+            "netTotal": 42
+          },
+          "p2Scorecard": {
+            "course": "Highland Creek",
+            "nine": "Back 9",
+            "handicap": 36,
+            "par": [
+              4,
+              3,
+              5,
+              4,
+              4,
+              4,
+              4,
+              3,
+              5
+            ],
+            "parTotal": 36,
+            "gross": [
+              5,
+              6,
+              10,
+              7,
+              6,
+              8,
+              8,
+              6,
+              5
+            ],
+            "grossTotal": 61,
+            "net": [
+              3,
+              4,
+              8,
+              5,
+              4,
+              6,
+              6,
+              4,
+              3
+            ],
+            "netTotal": 43
+          }
         },
         {
           "p1": "David Maddox",
