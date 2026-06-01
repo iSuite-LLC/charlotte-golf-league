@@ -105,7 +105,7 @@ Each player = 2 consecutive rows: match points row then NET score row directly b
 | 4 | Jun 1 – Jun 12 | Jerome Martin (#12) |
 | 5 | Jun 15 – Jun 26 | Brian Wojcio, Ethan High, Rob Bass (#1, #2, #3) |
 | 6 | Jun 29 – Jul 10 | Carson Bass, Michael McHugh, Bruce Atkins (#4, #5, #6) |
-| 7 | Jul 13 – Jul 24 | Alex Palmer, Curtis Lynn, Ben Link (#7, #8, #9) |
+| 7 | Jul 13 – Jul 24 | Alex Palmer, Curtis Lynn, Ben Linck (#7, #8, #9) |
 | 8 | Jul 27 – Aug 7 | Kaylan Adams (#13) |
 | 9 | Aug 10 – Aug 21 | Megan Serian (#14) |
 

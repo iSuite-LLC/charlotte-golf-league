@@ -72,7 +72,7 @@ PLAYER_ROWS = {
      6: (13, 14),   # Bruce Atkins
      7: (15, 16),   # Alex Palmer
      8: (17, 18),   # Curtis Lynn
-     9: (19, 20),   # Ben Link
+     9: (19, 20),   # Ben Linck
     10: (21, 22),   # Charlotte Hayes
     11: (23, 24),   # David Maddox
     12: (25, 26),   # Jerome Martin

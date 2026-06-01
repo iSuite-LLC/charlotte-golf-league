@@ -58,7 +58,7 @@ C:\Users\ehigh\claude\Golf League\
 | 6 | Bruce Atkins | 24 |
 | 7 | Alex Palmer | 27 |
 | 8 | Curtis Lynn | 28 |
-| 9 | Ben Link | 30 |
+| 9 | Ben Linck | 30 |
 | 10 | Charlotte Hayes | 36 |
 | 11 | David Maddox | 36 |
 | 12 | Jerome Martin | 36 |
