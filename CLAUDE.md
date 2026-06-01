@@ -123,6 +123,8 @@ Each player = 2 consecutive rows: match points row then NET score row directly b
 | Aug 10 | R8 | R9 |
 | Aug 24 | R9 (finale) | Season end |
 
+`generate_recap.py` writes **two drafts per round**: a friendly one (`Round_NN_Recap_Draft_<date>.htm`) and a savage/roast one (`Round_NN_Recap_HARSH_Draft_<date>.htm`). The user picks which to send. Both tones live in `TONE_BANKS` in the script.
+
 ## Scoring Rules
 
 - **Format:** Each round = 7 matches + 1 BYE. Max 8 pts per match across: First 3 holes, Middle 3, Final 3, Overall, Net Score.

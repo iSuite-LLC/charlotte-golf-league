@@ -153,6 +153,117 @@ CLOSINGS = [
 ]
 
 
+# ── Harsh comedy banks (savage tone — second draft generated every round) ─────
+HARSH_OPENINGS = [
+    "Round {r} is in the books, and the books should probably be burned. What happened "
+    "out there wasn't golf — it was a hostage situation, and par was the hostage.",
+    "Round {r} is over, and the scorecards read like a series of cries for help. "
+    "Let's relive the carnage together.",
+    "Welcome to the Round {r} recap, where dreams came to die and handicaps showed up "
+    "purely to make excuses. Buckle up.",
+    "Round {r} is done. A few of you played golf. The rest committed a string of "
+    "unforced crimes against the sport. Let's name names.",
+    "The Round {r} results are in, and frankly, several of you owe the game of golf "
+    "a written apology.",
+    "Round {r}: where 'fore' wasn't a warning — it was an average. Let's break down "
+    "the wreckage.",
+    "Grab a seat. Round {r} produced numbers so ugly they should be redacted for the "
+    "children. Here we go.",
+    "Round {r} has concluded and the course is pressing charges. Settle in for the "
+    "damage report.",
+]
+
+HARSH_BEST_QUIPS = [
+    "{first} was the lone competent human on the course this week. Everyone else appeared "
+    "to be playing a different, worse sport with the same equipment. Congratulations on "
+    "clearing a bar that is currently underground.",
+    "{first} actually played golf this round, which — judging by everyone else — now "
+    "qualifies as a rare and exotic talent. Soak it in. It won't last.",
+    "{first} ran away with it while the rest of the field busied themselves losing balls "
+    "and what was left of their dignity. Briefly, we salute you.",
+    "{first} posted a round so good it's borderline suspicious. Either they practiced or "
+    "they cheated. We've chosen to be impressed. For now.",
+    "{first} single-handedly kept this league from being a total embarrassment this week. "
+    "The other fourteen of you should send a thank-you note.",
+    "{first} played like the trophy already has their name on it. The rest of you played "
+    "like you were drafting your own apology tour.",
+    "{first} embarrassed the entire field and didn't even have the decency to make it "
+    "close. Beautiful work. Genuinely rude. We love it.",
+    "{first} was the only person out there who looked like they'd held a club before "
+    "today. Frankly, it was jarring to witness.",
+]
+
+HARSH_WORST_QUIPS = [
+    "{first} didn't play a round of golf so much as assault a golf course and flee the "
+    "scene. No points. No defense. The scorecard has been forwarded to the proper "
+    "authorities and a grief counselor.",
+    "{first} turned in a scorecard that belongs in a true-crime documentary. Genuinely "
+    "heinous work out there. The course did not deserve this.",
+    "{first} set a brand-new league standard this week — for what NOT to do. The bar is "
+    "now somewhere in the parking lot.",
+    "{first} gave us a round so bad it loops back around to performance art. Avant-garde. "
+    "Unwatchable. Unforgettable.",
+    "{first} proved, beyond reasonable doubt, that golf is a sport you can be actively, "
+    "aggressively bad at. A lesson for us all.",
+    "{first} spent the afternoon redecorating the rough and donating golf balls to the "
+    "local wildlife. Generous. Catastrophic. But generous.",
+    "{first} should seriously consider a restraining order between themselves and any "
+    "golf course — for everyone's safety, including the course's.",
+    "{first} had the kind of round where even the scorekeeper winced. We're not angry. "
+    "We're just deeply, profoundly disappointed.",
+]
+
+HARSH_MISSING_QUIPS = [
+    "Still no scores. We're not sure whether you're hiding from the league or from "
+    "yourself. Either way — the numbers. Send them. Now.",
+    "Scores still not submitted. Too ashamed or too lazy — at this point we'd respect "
+    "either, if you'd just send them in.",
+    "No scores turned in. The deadline was Friday. Time, like your golf game, has gotten "
+    "completely away from you.",
+    "Still missing. Hiding the evidence doesn't make the round un-happen. We know you "
+    "played. Submit.",
+]
+
+HARSH_CLOSINGS = [
+    "Round {nr} is live. Statistically, most of you will not improve. But the deadline "
+    "is Friday {end}, so at the very least be punctual about your mediocrity.",
+    "Round {nr} is open. Top spot is up for grabs, assuming any of you can locate a "
+    "fairway. Scores due {end}.",
+    "Onto Round {nr}. Try to make it competitive — or at least make it funny. Deadline "
+    "{end}. We've heard every excuse, so don't bother.",
+    "Round {nr} awaits. Redemption is technically possible, if mathematically unlikely "
+    "for most of you. Submit by {end}.",
+    "Go get 'em in Round {nr}. The leaderboard is hungry and several of you are looking "
+    "like easy meals. Scores in by {end}.",
+]
+
+# ── Tone registry: each generated round writes one draft per tone ─────────────
+TONE_BANKS = {
+    "friendly": {
+        "openings": OPENINGS,
+        "best":     BEST_QUIPS,
+        "worst":    WORST_QUIPS,
+        "missing":  MISSING_QUIPS,
+        "closings": CLOSINGS,
+        "all_submitted": (
+            "None &mdash; everyone submitted their scores. This is historic. "
+            "Frame this email. Put it in the trophy case."
+        ),
+    },
+    "harsh": {
+        "openings": HARSH_OPENINGS,
+        "best":     HARSH_BEST_QUIPS,
+        "worst":    HARSH_WORST_QUIPS,
+        "missing":  HARSH_MISSING_QUIPS,
+        "closings": HARSH_CLOSINGS,
+        "all_submitted": (
+            "Nobody, somehow &mdash; every last score came in on time. Mark the "
+            "calendar; it's the one thing this group got right all round."
+        ),
+    },
+}
+
+
 # ── Helpers ───────────────────────────────────────────────────────────────────
 def fmt_date(d):
     """Format date as 'May 1' — Windows-compatible (no %-d)."""
@@ -203,14 +314,15 @@ def _sec(icon, label):
     )
 
 
-def generate_email(round_num, today=None):
+def generate_email(round_num, today=None, tone="friendly"):
     if today is None:
         today = datetime.date.today()
 
     r_info   = ROUNDS[round_num]
     bye_set  = set(r_info["bye_players"])
     has_next = (round_num + 1) in ROUNDS
-    rng      = random.Random(round_num * 13337)
+    banks    = TONE_BANKS[tone]
+    rng      = random.Random(round_num * 13337 + sum(ord(c) for c in tone))
 
     data = load_data(round_num)
 
@@ -262,7 +374,7 @@ def generate_email(round_num, today=None):
     )
 
     # ── Opening ───────────────────────────────────────────────────────────────
-    opening = rng.choice(OPENINGS).format(r=round_num)
+    opening = rng.choice(banks["openings"]).format(r=round_num)
     H.append(f'<p style="margin:16px 0 0;">{_h(opening)}</p>')
 
     # ── Standings ─────────────────────────────────────────────────────────────
@@ -331,27 +443,24 @@ def generate_email(round_num, today=None):
     # ── MVP ───────────────────────────────────────────────────────────────────
     if best:
         H.append(_sec("🏆", f"ROUND {round_num} MVP — {best['name'].upper()}  ({best['round_mp']:.1f} pts)"))
-        quip = rng.choice(BEST_QUIPS).format(first=best["first"])
+        quip = rng.choice(banks["best"]).format(first=best["first"])
         H.append(f'<p style="margin:10px 0 0;">{_h(quip)}</p>')
 
     # ── Participation award ───────────────────────────────────────────────────
     if worst:
         H.append(_sec("🪣", f"ROUND {round_num} PARTICIPATION AWARD — {worst['name'].upper()}  ({worst['round_mp']:.1f} pts)"))
-        quip = rng.choice(WORST_QUIPS).format(first=worst["first"])
+        quip = rng.choice(banks["worst"]).format(first=worst["first"])
         H.append(f'<p style="margin:10px 0 0;">{_h(quip)}</p>')
 
     # ── Missing scores ────────────────────────────────────────────────────────
     H.append(_sec("⚠️", "MISSING SCORES"))
     if missing:
         names_html = "".join(f'<li>{_h(p["name"])}</li>' for p in missing)
-        quip = rng.choice(MISSING_QUIPS)
+        quip = rng.choice(banks["missing"])
         H.append(f'<ul style="margin:8px 0 4px 20px;">{names_html}</ul>')
         H.append(f'<p style="margin:6px 0 0;">{_h(quip)}</p>')
     else:
-        H.append(
-            '<p style="margin:10px 0 0;">None &mdash; everyone submitted their scores. '
-            'This is historic. Frame this email. Put it in the trophy case.</p>'
-        )
+        H.append(f'<p style="margin:10px 0 0;">{banks["all_submitted"]}</p>')
 
     # ── BYE notice ────────────────────────────────────────────────────────────
     bye_label = " &amp; ".join(_h(b) for b in r_info["bye_players"])
@@ -367,7 +476,7 @@ def generate_email(round_num, today=None):
         nr_inf = ROUNDS[nr]
         nr_bye = " &amp; ".join(_h(b) for b in nr_inf["bye_players"])
         H.append(_sec("📅", f"UP NEXT: ROUND {nr}  ({fmt_date(nr_inf['start'])} – {fmt_date(nr_inf['end'])})"))
-        closing = rng.choice(CLOSINGS).format(nr=nr, end=fmt_date(nr_inf["end"]))
+        closing = rng.choice(banks["closings"]).format(nr=nr, end=fmt_date(nr_inf["end"]))
         H.append(
             f'<p style="margin:10px 0 0;">{_h(closing)}</p>'
             f'<p style="margin:6px 0 0;"><strong>BYE:</strong> {nr_bye}</p>'
@@ -411,14 +520,15 @@ def main():
     print(f"Generating Round {round_num} recap (today: {today})...")
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-    text     = generate_email(round_num, today)
-    filename = f"Round_{round_num:02d}_Recap_Draft_{today.isoformat()}.htm"
-    filepath = os.path.join(OUTPUT_DIR, filename)
+    for tone, tag in (("friendly", ""), ("harsh", "HARSH_")):
+        text     = generate_email(round_num, today, tone)
+        filename = f"Round_{round_num:02d}_Recap_{tag}Draft_{today.isoformat()}.htm"
+        filepath = os.path.join(OUTPUT_DIR, filename)
 
-    with open(filepath, "w", encoding="utf-8") as f:
-        f.write(text)
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write(text)
 
-    print(f"Saved: {filepath}")
+        print(f"Saved ({tone}): {filepath}")
 
 
 if __name__ == "__main__":
