@@ -1,7 +1,7 @@
 # IMI Golf League 2026 — Standings
 
 **Season:** 2026 | **Rounds:** 9 | **Players:** 15
-**Last updated:** 2026-05-26 via Claude (R3 in progress — 3 of 7 matches recorded)
+**Last updated:** 2026-06-01 via Claude (R3 in progress — 4 of 7 matches recorded)
 
 ---
 
@@ -14,24 +14,24 @@ BYE: Charlotte Hayes
 
 ## Standings
 
-*R1 and R2 complete. R3 underway — 3 of 7 matches recorded.*
+*R1 and R2 complete. R3 underway — 4 of 7 matches recorded.*
 
 | Seed | Player | Total Pts | Record | Avg NET |
 |------|--------|-----------|--------|---------|
 | 1 | Curtis Lynn | 21 | 3-0-0 | 37.3 |
-| 2 | Ben Linck | 14.5 | 2-1-0 | 39.0 |
-| 3 | Charlotte Hayes | 14 | 2-0-0 | 38.5 |
-| 4 | Ethan High | 13 | 2-0-0 | 37.5 |
-| 5 | Megan Serian | 10.5 | 1-2-0 | 48.3 |
-| 6 | Bruce Atkins | 10 | 1-1-0 | 36.0 |
-| 7 | Alex Palmer | 10 | 1-2-0 | 45.3 |
-| 8 | David Maddox | 8 | 1-0-0 | 43.0 |
+| 2 | David Maddox | 15 | 2-0-0 | 47.5 |
+| 3 | Ben Linck | 14.5 | 2-1-0 | 39.0 |
+| 4 | Charlotte Hayes | 14 | 2-0-0 | 38.5 |
+| 5 | Ethan High | 13 | 2-0-0 | 37.5 |
+| 6 | Megan Serian | 10.5 | 1-2-0 | 48.3 |
+| 7 | Bruce Atkins | 10 | 1-1-0 | 36.0 |
+| 8 | Alex Palmer | 10 | 1-2-0 | 45.3 |
 | 9 | Carson Bass | 8 | 1-1-0 | 42.5 |
 | 10 | Michael McHugh | 6 | 1-1-0 | 44.5 |
 | 11 | Brian Wojcio | 6 | 0-1-1 | 41.5 |
 | 12 | Rob Bass | 5 | 0-1-1 | 41.0 |
 | 13 | Kaylan Adams | 5 | 0-2-1 | 53.0 |
-| 14 | Jerome Martin | 4 | 0-1-1 | 54.0 |
+| 14 | Jerome Martin | 5 | 0-2-1 | 54.0 |
 | 15 | Nick Coglianese | 1 | 0-2-0 | 53.5 |
 
 *Ties broken by: best record (most W, fewest L) → lowest avg NET → name.*
