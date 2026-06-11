@@ -1591,19 +1591,29 @@
 
     const rec  = buildSeasonRecords(playerFilter || null);
     const spec = buildBirdiesAndDoublePars(playerFilter || null);
+    // Collapse repeated names so each player appears once per record card,
+    // with all their qualifying rounds joined (e.g. "Name · R1, R2").
+    const dedupeRoundEntries = entries => {
+      const byName = new Map();
+      for (const e of entries) {
+        if (!byName.has(e.name)) byName.set(e.name, []);
+        byName.get(e.name).push(e.round);
+      }
+      return [...byName.entries()].map(([name, rounds]) => ({ name, rounds }));
+    };
     let recordsHtml = '';
     if (rec.low || rec.high || spec.topBirdie || spec.topDouble) {
       const lowCard = rec.low
         ? `<div class="record-card low-card">
              <div class="record-label">Low Round</div>
              <div class="record-value">${rec.low.net}<span class="record-unit">NET</span></div>
-             <div class="record-who">${rec.low.entries.map(e => `${e.name} &middot; R${e.round}`).join('<br>')}</div>
+             <div class="record-who">${dedupeRoundEntries(rec.low.entries).map(e => `${e.name} &middot; R${e.rounds.join(', R')}`).join('<br>')}</div>
            </div>` : '';
       const highCard = rec.high
         ? `<div class="record-card high-card">
              <div class="record-label">High Round</div>
              <div class="record-value">${rec.high.net}<span class="record-unit">NET</span></div>
-             <div class="record-who">${rec.high.entries.map(e => `${e.name} &middot; R${e.round}`).join('<br>')}</div>
+             <div class="record-who">${dedupeRoundEntries(rec.high.entries).map(e => `${e.name} &middot; R${e.rounds.join(', R')}`).join('<br>')}</div>
            </div>` : '';
       const birdieCard = spec.topBirdie
         ? `<div class="record-card birdie-card">
