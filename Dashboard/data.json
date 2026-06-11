@@ -1,7 +1,7 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-06-01 10:41 AM ET",
-  "currentRound": 4,
+  "lastUpdated": "2026-06-03 11:07 AM ET",
+  "currentRound": 3,
   "players": [
     {
       "id": 1,
@@ -127,6 +127,7 @@
       "id": 6,
       "name": "Bruce Atkins",
       "handicap": 24,
+      "withdrawn": true,
       "totalPts": 10,
       "record": "1-1-0",
       "avgNet": 36.0,
@@ -1909,7 +1910,7 @@
           "p1": "Rob Bass",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Bruce Atkins",
+          "p2": "Bruce Replacement - TBD",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -2326,7 +2327,7 @@
           "p1": "Carson Bass",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Bruce Atkins",
+          "p2": "Bruce Replacement - TBD",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -2382,7 +2383,7 @@
           "played": false
         },
         {
-          "p1": "Bruce Atkins",
+          "p1": "Bruce Replacement - TBD",
           "p1Pts": null,
           "p1Net": null,
           "p2": "Alex Palmer",
@@ -2436,7 +2437,7 @@
     {
       "round": 6,
       "dates": "Jun 29 – Jul 10",
-      "bye": "C. Bass / McHugh / Atkins",
+      "bye": "C. Bass / McHugh",
       "status": "upcoming",
       "matches": [],
       "pairings": [
@@ -2560,7 +2561,7 @@
           "played": false
         },
         {
-          "p1": "Bruce Atkins",
+          "p1": "Bruce Replacement - TBD",
           "p1Pts": null,
           "p1Net": null,
           "p2": "Kaylan Adams",
@@ -2582,7 +2583,7 @@
           "p1": "Brian Wojcio",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Bruce Atkins",
+          "p2": "Bruce Replacement - TBD",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -2671,7 +2672,7 @@
           "p1": "Ethan High",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Bruce Atkins",
+          "p2": "Bruce Replacement - TBD",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -2759,7 +2760,7 @@
     {
       "round": 6,
       "dates": "Jun 29 – Jul 10",
-      "bye": "C. Bass / McHugh / Atkins"
+      "bye": "C. Bass / McHugh"
     },
     {
       "round": 7,
