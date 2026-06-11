@@ -156,6 +156,10 @@
       vertical-align: middle;
     }
     .player-row.muted td { color: var(--muted); cursor: default; }
+    .player-row.withdrawn { opacity: 0.5; }
+    .player-row.withdrawn .player-name { text-decoration: line-through; }
+    .wd-badge { display:inline-block; margin-left:6px; padding:1px 5px; border-radius:4px;
+                background:#3a2a2a; color:#c98; font-size:0.62rem; font-weight:700; vertical-align:middle; }
     .rank-badge {
       display: inline-block; width: 26px; height: 26px;
       border-radius: 50%; background: var(--surface);
@@ -830,7 +834,7 @@
     const hcp = p => (p.handicap != null ? p.handicap : '—');
 
     // Podium
-    const podiumHTML = renderPodium(ranked);
+    const podiumHTML = renderPodium(ranked.filter(p => !p.withdrawn));
 
     // Search
     const searchHTML = `<div class="search-wrap">
@@ -843,12 +847,16 @@
         <th>Rank</th><th>Player</th><th>Hcp</th><th>Pts</th><th>Record</th><th>Avg NET</th><th>Streak</th>
       </tr></thead><tbody>`;
 
-    ranked.forEach((p, i) => {
+    let activeRank = 0;
+    ranked.forEach((p) => {
+      const wd = !!p.withdrawn;
+      const rankCell = wd ? '<span class="wd-badge">WD</span>' : rankBadge(++activeRank);
+      const nameExtra = wd ? '<span class="wd-badge">WD</span>' : '';
       tableHTML += `
-        <tr class="player-row" id="row-${p.id}" onclick="toggleExpand('${p.id}')">
-          <td>${rankBadge(i + 1)}</td>
+        <tr class="player-row${wd ? ' withdrawn' : ''}" id="row-${p.id}" onclick="toggleExpand('${p.id}')">
+          <td>${rankCell}</td>
           <td>
-            <div class="player-name">${p.name}</div>
+            <div class="player-name">${p.name}${nameExtra}</div>
             ${lastMatchHTML(p)}
           </td>
           <td class="hcp">${hcp(p)}</td>
@@ -872,12 +880,15 @@
 
     // Mobile cards
     let cardsHTML = '<div class="player-cards">';
-    ranked.forEach((p, i) => {
-      const rank = i + 1;
+    let activeCardRank = 0;
+    ranked.forEach((p) => {
+      const wd = !!p.withdrawn;
+      const rank = wd ? null : ++activeCardRank;
+      const rankCell = wd ? '<span class="wd-badge">WD</span>' : rankBadge(rank);
       cardsHTML += `
-        <div class="player-card ${rank <= 3 ? 'rank-' + rank : ''}" onclick="toggleCardExpand('${p.id}')">
+        <div class="player-card ${(!wd && rank <= 3) ? 'rank-' + rank : ''}${wd ? ' withdrawn' : ''}" onclick="toggleCardExpand('${p.id}')">
           <div class="card-top">
-            <span style="min-width:26px">${rankBadge(rank)}</span>
+            <span style="min-width:26px">${rankCell}</span>
             <span class="card-name">${p.name}</span>
             <span class="card-pts">${p.totalPts}</span>
           </div>
@@ -1743,7 +1754,7 @@
 
     // Standings sort — same logic as renderStandings
     const ranked = leagueData.players
-      .filter(p => p.rounds.length > 0)
+      .filter(p => p.rounds.length > 0 && !p.withdrawn)
       .sort((a, b) => {
         if (b.totalPts !== a.totalPts) return b.totalPts - a.totalPts;
         const [aW, aL] = (a.record || '0-0-0').split('-').map(Number);
