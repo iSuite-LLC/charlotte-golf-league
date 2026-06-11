@@ -158,8 +158,10 @@
     .player-row.muted td { color: var(--muted); cursor: default; }
     .player-row.withdrawn { opacity: 0.5; }
     .player-row.withdrawn .player-name { text-decoration: line-through; }
-    .wd-badge { display:inline-block; margin-left:6px; padding:1px 5px; border-radius:4px;
-                background:#3a2a2a; color:#c98; font-size:0.62rem; font-weight:700; vertical-align:middle; }
+    .wd-badge { display: inline-block; margin-left: 6px; padding: 1px 5px; border-radius: 4px;
+                background: #3a2a2a; color: #c98; font-size: 0.62rem; font-weight: 700; vertical-align: middle; }
+    .player-card.withdrawn { opacity: 0.5; }
+    .player-card.withdrawn .card-name { text-decoration: line-through; }
     .rank-badge {
       display: inline-block; width: 26px; height: 26px;
       border-radius: 50%; background: var(--surface);
@@ -851,12 +853,11 @@
     ranked.forEach((p) => {
       const wd = !!p.withdrawn;
       const rankCell = wd ? '<span class="wd-badge">WD</span>' : rankBadge(++activeRank);
-      const nameExtra = wd ? '<span class="wd-badge">WD</span>' : '';
       tableHTML += `
         <tr class="player-row${wd ? ' withdrawn' : ''}" id="row-${p.id}" onclick="toggleExpand('${p.id}')">
           <td>${rankCell}</td>
           <td>
-            <div class="player-name">${p.name}${nameExtra}</div>
+            <div class="player-name">${p.name}</div>
             ${lastMatchHTML(p)}
           </td>
           <td class="hcp">${hcp(p)}</td>
@@ -886,7 +887,7 @@
       const rank = wd ? null : ++activeCardRank;
       const rankCell = wd ? '<span class="wd-badge">WD</span>' : rankBadge(rank);
       cardsHTML += `
-        <div class="player-card ${(!wd && rank <= 3) ? 'rank-' + rank : ''}${wd ? ' withdrawn' : ''}" onclick="toggleCardExpand('${p.id}')">
+        <div class="player-card${(!wd && rank <= 3) ? ' rank-' + rank : ''}${wd ? ' withdrawn' : ''}" onclick="toggleCardExpand('${p.id}')">
           <div class="card-top">
             <span style="min-width:26px">${rankCell}</span>
             <span class="card-name">${p.name}</span>
