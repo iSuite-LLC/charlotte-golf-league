@@ -44,7 +44,7 @@ Any player who plays an **extra** (pickup) match earns the right to **drop their
 ### Constraint: one column per round
 The protected master workbook (`2026 IMI Golf League.xlsx` → `Scores 2026`) has exactly **one column per round** per player. A player who plays twice in one round produces two results that cannot both occupy that single cell. Per the standing instructions, we **never write to this workbook directly** anyway.
 
-**Resolution:** All pickup-match data and the drop-lowest adjustment live in the **dashboard layer** — `Dashboard/data.json` and `Dashboard/standings.md`. The workbook holds at most the single "official" round score; the dashboard carries the full record (including pickup matches) and the adjusted, drop-applied standings. This means the workbook total and the official dashboard total may diverge for players who played pickups; the **dashboard is authoritative** for standings once pickups exist.
+**Resolution:** All pickup-match data and the drop-lowest adjustment live in the **dashboard layer** — `Dashboard/data.json` and `Dashboard/standings.md`. The workbook holds at most the single "official" round score; the dashboard carries the full record (including pickup matches) and the adjusted, drop-applied standings. This means the workbook total and the official dashboard total may diverge for players who played pickups; the **dashboard is authoritative** for standings once pickups exist. *(Confirmed by user 2026-06-11: this departure from "workbook is source of truth" is accepted.)*
 
 ### Today's changes (immediate)
 1. **`Dashboard/data.json`** — rename Bruce's opponent slot to `Bruce Replacement - TBD` in the R3, R4, R5, R7, R8, R9 `pairings`. Remove Bruce from the R6 bye string. Leave Bruce's `players[]` entry frozen with his R1/R2 results. The R3 slot stays `played: false` (pending makeup).
@@ -55,6 +55,9 @@ The protected master workbook (`2026 IMI Golf League.xlsx` → `Scores 2026`) ha
 - When a pickup match is actually played, record **both** the scheduled match and the pickup match in `data.json` for that round.
 - Apply the drop-lowest adjustment by hand at each standings refresh for any player who has played extra matches, removing their worst round from points, record, and avg NET.
 - Re-sort standings per the usual order (total pts ↓, record, avg NET ↓, name ↑).
+
+### League communication (in scope)
+Draft a short, friendly note to the league explaining: Bruce has withdrawn; his upcoming/incomplete matches now show `Bruce Replacement - TBD`; the scheduled opponent may invite any league member to a pickup match (that member plays twice that round); and any player who plays an extra match may drop their lowest round. Deliver as a standalone draft for the user to send (not auto-sent).
 
 ## Out of scope
 - No changes to `setup/process_scores.py`, `watcher.py`, `generate_recap.py`, or the `.bat` files (per CLAUDE.md). The drop-lowest logic is applied manually in the dashboard layer for now; automating it in the processor is a possible future task but not part of this change.
