@@ -7,7 +7,7 @@ This folder is the working directory for the 2026 IMI Golf League. Claude acts a
 When the user reports that new scores are in the Scores folder (or otherwise asks for a refresh), follow these steps **every time, in order**:
 
 1. **Identify the round** — figure out which round tab the new scores are on (e.g., `R2 Scores`). Ask the user if unclear.
-2. **Run the processor** — `python setup/process_scores.py "Scores/Scores.xlsx" "R{n} Scores"`. This is the only thing that syncs `Scores 2026` tab and `Dashboard/data.json`. Never skip this step — do not assume the watcher has already run.
+2. **Run the processor** — `python setup/process_scores.py "Scores/Scores.xlsx" "R{n} Scores"`. This is the only thing that syncs `Scores 2026` tab and `Dashboard/data.json`. Never skip this step.
 3. **Read the round tab** — open `Scores/Scores.xlsx` → `R{n} Scores` and note the actual matchups (paired by adjacent player blocks). Needed so the commit/recap text describes results accurately instead of guessing.
 4. **Read the master totals** — open `2026 IMI Golf League.xlsx` → `Scores 2026` tab (`data_only=True, read_only=True`) and pull every player's total points, W-L-D record, and avg NET.
 5. **Rewrite `Dashboard/standings.md` in full** — sort by:
@@ -18,7 +18,7 @@ When the user reports that new scores are in the Scores folder (or otherwise ask
 6. **Commit and push** — stage `2026 IMI Golf League.xlsx`, `Dashboard/standings.md`, `Dashboard/data.json`, `Scores/Scores.xlsx`, `Score Calculator.xlsx`, `setup/processed_files.json`. Commit message must list the actual matchups from step 3, then push.
 7. **Website** — GitHub Pages auto-deploys from `Dashboard/` on push. No extra action needed.
 
-Do not modify `setup/watcher.py`, `setup/process_scores.py`, `setup/generate_recap.py`, `start_watcher.bat`, or `run_recap.bat` unless explicitly asked.
+Do not modify `setup/process_scores.py`, `setup/generate_recap.py`, or `run_recap.bat` unless explicitly asked.
 
 ## Key Files
 
@@ -27,7 +27,6 @@ Do not modify `setup/watcher.py`, `setup/process_scores.py`, `setup/generate_rec
 | `2026 IMI Golf League.xlsx` | Source of truth — Schedule tab + Scores 2026 tab (password: `steelers`) |
 | `Scores/Scores.xlsx` | Score input — tabs R1 Scores through R9 Scores |
 | `setup/process_scores.py` | Processes a score tab → updates Scores 2026 |
-| `setup/watcher.py` | Auto-runs processor when Scores.xlsx changes (starts at login) |
 | `setup/generate_recap.py` | Generates round recap email draft → Recap Emails/ |
 | `Dashboard/standings.md` | Live standings — Claude rewrites this via conversation |
 | `setup/League Manager Guide.md` | Full system reference |
