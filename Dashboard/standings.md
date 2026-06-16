@@ -1,7 +1,7 @@
 # IMI Golf League 2026 — Standings
 
 **Season:** 2026 | **Rounds:** 9 | **Players:** 14 active (1 withdrawn)
-**Last updated:** 2026-06-11 via Claude (Bruce Atkins withdrawn; replacement/pickup rule in effect)
+**Last updated:** 2026-06-16 via Claude (R4 opener: Maddox–Coglianese draw recorded)
 
 ---
 
@@ -24,12 +24,12 @@ BYE: Jerome Martin
 
 ## Standings
 
-*R1 and R2 complete. R3 mostly complete (4 of 7 recorded; outstanding incl. Rob Bass's replacement makeup).*
+*R1 and R2 complete. R3 mostly complete. R4 underway — 1 of 7 matches recorded (Maddox–Coglianese draw).*
 
 | Seed | Player | Total Pts | Record | Avg NET |
 |------|--------|-----------|--------|---------|
 | 1 | Curtis Lynn | 21 | 3-0-0 | 37.3 |
-| 2 | David Maddox | 15 | 2-0-0 | 47.5 |
+| 2 | David Maddox | 19 | 2-0-1 | 46.0 |
 | 3 | Ben Linck | 14.5 | 2-1-0 | 39.0 |
 | 4 | Charlotte Hayes | 14 | 2-0-0 | 38.5 |
 | 5 | Ethan High | 13 | 2-0-0 | 37.5 |
@@ -39,9 +39,9 @@ BYE: Jerome Martin
 | 9 | Michael McHugh | 6 | 1-1-0 | 44.5 |
 | 10 | Brian Wojcio | 6 | 0-1-1 | 41.5 |
 | 11 | Rob Bass | 5 | 0-1-1 | 41.0 |
-| 12 | Kaylan Adams | 5 | 0-2-1 | 53.0 |
-| 13 | Jerome Martin | 5 | 0-2-1 | 54.0 |
-| 14 | Nick Coglianese | 1 | 0-2-0 | 53.5 |
+| 12 | Nick Coglianese | 5 | 0-2-1 | 50.0 |
+| 13 | Kaylan Adams | 5 | 0-2-1 | 53.0 |
+| 14 | Jerome Martin | 5 | 0-2-1 | 54.0 |
 | — | ~~Bruce Atkins~~ (WD) | 10 | 1-1-0 | 36.0 |
 
 *Ties broken by: best record (most W, fewest L) → lowest avg NET → name.*

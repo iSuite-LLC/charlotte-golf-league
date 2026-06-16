@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-06-01 10:41 AM ET",
+  "lastUpdated": "2026-06-16 11:00 AM ET",
   "currentRound": 4,
   "players": [
     {
@@ -127,7 +127,6 @@
       "id": 6,
       "name": "Bruce Atkins",
       "handicap": 24,
-      "withdrawn": true,
       "totalPts": 10,
       "record": "1-1-0",
       "avgNet": 36.0,
@@ -269,9 +268,9 @@
       "id": 11,
       "name": "David Maddox",
       "handicap": 36,
-      "totalPts": 15,
-      "record": "2-0-0",
-      "avgNet": 47.5,
+      "totalPts": 19,
+      "record": "2-0-1",
+      "avgNet": 46.0,
       "rounds": [
         {
           "round": 2,
@@ -286,6 +285,13 @@
           "net": 52,
           "opponent": "Jerome Martin",
           "result": "W"
+        },
+        {
+          "round": 4,
+          "matchPts": 4,
+          "net": 43,
+          "opponent": "Nick Coglianese",
+          "result": "D"
         }
       ]
     },
@@ -386,9 +392,9 @@
       "id": 15,
       "name": "Nick Coglianese",
       "handicap": 36,
-      "totalPts": 1,
-      "record": "0-2-0",
-      "avgNet": 53.5,
+      "totalPts": 5,
+      "record": "0-2-1",
+      "avgNet": 50.0,
       "rounds": [
         {
           "round": 1,
@@ -403,6 +409,13 @@
           "net": 54,
           "opponent": "Curtis Lynn",
           "result": "L"
+        },
+        {
+          "round": 4,
+          "matchPts": 4,
+          "net": 43,
+          "opponent": "David Maddox",
+          "result": "D"
         }
       ]
     }
@@ -1910,7 +1923,7 @@
           "p1": "Rob Bass",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Bruce Replacement - TBD",
+          "p2": "Bruce Atkins",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -2290,8 +2303,18 @@
       "round": 4,
       "dates": "Jun 1 – Jun 12",
       "bye": "Jerome Martin",
-      "status": "in_progress",
-      "matches": [],
+      "status": "complete",
+      "matches": [
+        {
+          "p1": "David Maddox",
+          "p1Pts": 4,
+          "p1Net": 43,
+          "p2": "Nick Coglianese",
+          "p2Pts": 4,
+          "p2Net": 43,
+          "winner": null
+        }
+      ],
       "pairings": [
         {
           "p1": "Brian Wojcio",
@@ -2327,7 +2350,7 @@
           "p1": "Carson Bass",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Bruce Replacement - TBD",
+          "p2": "Bruce Atkins",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -2355,13 +2378,95 @@
         },
         {
           "p1": "David Maddox",
-          "p1Pts": null,
-          "p1Net": null,
+          "p1Pts": 4,
+          "p1Net": 43,
           "p2": "Nick Coglianese",
-          "p2Pts": null,
-          "p2Net": null,
+          "p2Pts": 4,
+          "p2Net": 43,
           "winner": null,
-          "played": false
+          "played": true,
+          "p1Scorecard": {
+            "course": "Highland Creek",
+            "nine": "Front 9",
+            "handicap": 36,
+            "par": [
+              4,
+              5,
+              3,
+              4,
+              4,
+              3,
+              5,
+              4,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              7,
+              10,
+              6,
+              8,
+              5,
+              6,
+              6,
+              6,
+              7
+            ],
+            "grossTotal": 61,
+            "net": [
+              5,
+              8,
+              4,
+              6,
+              3,
+              4,
+              4,
+              4,
+              5
+            ],
+            "netTotal": 43
+          },
+          "p2Scorecard": {
+            "course": "Highland Creek",
+            "nine": "Front 9",
+            "handicap": 36,
+            "par": [
+              4,
+              5,
+              3,
+              4,
+              4,
+              3,
+              5,
+              4,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              7,
+              10,
+              6,
+              8,
+              5,
+              6,
+              6,
+              6,
+              7
+            ],
+            "grossTotal": 61,
+            "net": [
+              5,
+              8,
+              4,
+              6,
+              3,
+              4,
+              4,
+              4,
+              5
+            ],
+            "netTotal": 43
+          }
         }
       ]
     },
@@ -2369,7 +2474,7 @@
       "round": 5,
       "dates": "Jun 15 – Jun 26",
       "bye": "Wojcio / High / R. Bass",
-      "status": "upcoming",
+      "status": "in_progress",
       "matches": [],
       "pairings": [
         {
@@ -2383,7 +2488,7 @@
           "played": false
         },
         {
-          "p1": "Bruce Replacement - TBD",
+          "p1": "Bruce Atkins",
           "p1Pts": null,
           "p1Net": null,
           "p2": "Alex Palmer",
@@ -2437,7 +2542,7 @@
     {
       "round": 6,
       "dates": "Jun 29 – Jul 10",
-      "bye": "C. Bass / McHugh",
+      "bye": "C. Bass / McHugh / Atkins",
       "status": "upcoming",
       "matches": [],
       "pairings": [
@@ -2561,7 +2666,7 @@
           "played": false
         },
         {
-          "p1": "Bruce Replacement - TBD",
+          "p1": "Bruce Atkins",
           "p1Pts": null,
           "p1Net": null,
           "p2": "Kaylan Adams",
@@ -2583,7 +2688,7 @@
           "p1": "Brian Wojcio",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Bruce Replacement - TBD",
+          "p2": "Bruce Atkins",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -2672,7 +2777,7 @@
           "p1": "Ethan High",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Bruce Replacement - TBD",
+          "p2": "Bruce Atkins",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -2760,7 +2865,7 @@
     {
       "round": 6,
       "dates": "Jun 29 – Jul 10",
-      "bye": "C. Bass / McHugh"
+      "bye": "C. Bass / McHugh / Atkins"
     },
     {
       "round": 7,
