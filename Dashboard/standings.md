@@ -15,16 +15,16 @@ Bruce Atkins has withdrawn from the league. His played results (R1, R2) stand an
 
 ## Current Round
 
-**Round 4** | Jun 1 – Jun 12, 2026
-BYE: Jerome Martin
+**Round 5** | Jun 15 – Jun 26, 2026
+BYE: Brian Wojcio, Ethan High, Rob Bass
 
-> **Note:** Carson Bass's R4 opponent is now "Bruce Replacement - TBD." Rob Bass's R3 match is an outstanding makeup against a replacement. Standings shift as those come in.
+> **Note:** Round 4 is closed. Only one R4 match was played (Maddox–Coglianese, a draw) — the rest went unplayed and will not be recorded. We're now on to Round 5.
 
 ---
 
 ## Standings
 
-*R1 and R2 complete. R3 mostly complete. R4 underway — 1 of 7 matches recorded (Maddox–Coglianese draw).*
+*R1 and R2 complete. R3 mostly complete. R4 closed with only 1 of 7 matches played (Maddox–Coglianese draw). R5 now underway.*
 
 | Seed | Player | Total Pts | Record | Avg NET |
 |------|--------|-----------|--------|---------|
@@ -55,8 +55,8 @@ BYE: Jerome Martin
 | 1 | Apr 20 – May 1 | David Maddox |
 | 2 | May 4 – May 15 | Nick Coglianese |
 | 3 | May 18 – May 29 | Charlotte Hayes |
-| **4 ← current** | Jun 1 – Jun 12 | Jerome Martin |
-| 5 | Jun 15 – Jun 26 | Wojcio / High / R. Bass |
+| 4 | Jun 1 – Jun 12 | Jerome Martin |
+| **5 ← current** | Jun 15 – Jun 26 | Wojcio / High / R. Bass |
 | 6 | Jun 29 – Jul 10 | C. Bass / McHugh |
 | 7 | Jul 13 – Jul 24 | Palmer / Lynn / Linck |
 | 8 | Jul 27 – Aug 7 | Kaylan Adams |
