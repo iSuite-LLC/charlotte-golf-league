@@ -8,6 +8,7 @@ When the user reports that new scores are in the Scores folder (or otherwise ask
 
 1. **Identify the round** — figure out which round tab the new scores are on (e.g., `R2 Scores`). Ask the user if unclear.
 2. **Run the processor** — `python setup/process_scores.py "Scores/Scores.xlsx" "R{n} Scores"`. This is the only thing that syncs `Scores 2026` tab and `Dashboard/data.json`. Never skip this step.
+2b. **Re-apply dashboard overrides** — `python setup/apply_overrides.py`. The processor rebuilds `data.json` from the workbook and WIPES dashboard-only edits (Bruce Atkins's withdrawal, his "Replacement - TBD" pairings, the corrected R6 bye). This idempotent script restores them. Never skip — run it immediately after step 2, every time.
 3. **Read the round tab** — open `Scores/Scores.xlsx` → `R{n} Scores` and note the actual matchups (paired by adjacent player blocks). Needed so the commit/recap text describes results accurately instead of guessing.
 4. **Read the master totals** — open `2026 IMI Golf League.xlsx` → `Scores 2026` tab (`data_only=True, read_only=True`) and pull every player's total points, W-L-D record, and avg NET.
 5. **Rewrite `Dashboard/standings.md` in full** — sort by:
@@ -27,6 +28,7 @@ Do not modify `setup/process_scores.py`, `setup/generate_recap.py`, or `run_reca
 | `2026 IMI Golf League.xlsx` | Source of truth — Schedule tab + Scores 2026 tab (password: `steelers`) |
 | `Scores/Scores.xlsx` | Score input — tabs R1 Scores through R9 Scores |
 | `setup/process_scores.py` | Processes a score tab → updates Scores 2026 |
+| `setup/apply_overrides.py` | Re-applies dashboard-only overrides (Bruce withdrawal/TBD pairings/R6 bye) wiped by the processor — run after every score run |
 | `setup/generate_recap.py` | Generates round recap email draft → Recap Emails/ |
 | `Dashboard/standings.md` | Live standings — Claude rewrites this via conversation |
 | `setup/League Manager Guide.md` | Full system reference |
