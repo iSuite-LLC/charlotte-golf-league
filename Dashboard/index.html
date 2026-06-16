@@ -1064,10 +1064,24 @@
           </div>
         </div>`;
       }
-      const badgeCls = r.status === 'in_progress' ? 'in-progress' : 'complete';
-      const badgeTxt = r.status === 'in_progress' ? 'In Progress' : 'Complete';
-      const isOpen   = r.status === 'in_progress';
-      const played = (r.pairings || r.matches || []).filter(m => m.played !== false);
+      const allPairings = r.pairings || r.matches || [];
+      const played    = allPairings.filter(m => m.played !== false);
+      const remaining = allPairings.length - played.length;
+      // While the round is still within its date window (in_progress) keep the
+      // "In Progress" badge. Only once the window has passed (complete) do we
+      // surface "Complete" (all in) or how many matches are still missing.
+      let badgeCls, badgeTxt;
+      if (r.status === 'in_progress') {
+        badgeCls = 'in-progress';
+        badgeTxt = 'In Progress';
+      } else if (remaining === 0) {
+        badgeCls = 'complete';
+        badgeTxt = 'Complete';
+      } else {
+        badgeCls = 'in-progress';
+        badgeTxt = remaining === 1 ? '1 match remaining' : remaining + ' matches remaining';
+      }
+      const isOpen    = r.status === 'in_progress';
       const matchRows = played.map((m, mi) => {
         const draw    = m.winner === null;
         const scId    = `sc-r${r.round}-m${mi}`;
