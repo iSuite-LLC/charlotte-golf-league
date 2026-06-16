@@ -287,6 +287,7 @@
     .matchup-table td { padding: 7px 10px; border-top: 1px solid #2a2a2a; }
     .status-complete { color: var(--green);  font-weight: 600; }
     .status-current  { color: var(--orange); font-weight: 600; }
+    .status-missing  { color: var(--red);    font-weight: 700; }
     .status-upcoming { color: #555; }
     /* Player search control */
     .schedule-search {
@@ -375,6 +376,7 @@
     .ps-status.W            { color: var(--green); }
     .ps-status.L            { color: var(--red); }
     .ps-status.D            { color: var(--silver); }
+    .ps-status.missing      { color: var(--red); }
     .ps-status.upcoming     { color: var(--muted); font-weight: 400; }
     .ps-status.bye          { color: var(--muted); font-weight: 400; }
     /* ── Stats ── */
@@ -1232,10 +1234,19 @@
     const rows = leagueData.schedule.map(s => {
       const rd     = leagueData.rounds.find(r => r.round === s.round);
       const status = rd ? rd.status : 'upcoming';
-      const statusHTML =
-        status === 'complete'    ? '<span class="status-complete">Done</span>'     :
-        status === 'in_progress' ? '<span class="status-current">Now</span>'       :
-                                   '<span class="status-upcoming">Upcoming</span>';
+      // Once a round's date window has passed (status 'complete'): "Done" if every
+      // match is recorded, otherwise red "MISSING". Anything not yet past-due
+      // (the current round and future rounds) shows "Upcoming".
+      let statusHTML;
+      if (status === 'complete') {
+        const pairings  = (rd && (rd.pairings || rd.matches)) || [];
+        const remaining = pairings.length - pairings.filter(m => m.played !== false).length;
+        statusHTML = remaining === 0
+          ? '<span class="status-complete">Done</span>'
+          : '<span class="status-missing">MISSING</span>';
+      } else {
+        statusHTML = '<span class="status-upcoming">Upcoming</span>';
+      }
       const rowCls = [
         status === 'in_progress' ? 'current-round' : status === 'complete' ? 'complete-round' : '',
         'clickable'
@@ -1286,12 +1297,13 @@
         </tr>`;
       }
       if (!s.played) {
+        const cls = s.status === 'MISSING' ? 'missing' : 'upcoming';
         return `<tr class="${rowCls}">
           <td>R${s.round}</td>
           <td>${s.dates}</td>
           <td>vs ${s.opponent}</td>
           <td>—</td>
-          <td><span class="ps-status upcoming">Upcoming</span></td>
+          <td><span class="ps-status ${cls}">${s.status}</span></td>
         </tr>`;
       }
       return `<tr class="${rowCls}">
@@ -1311,7 +1323,7 @@
 
   // Returns 9 entries (one per round) shaped:
   //   { round, dates, isBye, isCurrent, opponent?, played?, playerPts?, opponentPts?, status }
-  // status: 'W' | 'L' | 'D' | 'Upcoming' | 'BYE'
+  // status: 'W' | 'L' | 'D' | 'MISSING' | 'Upcoming' | 'BYE'
   function getPlayerSchedule(name) {
     return leagueData.schedule.map(s => {
       const rd      = leagueData.rounds.find(r => r.round === s.round);
@@ -1330,7 +1342,8 @@
       const opponentPts = isP1 ? pairing.p2Pts : pairing.p1Pts;
 
       if (!pairing.played) {
-        return { round: s.round, dates: s.dates, isBye: false, isCurrent, opponent, played: false, status: 'Upcoming' };
+        const pastDue = !!(rd && rd.status === 'complete');
+        return { round: s.round, dates: s.dates, isBye: false, isCurrent, opponent, played: false, status: pastDue ? 'MISSING' : 'Upcoming' };
       }
       const status = pairing.winner === null ? 'D'
                    : pairing.winner === name  ? 'W' : 'L';
