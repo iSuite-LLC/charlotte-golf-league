@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-06-16 02:00 PM ET",
+  "lastUpdated": "2026-06-16 03:30 PM ET",
   "currentRound": 5,
   "players": [
     {
@@ -145,7 +145,8 @@
           "opponent": "Curtis Lynn",
           "result": "L"
         }
-      ]
+      ],
+      "withdrawn": true
     },
     {
       "id": 7,
@@ -1923,7 +1924,7 @@
           "p1": "Rob Bass",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Bruce Atkins",
+          "p2": "Bruce Replacement - TBD",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -2350,7 +2351,7 @@
           "p1": "Carson Bass",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Bruce Atkins",
+          "p2": "Bruce Replacement - TBD",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -2488,7 +2489,7 @@
           "played": false
         },
         {
-          "p1": "Bruce Atkins",
+          "p1": "Bruce Replacement - TBD",
           "p1Pts": null,
           "p1Net": null,
           "p2": "Alex Palmer",
@@ -2542,7 +2543,7 @@
     {
       "round": 6,
       "dates": "Jun 29 – Jul 10",
-      "bye": "C. Bass / McHugh / Atkins",
+      "bye": "C. Bass / McHugh",
       "status": "upcoming",
       "matches": [],
       "pairings": [
@@ -2666,7 +2667,7 @@
           "played": false
         },
         {
-          "p1": "Bruce Atkins",
+          "p1": "Bruce Replacement - TBD",
           "p1Pts": null,
           "p1Net": null,
           "p2": "Kaylan Adams",
@@ -2688,7 +2689,7 @@
           "p1": "Brian Wojcio",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Bruce Atkins",
+          "p2": "Bruce Replacement - TBD",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -2777,7 +2778,7 @@
           "p1": "Ethan High",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Bruce Atkins",
+          "p2": "Bruce Replacement - TBD",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -2865,7 +2866,7 @@
     {
       "round": 6,
       "dates": "Jun 29 – Jul 10",
-      "bye": "C. Bass / McHugh / Atkins"
+      "bye": "C. Bass / McHugh"
     },
     {
       "round": 7,
