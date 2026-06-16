@@ -18,13 +18,13 @@ Bruce Atkins has withdrawn from the league. His played results (R1, R2) stand an
 **Round 5** | Jun 15 – Jun 26, 2026
 BYE: Brian Wojcio, Ethan High, Rob Bass
 
-> **Note:** Round 4 is closed. Only one R4 match was played (Maddox–Coglianese, a draw) — the rest went unplayed and will not be recorded. We're now on to Round 5.
+> **Note:** We've moved on to Round 5, but Round 4 makeup matches are still being played and will be recorded as they come in. So far only Maddox–Coglianese (a draw) is in the books.
 
 ---
 
 ## Standings
 
-*R1 and R2 complete. R3 mostly complete. R4 closed with only 1 of 7 matches played (Maddox–Coglianese draw). R5 now underway.*
+*R1 and R2 complete. R3 mostly complete. R5 now underway, with R4 makeup matches still outstanding (only Maddox–Coglianese recorded so far).*
 
 | Seed | Player | Total Pts | Record | Avg NET |
 |------|--------|-----------|--------|---------|
