@@ -1235,15 +1235,15 @@
       const rd     = leagueData.rounds.find(r => r.round === s.round);
       const status = rd ? rd.status : 'upcoming';
       // Once a round's date window has passed (status 'complete'): "Done" if every
-      // match is recorded, otherwise red "MISSING". Anything not yet past-due
-      // (the current round and future rounds) shows "Upcoming".
+      // match is recorded, otherwise "N matches remaining" (mirrors the Results
+      // tab). Anything not yet past-due (current + future rounds) shows "Upcoming".
       let statusHTML;
       if (status === 'complete') {
         const pairings  = (rd && (rd.pairings || rd.matches)) || [];
         const remaining = pairings.length - pairings.filter(m => m.played !== false).length;
         statusHTML = remaining === 0
           ? '<span class="status-complete">Done</span>'
-          : '<span class="status-missing">MISSING</span>';
+          : '<span class="status-current">' + (remaining === 1 ? '1 match remaining' : remaining + ' matches remaining') + '</span>';
       } else {
         statusHTML = '<span class="status-upcoming">Upcoming</span>';
       }
