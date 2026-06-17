@@ -34,15 +34,12 @@ BYE_OVERRIDES = {
     6: "C. Bass / McHugh",   # Bruce was the 3rd bye player here; now withdrawn.
 }
 
-# Mid-season handicap adjustments. Sets the player's CURRENT roster/display
-# handicap on the dashboard. This is display-only: historical per-round
-# scorecards keep the handicap they were played at, and future-round strokes are
-# computed from whatever handicap is entered on that round's score-input
-# scorecard (enter the new value there going forward). Without this override the
-# value would be re-pulled as the old Schedule-tab handicap on every processor run.
-HANDICAP_OVERRIDES = {
-    "Alex Palmer": 30,   # adjusted from 27, effective R4 (mid-season, 2026-06-17)
-}
+# NOTE: mid-season handicap changes are now made directly in the master
+# workbook's Schedule tab (col D), which process_scores.py reads as the current
+# roster handicap — so no override is needed here. Historical per-round
+# scorecards keep the handicap they were played at; future-round strokes come
+# from the handicap entered on each round's score-input scorecard. (Alex Palmer
+# was raised 27 → 30 in the Schedule tab effective R4 on 2026-06-17.)
 
 DEFAULT_PATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
@@ -79,14 +76,6 @@ def apply(path):
             if want and r.get("bye") != want:
                 r["bye"] = want
                 changes.append(f"{coll_name} R{r.get('round')} bye → {want}")
-
-    # 4) mid-season handicap overrides (current roster/display handicap only)
-    for p in d.get("players", []):
-        want = HANDICAP_OVERRIDES.get(p.get("name"))
-        if want is not None and p.get("handicap") != want:
-            old = p.get("handicap")
-            p["handicap"] = want
-            changes.append(f"{p['name']} handicap {old} → {want}")
 
     if changes:
         with open(path, "w", encoding="utf-8") as f:
