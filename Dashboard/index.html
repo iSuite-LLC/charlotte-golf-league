@@ -1321,14 +1321,21 @@
     </table>`;
   }
 
+  // A player who took over another's slot mid-season also answers to their
+  // predecessor's name on the rounds that predecessor actually played, so the
+  // inherited rounds resolve to the same slot. Keys = current name.
+  const NAME_ALIASES = { 'Preston Stoner': ['Preston Stoner', 'Ben Linck'] };
+  const aliasesOf = (name) => NAME_ALIASES[name] || [name];
+
   // Returns 9 entries (one per round) shaped:
   //   { round, dates, isBye, isCurrent, opponent?, played?, playerPts?, opponentPts?, status }
   // status: 'W' | 'L' | 'D' | 'MISSING' | 'Upcoming' | 'BYE'
   function getPlayerSchedule(name) {
+    const names = aliasesOf(name);
     return leagueData.schedule.map(s => {
       const rd      = leagueData.rounds.find(r => r.round === s.round);
       const pairing = rd && rd.pairings
-        ? rd.pairings.find(p => p.p1 === name || p.p2 === name)
+        ? rd.pairings.find(p => names.includes(p.p1) || names.includes(p.p2))
         : null;
       const isCurrent = !!(rd && rd.status === 'in_progress');
 
@@ -1336,7 +1343,7 @@
         return { round: s.round, dates: s.dates, isBye: true, isCurrent, status: 'BYE' };
       }
 
-      const isP1        = pairing.p1 === name;
+      const isP1        = names.includes(pairing.p1);
       const opponent    = isP1 ? pairing.p2    : pairing.p1;
       const playerPts   = isP1 ? pairing.p1Pts : pairing.p2Pts;
       const opponentPts = isP1 ? pairing.p2Pts : pairing.p1Pts;
@@ -1346,7 +1353,7 @@
         return { round: s.round, dates: s.dates, isBye: false, isCurrent, opponent, played: false, status: pastDue ? 'MISSING' : 'Upcoming' };
       }
       const status = pairing.winner === null ? 'D'
-                   : pairing.winner === name  ? 'W' : 'L';
+                   : names.includes(pairing.winner) ? 'W' : 'L';
       return { round: s.round, dates: s.dates, isBye: false, isCurrent, opponent, played: true, playerPts, opponentPts, status };
     });
   }
