@@ -1,7 +1,7 @@
 # IMI Golf League 2026 — Standings
 
 **Season:** 2026 | **Rounds:** 9 | **Players:** 14 active (1 withdrawn)
-**Last updated:** 2026-06-17 via Claude (R4 makeup: Charlotte Hayes def. Megan Serian 8–0)
+**Last updated:** 2026-06-17 via Claude (roster change: Preston Stoner takes over Ben Linck's slot)
 
 ---
 
@@ -10,6 +10,12 @@
 Bruce Atkins has withdrawn from the league. His played results (R1, R2) stand and remain on the board, but he is no longer an active contender and is not seeded. His incomplete/upcoming match slots (R3, R4, R5, R7, R8, R9) now read **"Bruce Replacement - TBD"**.
 
 **Pickup rule:** the player who was scheduled against Bruce may invite any league member to a pickup match that round. The invited player plays twice that round; both results count. Any player who plays an extra (pickup) match may drop their lowest round — removed entirely from points, record, and avg NET — when it helps them.
+
+---
+
+## Roster Change — Preston Stoner Takes Over for Ben Linck
+
+Ben Linck has moved and can no longer play. **Preston Stoner (HC 28)** takes over his roster slot for all upcoming and missing rounds (R4 makeup onward), inheriting Ben's standing — the **14.5 pts / 2-1-0** earned in R1–R3 carry over. Those first three rounds were played by Ben Linck and now appear under Preston as the slot's owner.
 
 ---
 
@@ -32,7 +38,7 @@ BYE: Brian Wojcio, Ethan High, Rob Bass
 | 2 | Curtis Lynn | 21 | 3-0-0 | 37.3 |
 | 3 | Ethan High | 20 | 3-0-0 | 39.0 |
 | 4 | David Maddox | 19 | 2-0-1 | 46.0 |
-| 5 | Ben Linck | 14.5 | 2-1-0 | 39.0 |
+| 5 | Preston Stoner | 14.5 | 2-1-0 | 39.0 |
 | 6 | Alex Palmer | 11 | 1-3-0 | 46.2 |
 | 7 | Megan Serian | 10.5 | 1-3-0 | 49.8 |
 | 8 | Carson Bass | 8 | 1-1-0 | 42.5 |
@@ -58,6 +64,6 @@ BYE: Brian Wojcio, Ethan High, Rob Bass
 | 4 | Jun 1 – Jun 12 | Jerome Martin |
 | **5 ← current** | Jun 15 – Jun 26 | Wojcio / High / R. Bass |
 | 6 | Jun 29 – Jul 10 | C. Bass / McHugh |
-| 7 | Jul 13 – Jul 24 | Palmer / Lynn / Linck |
+| 7 | Jul 13 – Jul 24 | Palmer / Lynn / Stoner |
 | 8 | Jul 27 – Aug 7 | Kaylan Adams |
 | 9 | Aug 10 – Aug 21 | Megan Serian |

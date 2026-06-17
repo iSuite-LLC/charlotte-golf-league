@@ -38,7 +38,7 @@ SCHEDULE = [
     {'round': 4, 'dates': 'Jun 1 – Jun 12',  'bye': 'Jerome Martin'},
     {'round': 5, 'dates': 'Jun 15 – Jun 26', 'bye': 'Wojcio / High / R. Bass'},
     {'round': 6, 'dates': 'Jun 29 – Jul 10', 'bye': 'C. Bass / McHugh / Atkins'},
-    {'round': 7, 'dates': 'Jul 13 – Jul 24', 'bye': 'Palmer / Lynn / Linck'},
+    {'round': 7, 'dates': 'Jul 13 – Jul 24', 'bye': 'Palmer / Lynn / Stoner'},
     {'round': 8, 'dates': 'Jul 27 – Aug 7',  'bye': 'Kaylan Adams'},
     {'round': 9, 'dates': 'Aug 10 – Aug 21', 'bye': 'Megan Serian'},
 ]
@@ -72,7 +72,7 @@ PLAYER_ROWS = {
      6: (13, 14),   # Bruce Atkins
      7: (15, 16),   # Alex Palmer
      8: (17, 18),   # Curtis Lynn
-     9: (19, 20),   # Ben Linck
+     9: (19, 20),   # Preston Stoner (slot formerly Ben Linck)
     10: (21, 22),   # Charlotte Hayes
     11: (23, 24),   # David Maddox
     12: (25, 26),   # Jerome Martin

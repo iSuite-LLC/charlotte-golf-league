@@ -68,7 +68,7 @@ Each player = 2 consecutive rows: match points row then NET score row directly b
 | Bruce Atkins | 13 | 14 |
 | Alex Palmer | 15 | 16 |
 | Curtis Lynn | 17 | 18 |
-| Ben Linck | 19 | 20 |
+| Preston Stoner | 19 | 20 |
 | Charlotte Hayes | 21 | 22 |
 | David Maddox | 23 | 24 |
 | Jerome Martin | 25 | 26 |
@@ -88,7 +88,7 @@ Each player = 2 consecutive rows: match points row then NET score row directly b
 | 6 | Bruce Atkins | 24 |
 | 7 | Alex Palmer | 30 |
 | 8 | Curtis Lynn | 28 |
-| 9 | Ben Linck | 30 |
+| 9 | Preston Stoner | 28 |
 | 10 | Charlotte Hayes | 36 |
 | 11 | David Maddox | 36 |
 | 12 | Jerome Martin | 36 |
@@ -106,7 +106,7 @@ Each player = 2 consecutive rows: match points row then NET score row directly b
 | 4 | Jun 1 – Jun 12 | Jerome Martin (#12) |
 | 5 | Jun 15 – Jun 26 | Brian Wojcio, Ethan High, Rob Bass (#1, #2, #3) |
 | 6 | Jun 29 – Jul 10 | Carson Bass, Michael McHugh, Bruce Atkins (#4, #5, #6) |
-| 7 | Jul 13 – Jul 24 | Alex Palmer, Curtis Lynn, Ben Linck (#7, #8, #9) |
+| 7 | Jul 13 – Jul 24 | Alex Palmer, Curtis Lynn, Preston Stoner (#7, #8, #9) |
 | 8 | Jul 27 – Aug 7 | Kaylan Adams (#13) |
 | 9 | Aug 10 – Aug 21 | Megan Serian (#14) |
 

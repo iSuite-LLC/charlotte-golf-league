@@ -226,8 +226,8 @@
     },
     {
       "id": 9,
-      "name": "Ben Linck",
-      "handicap": 30,
+      "name": "Preston Stoner",
+      "handicap": 28,
       "totalPts": 14.5,
       "record": "2-1-0",
       "avgNet": 39.0,
@@ -267,7 +267,7 @@
           "round": 1,
           "matchPts": 6,
           "net": 35,
-          "opponent": "Ben Linck",
+          "opponent": "Preston Stoner",
           "result": "W"
         },
         {
@@ -336,7 +336,7 @@
           "round": 2,
           "matchPts": 0,
           "net": 54,
-          "opponent": "Ben Linck",
+          "opponent": "Preston Stoner",
           "result": "L"
         },
         {
@@ -405,7 +405,7 @@
           "round": 3,
           "matchPts": 3.5,
           "net": 43,
-          "opponent": "Ben Linck",
+          "opponent": "Preston Stoner",
           "result": "L"
         },
         {
@@ -484,7 +484,7 @@
           "winner": "Carson Bass"
         },
         {
-          "p1": "Ben Linck",
+          "p1": "Preston Stoner",
           "p1Pts": 2,
           "p1Net": 39,
           "p2": "Charlotte Hayes",
@@ -890,7 +890,7 @@
           }
         },
         {
-          "p1": "Ben Linck",
+          "p1": "Preston Stoner",
           "p1Pts": 2,
           "p1Net": 39,
           "p2": "Charlotte Hayes",
@@ -1219,13 +1219,13 @@
           "winner": "David Maddox"
         },
         {
-          "p1": "Ben Linck",
+          "p1": "Preston Stoner",
           "p1Pts": 8,
           "p1Net": 36,
           "p2": "Jerome Martin",
           "p2Pts": 0,
           "p2Net": 54,
-          "winner": "Ben Linck"
+          "winner": "Preston Stoner"
         },
         {
           "p1": "Michael McHugh",
@@ -1607,13 +1607,13 @@
           }
         },
         {
-          "p1": "Ben Linck",
+          "p1": "Preston Stoner",
           "p1Pts": 8,
           "p1Net": 36,
           "p2": "Jerome Martin",
           "p2Pts": 0,
           "p2Net": 54,
-          "winner": "Ben Linck",
+          "winner": "Preston Stoner",
           "played": true,
           "p1Scorecard": {
             "course": "Skybrook",
@@ -1909,13 +1909,13 @@
           "winner": "Alex Palmer"
         },
         {
-          "p1": "Ben Linck",
+          "p1": "Preston Stoner",
           "p1Pts": 4.5,
           "p1Net": 42,
           "p2": "Megan Serian",
           "p2Pts": 3.5,
           "p2Net": 43,
-          "winner": "Ben Linck"
+          "winner": "Preston Stoner"
         },
         {
           "p1": "David Maddox",
@@ -2143,13 +2143,13 @@
           }
         },
         {
-          "p1": "Ben Linck",
+          "p1": "Preston Stoner",
           "p1Pts": 4.5,
           "p1Net": 42,
           "p2": "Megan Serian",
           "p2Pts": 3.5,
           "p2Net": 43,
-          "winner": "Ben Linck",
+          "winner": "Preston Stoner",
           "played": true,
           "p1Scorecard": {
             "course": "Highland Creek",
@@ -2486,7 +2486,7 @@
           "played": false
         },
         {
-          "p1": "Ben Linck",
+          "p1": "Preston Stoner",
           "p1Pts": null,
           "p1Net": null,
           "p2": "Kaylan Adams",
@@ -2712,7 +2712,7 @@
           "p1": "Curtis Lynn",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Ben Linck",
+          "p2": "Preston Stoner",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -2788,7 +2788,7 @@
           "played": false
         },
         {
-          "p1": "Ben Linck",
+          "p1": "Preston Stoner",
           "p1Pts": null,
           "p1Net": null,
           "p2": "David Maddox",
@@ -2822,7 +2822,7 @@
     {
       "round": 7,
       "dates": "Jul 13 – Jul 24",
-      "bye": "Palmer / Lynn / Linck",
+      "bye": "Palmer / Lynn / Stoner",
       "status": "upcoming",
       "matches": [],
       "pairings": [
@@ -2946,7 +2946,7 @@
           "played": false
         },
         {
-          "p1": "Ben Linck",
+          "p1": "Preston Stoner",
           "p1Pts": null,
           "p1Net": null,
           "p2": "Nick Coglianese",
@@ -2978,7 +2978,7 @@
           "p1": "Brian Wojcio",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Ben Linck",
+          "p2": "Preston Stoner",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -3081,7 +3081,7 @@
     {
       "round": 7,
       "dates": "Jul 13 – Jul 24",
-      "bye": "Palmer / Lynn / Linck"
+      "bye": "Palmer / Lynn / Stoner"
     },
     {
       "round": 8,

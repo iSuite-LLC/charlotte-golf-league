@@ -28,18 +28,30 @@ WITHDRAWN = {
     "Bruce Atkins": "Bruce Replacement - TBD",
 }
 
-# Round byes that must be corrected after a withdrawal (workbook can't express
-# this). Keyed by round number → the exact bye string the dashboard should show.
-BYE_OVERRIDES = {
-    6: "C. Bass / McHugh",   # Bruce was the 3rd bye player here; now withdrawn.
+# Roster replacements: a departed player's slot taken over by a named successor
+# for all remaining AND missing rounds. The successor INHERITS the slot — including
+# already-played results — so this is a straight name swap applied to every exact
+# occurrence in data.json (player name, pairings, opponents, winners). Once the
+# workbook Schedule tab (col C) is renamed to match, this override becomes a no-op.
+NAME_OVERRIDES = {
+    "Ben Linck": "Preston Stoner",   # Ben moved away; Preston takes over from R4 on (2026-06-17)
 }
 
-# NOTE: mid-season handicap changes are now made directly in the master
-# workbook's Schedule tab (col D), which process_scores.py reads as the current
-# roster handicap — so no override is needed here. Historical per-round
-# scorecards keep the handicap they were played at; future-round strokes come
-# from the handicap entered on each round's score-input scorecard. (Alex Palmer
-# was raised 27 → 30 in the Schedule tab effective R4 on 2026-06-17.)
+# Mid-season handicap overrides (current roster/display handicap only), keyed by
+# the player's CURRENT name. Used when the workbook Schedule tab (col D) doesn't
+# yet reflect the value. Display-only: future strokes come from the handicap typed
+# on each score-input scorecard. Remove an entry once the Schedule tab shows the
+# same number (then the workbook is sole source, as with Alex Palmer's 30).
+HANDICAP_OVERRIDES = {
+    "Preston Stoner": 28,   # Preston took over Ben Linck's slot; plays at HC 28 (2026-06-17)
+}
+
+# Round byes that must be corrected (workbook can't express these).
+# Keyed by round number → the exact bye string the dashboard should show.
+BYE_OVERRIDES = {
+    6: "C. Bass / McHugh",        # Bruce was the 3rd bye player here; now withdrawn.
+    7: "Palmer / Lynn / Stoner",  # Ben Linck replaced by Preston Stoner.
+}
 
 DEFAULT_PATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
@@ -52,6 +64,31 @@ def apply(path):
         d = json.load(f)
 
     changes = []
+
+    # 0) roster name replacements — swap every exact-match occurrence (player
+    #    name, pairings, opponents, winners, matches). No-op once the workbook
+    #    Schedule tab is renamed to match.
+    name_swaps = []
+    def swap_names(obj):
+        if isinstance(obj, dict):
+            return {k: swap_names(v) for k, v in obj.items()}
+        if isinstance(obj, list):
+            return [swap_names(v) for v in obj]
+        if isinstance(obj, str) and obj in NAME_OVERRIDES:
+            name_swaps.append(obj)
+            return NAME_OVERRIDES[obj]
+        return obj
+    d = swap_names(d)
+    for old in sorted(set(name_swaps)):
+        changes.append(f"renamed {name_swaps.count(old)}x '{old}' -> '{NAME_OVERRIDES[old]}'")
+
+    # 0b) roster handicap overrides (by current name)
+    for p in d.get("players", []):
+        want = HANDICAP_OVERRIDES.get(p.get("name"))
+        if want is not None and p.get("handicap") != want:
+            old = p.get("handicap")
+            p["handicap"] = want
+            changes.append(f"{p['name']} handicap {old} -> {want}")
 
     # 1) withdrawn flag on each withdrawn player
     for p in d.get("players", []):
