@@ -86,7 +86,7 @@ Each player = 2 consecutive rows: match points row then NET score row directly b
 | 4 | Carson Bass | 20 |
 | 5 | Michael McHugh | 22 |
 | 6 | Bruce Atkins | 24 |
-| 7 | Alex Palmer | 27 |
+| 7 | Alex Palmer | 30 |
 | 8 | Curtis Lynn | 28 |
 | 9 | Ben Linck | 30 |
 | 10 | Charlotte Hayes | 36 |
