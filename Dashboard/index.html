@@ -358,6 +358,7 @@
     }
     .player-schedule-summary .name  { font-weight: 700; color: var(--text); }
     .player-schedule-summary .stats { color: var(--muted); margin-left: 8px; }
+    .player-schedule-summary .note  { display: block; margin-top: 6px; font-size: 0.78rem; color: var(--muted); font-style: italic; }
     .player-schedule-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
     .player-schedule-table thead th {
       text-align: left;
@@ -1280,9 +1281,11 @@
       avgNet   !== '' ? `${avgNet} avg NET` : '',
     ].filter(Boolean).join(' · ');
 
+    const noteHtml = SLOT_NOTES[name] ? `<span class="note">${SLOT_NOTES[name]}</span>` : '';
     const summary = `<div class="player-schedule-summary">
       <span class="name">${name}</span>
       <span class="stats">${summaryStats}</span>
+      ${noteHtml}
     </div>`;
 
     const rows = schedule.map(s => {
@@ -1326,6 +1329,10 @@
   // inherited rounds resolve to the same slot. Keys = current name.
   const NAME_ALIASES = { 'Preston Stoner': ['Preston Stoner', 'Ben Linck'] };
   const aliasesOf = (name) => NAME_ALIASES[name] || [name];
+
+  // Note shown under a player's filtered-schedule header when they took over a
+  // slot mid-season, clarifying which early rounds a predecessor played.
+  const SLOT_NOTES = { 'Preston Stoner': 'Rounds 1–3 were played by Ben Linck.' };
 
   // Returns 9 entries (one per round) shaped:
   //   { round, dates, isBye, isCurrent, opponent?, played?, playerPts?, opponentPts?, status }
