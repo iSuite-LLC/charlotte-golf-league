@@ -28,14 +28,22 @@ WITHDRAWN = {
     "Bruce Atkins": "Bruce Replacement - TBD",
 }
 
-# Roster replacements: a departed player's slot taken over by a named successor
-# for all remaining AND missing rounds. The successor INHERITS the slot — including
-# already-played results — so this is a straight name swap applied to every exact
-# occurrence in data.json (player name, pairings, opponents, winners). Once the
-# workbook Schedule tab (col C) is renamed to match, this override becomes a no-op.
-NAME_OVERRIDES = {
-    "Ben Linck": "Preston Stoner",   # Ben moved away; Preston takes over from R4 on (2026-06-17)
-}
+# Roster replacements: a player's slot taken over mid-season by a named successor.
+# The successor INHERITS the slot's standing (points/record/seed) and plays every
+# round from `takeover_round` on — but rounds BEFORE that keep the ORIGINAL player's
+# name in the per-round results, because they actually played them.
+#   any_name      : every name the slot has ever used (matched in either direction,
+#                   so this is robust no matter which name process_scores emits)
+#   current       : standings-entry name + name shown for rounds >= takeover_round
+#   historical    : name shown for rounds < takeover_round
+ROSTER_RENAMES = [
+    {
+        "any_name": ("Ben Linck", "Preston Stoner"),
+        "current": "Preston Stoner",
+        "historical": "Ben Linck",
+        "takeover_round": 4,   # Ben played R1-R3; Preston took over from R4 (2026-06-17)
+    },
+]
 
 # Mid-season handicap overrides (current roster/display handicap only), keyed by
 # the player's CURRENT name. Used when the workbook Schedule tab (col D) doesn't
@@ -65,22 +73,44 @@ def apply(path):
 
     changes = []
 
-    # 0) roster name replacements — swap every exact-match occurrence (player
-    #    name, pairings, opponents, winners, matches). No-op once the workbook
-    #    Schedule tab is renamed to match.
-    name_swaps = []
-    def swap_names(obj):
-        if isinstance(obj, dict):
-            return {k: swap_names(v) for k, v in obj.items()}
-        if isinstance(obj, list):
-            return [swap_names(v) for v in obj]
-        if isinstance(obj, str) and obj in NAME_OVERRIDES:
-            name_swaps.append(obj)
-            return NAME_OVERRIDES[obj]
-        return obj
-    d = swap_names(d)
-    for old in sorted(set(name_swaps)):
-        changes.append(f"renamed {name_swaps.count(old)}x '{old}' -> '{NAME_OVERRIDES[old]}'")
+    # 0) roster replacements — current name on the standings entry and rounds
+    #    >= takeover; original name preserved on earlier (already-played) rounds.
+    def slot_for(name):
+        for s in ROSTER_RENAMES:
+            if name in s["any_name"]:
+                return s
+        return None
+
+    def name_for_round(s, rno):
+        return s["historical"] if (rno is not None and rno < s["takeover_round"]) else s["current"]
+
+    n_renames = 0
+    # player standings entry → current name
+    for p in d.get("players", []):
+        s = slot_for(p.get("name"))
+        if s and p["name"] != s["current"]:
+            p["name"] = s["current"]; n_renames += 1
+    # per-round pairings + matches → round-appropriate name
+    for rnd in d.get("rounds", []):
+        rno = rnd.get("round")
+        for coll in ("pairings", "matches"):
+            for m in rnd.get(coll, []):
+                for key in ("p1", "p2", "winner"):
+                    s = slot_for(m.get(key))
+                    if s:
+                        want = name_for_round(s, rno)
+                        if m.get(key) != want:
+                            m[key] = want; n_renames += 1
+    # opponent references inside each player's round list → round-appropriate name
+    for p in d.get("players", []):
+        for rd in p.get("rounds", []):
+            s = slot_for(rd.get("opponent"))
+            if s:
+                want = name_for_round(s, rd.get("round"))
+                if rd.get("opponent") != want:
+                    rd["opponent"] = want; n_renames += 1
+    if n_renames:
+        changes.append(f"applied {n_renames} roster-replacement name fix(es) (Ben Linck/Preston Stoner)")
 
     # 0b) roster handicap overrides (by current name)
     for p in d.get("players", []):
