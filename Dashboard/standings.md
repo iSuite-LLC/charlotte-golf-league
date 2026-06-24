@@ -1,7 +1,7 @@
 # IMI Golf League 2026 — Standings
 
 **Season:** 2026 | **Rounds:** 9 | **Players:** 14 active (1 withdrawn)
-**Last updated:** 2026-06-17 via Claude (roster change: Preston Stoner takes over Ben Linck's slot)
+**Last updated:** 2026-06-24 via Claude (R4 makeup: Preston Stoner def. Kaylan Adams; R5: Kaylan Adams def. Megan Serian)
 
 ---
 
@@ -24,29 +24,29 @@ Ben Linck has moved and can no longer play. **Preston Stoner (HC 28)** takes ove
 **Round 5** | Jun 15 – Jun 26, 2026
 BYE: Brian Wojcio, Ethan High, Rob Bass
 
-> **Note:** We've moved on to Round 5, but Round 4 makeup matches are still being played and recorded as they come in. R4 so far: Maddox–Coglianese (draw), Ethan High def. Alex Palmer 7–1, Charlotte Hayes def. Megan Serian 8–0 — 3 of 7 recorded.
+> **Note:** We're in Round 5, but Round 4 makeup matches are still being played and recorded as they come in. R4 so far: Maddox–Coglianese (draw), Ethan High def. Alex Palmer 7–1, Charlotte Hayes def. Megan Serian 8–0, Preston Stoner def. Kaylan Adams 8–0 — 4 of 7 recorded. R5 underway: Kaylan Adams def. Megan Serian 7–1.
 
 ---
 
 ## Standings
 
-*R1 and R2 complete. R3 mostly complete. R5 now underway, with R4 makeup matches still outstanding (3 of 7 recorded: Maddox–Coglianese, Ethan High–Alex Palmer, Charlotte Hayes–Megan Serian).*
+*R1 and R2 complete. R3 mostly complete. R5 underway (Kaylan Adams–Megan Serian recorded), with R4 makeup matches still outstanding (4 of 7 recorded: Maddox–Coglianese, Ethan High–Alex Palmer, Charlotte Hayes–Megan Serian, Preston Stoner–Kaylan Adams).*
 
 | Seed | Player | Total Pts | Record | Avg NET |
 |------|--------|-----------|--------|---------|
-| 1 | Charlotte Hayes | 22 | 3-0-0 | 39.3 |
-| 2 | Curtis Lynn | 21 | 3-0-0 | 37.3 |
-| 3 | Ethan High | 20 | 3-0-0 | 39.0 |
-| 4 | David Maddox | 19 | 2-0-1 | 46.0 |
-| 5 | Preston Stoner | 14.5 | 2-1-0 | 39.0 |
-| 6 | Alex Palmer | 11 | 1-3-0 | 46.2 |
-| 7 | Megan Serian | 10.5 | 1-3-0 | 49.8 |
-| 8 | Carson Bass | 8 | 1-1-0 | 42.5 |
-| 9 | Michael McHugh | 6 | 1-1-0 | 44.5 |
-| 10 | Brian Wojcio | 6 | 0-1-1 | 41.5 |
-| 11 | Rob Bass | 5 | 0-1-1 | 41.0 |
-| 12 | Nick Coglianese | 5 | 0-2-1 | 50.0 |
-| 13 | Kaylan Adams | 5 | 0-2-1 | 53.0 |
+| 1 | Preston Stoner | 22.5 | 3-1-0 | 38.8 |
+| 2 | Charlotte Hayes | 22 | 3-0-0 | 39.3 |
+| 3 | Curtis Lynn | 21 | 3-0-0 | 37.3 |
+| 4 | Ethan High | 20 | 3-0-0 | 39.0 |
+| 5 | David Maddox | 19 | 2-0-1 | 46.0 |
+| 6 | Kaylan Adams | 12 | 1-3-1 | 51.4 |
+| 7 | Megan Serian | 11.5 | 1-4-0 | 50.2 |
+| 8 | Alex Palmer | 11 | 1-3-0 | 46.2 |
+| 9 | Carson Bass | 8 | 1-1-0 | 42.5 |
+| 10 | Michael McHugh | 6 | 1-1-0 | 44.5 |
+| 11 | Brian Wojcio | 6 | 0-1-1 | 41.5 |
+| 12 | Rob Bass | 5 | 0-1-1 | 41.0 |
+| 13 | Nick Coglianese | 5 | 0-2-1 | 50.0 |
 | 14 | Jerome Martin | 5 | 0-2-1 | 54.0 |
 | — | ~~Bruce Atkins~~ (WD) | 10 | 1-1-0 | 36.0 |
 

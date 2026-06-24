@@ -45,6 +45,19 @@ ROSTER_RENAMES = [
     },
 ]
 
+# Inherited-slot opponents the processor can't recover. When a slot changes hands
+# mid-season, the early score-input tabs still record those rounds under the
+# ORIGINAL player's name (e.g. "Ben Linck"), so process_scores can't link them to
+# the successor's standings entry (now "Preston Stoner") and leaves the successor's
+# OWN per-round opponents null. Restore them here — keyed by CURRENT name →
+# {round: opponent} — for rounds the successor inherited. These are the opponents
+# the slot actually faced; they survive in the committed data.json but get wiped
+# on every score run. (Step 0's rename handles the reverse direction — other
+# players whose opponent is the slot — this restores the slot's own opponents.)
+INHERITED_OPPONENTS = {
+    "Preston Stoner": {1: "Charlotte Hayes", 2: "Jerome Martin", 3: "Megan Serian"},
+}
+
 # Mid-season handicap overrides (current roster/display handicap only), keyed by
 # the player's CURRENT name. Used when the workbook Schedule tab (col D) doesn't
 # yet reflect the value. Display-only: future strokes come from the handicap typed
@@ -111,6 +124,20 @@ def apply(path):
                     rd["opponent"] = want; n_renames += 1
     if n_renames:
         changes.append(f"applied {n_renames} roster-replacement name fix(es) (Ben Linck/Preston Stoner)")
+
+    # 0a) inherited-slot opponents wiped by the processor (by current name)
+    n_opp = 0
+    for p in d.get("players", []):
+        want_map = INHERITED_OPPONENTS.get(p.get("name"))
+        if not want_map:
+            continue
+        for rd in p.get("rounds", []):
+            want = want_map.get(rd.get("round"))
+            if want and rd.get("opponent") != want:
+                rd["opponent"] = want
+                n_opp += 1
+    if n_opp:
+        changes.append(f"restored {n_opp} inherited-slot opponent(s) (Preston Stoner R1-R3)")
 
     # 0b) roster handicap overrides (by current name)
     for p in d.get("players", []):
