@@ -625,7 +625,7 @@
 
   async function init() {
     try {
-      const resp = await fetch('data.json');
+      const resp = await fetch('data.json', { cache: 'no-store' });
       if (!resp.ok) throw new Error('fetch failed');
       leagueData = await resp.json();
       renderAll();
@@ -1715,7 +1715,7 @@
 
   async function fetchPhotos() {
     try {
-      const res = await fetch('photos.json');
+      const res = await fetch('photos.json', { cache: 'no-store' });
       if (!res.ok) return [];
       const data = await res.json();
       return data.photos || [];
