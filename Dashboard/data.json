@@ -443,7 +443,8 @@
           "opponent": "Kaylan Adams",
           "result": "L"
         }
-      ]
+      ],
+      "withdrawn": true
     },
     {
       "id": 15,
@@ -3012,7 +3013,7 @@
           "p1": "Jerome Martin",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Megan Serian",
+          "p2": "Megan Replacement - TBD",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -3081,7 +3082,7 @@
           "p1": "Michael McHugh",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Megan Serian",
+          "p2": "Megan Replacement - TBD",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -3140,7 +3141,7 @@
           "p1": "Carson Bass",
           "p1Pts": null,
           "p1Net": null,
-          "p2": "Megan Serian",
+          "p2": "Megan Replacement - TBD",
           "p2Pts": null,
           "p2Net": null,
           "winner": null,
@@ -3181,7 +3182,7 @@
     {
       "round": 9,
       "dates": "Aug 10 – Aug 21",
-      "bye": "Megan Serian",
+      "bye": "—",
       "status": "upcoming",
       "matches": [],
       "pairings": [
@@ -3302,7 +3303,7 @@
     {
       "round": 9,
       "dates": "Aug 10 – Aug 21",
-      "bye": "Megan Serian"
+      "bye": "—"
     }
   ],
   "playoffs": {

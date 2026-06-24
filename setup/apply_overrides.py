@@ -26,6 +26,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 # Withdrawn players → the placeholder name shown in their UNPLAYED pairings.
 WITHDRAWN = {
     "Bruce Atkins": "Bruce Replacement - TBD",
+    "Megan Serian": "Megan Replacement - TBD",
 }
 
 # Roster replacements: a player's slot taken over mid-season by a named successor.
@@ -72,6 +73,7 @@ HANDICAP_OVERRIDES = {
 BYE_OVERRIDES = {
     6: "C. Bass / McHugh",        # Bruce was the 3rd bye player here; now withdrawn.
     7: "Palmer / Lynn / Stoner",  # Ben Linck replaced by Preston Stoner.
+    9: "—",                       # Megan Serian was the sole R9 bye; now withdrawn → no bye.
 }
 
 # Frozen snapshot of inherited-slot per-round pairings the processor can't rebuild.
