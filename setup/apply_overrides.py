@@ -74,10 +74,30 @@ BYE_OVERRIDES = {
     7: "Palmer / Lynn / Stoner",  # Ben Linck replaced by Preston Stoner.
 }
 
+# Frozen snapshot of inherited-slot per-round pairings the processor can't rebuild.
+# process_scores builds rounds[].pairings from ROUND_PAIRINGS using the CURRENT
+# Schedule-tab name ("Preston Stoner"), then looks up the played match by that
+# name. The R1-R3 score tabs label slot #9 as "Ben Linck", so the lookup fails and
+# those pairings come back played:false with no points/scorecards — hiding them
+# from the Results tab and marking them MISSING on Preston's schedule. This file
+# holds the correct pairing objects (with scorecards); apply_overrides splices them
+# back every run. See setup/inherited_pairings.json for the data + provenance.
+INHERITED_PAIRINGS_FILE = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "inherited_pairings.json"
+)
+
 DEFAULT_PATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
     "Dashboard", "data.json"
 )
+
+
+def _load_inherited_pairings():
+    try:
+        with open(INHERITED_PAIRINGS_FILE, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return None
 
 
 def apply(path):
@@ -138,6 +158,31 @@ def apply(path):
                 n_opp += 1
     if n_opp:
         changes.append(f"restored {n_opp} inherited-slot opponent(s) (Preston Stoner R1-R3)")
+
+    # 0c) inherited-slot pairings the processor can't rebuild (wrong name →
+    #     played:false, scorecards dropped). Splice the frozen snapshot back into
+    #     rounds[].pairings so the Results tab and player schedule show them.
+    snap = _load_inherited_pairings()
+    if snap and snap.get("rounds"):
+        slot_names = set(snap.get("slot_any_name", []))
+        n_pair = 0
+        for r in d.get("rounds", []):
+            want = snap["rounds"].get(str(r.get("round")))
+            if not want:
+                continue
+            pairings = r.setdefault("pairings", [])
+            idx = next(
+                (i for i, p in enumerate(pairings)
+                 if {p.get("p1"), p.get("p2")} & slot_names),
+                None,
+            )
+            want_copy = json.loads(json.dumps(want))
+            if idx is None:
+                pairings.append(want_copy); n_pair += 1
+            elif pairings[idx] != want_copy:
+                pairings[idx] = want_copy; n_pair += 1
+        if n_pair:
+            changes.append(f"restored {n_pair} inherited-slot pairing(s) w/ scorecards (Ben Linck R1-R3)")
 
     # 0b) roster handicap overrides (by current name)
     for p in d.get("players", []):

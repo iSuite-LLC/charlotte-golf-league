@@ -1,0 +1,285 @@
+{
+  "_comment": "Frozen snapshot of slot #9 (Ben Linck) R1-R3 inherited pairings. process_scores rebuilds pairings using the current Schedule-tab name (Preston Stoner) but the R1-R3 score tabs label this slot Ben Linck, so the played-match lookup fails and these pairings come back played:false with no scorecards. apply_overrides splices these back. Source: commit a9d2fea (last good).",
+  "slot_any_name": [
+    "Ben Linck",
+    "Preston Stoner"
+  ],
+  "rounds": {
+    "1": {
+      "p1": "Ben Linck",
+      "p1Pts": 2,
+      "p1Net": 39,
+      "p2": "Charlotte Hayes",
+      "p2Pts": 6,
+      "p2Net": 35,
+      "winner": "Charlotte Hayes",
+      "played": true,
+      "p1Scorecard": {
+        "course": "Skybrook",
+        "nine": "Back 9",
+        "handicap": 30,
+        "par": [
+          4,
+          5,
+          4,
+          4,
+          3,
+          4,
+          3,
+          4,
+          5
+        ],
+        "parTotal": 36,
+        "gross": [
+          7,
+          8,
+          5,
+          5,
+          6,
+          6,
+          6,
+          5,
+          6
+        ],
+        "grossTotal": 54,
+        "net": [
+          5,
+          6,
+          4,
+          3,
+          5,
+          4,
+          5,
+          3,
+          4
+        ],
+        "netTotal": 39
+      },
+      "p2Scorecard": {
+        "course": "Skybrook",
+        "nine": "Back 9",
+        "handicap": 20,
+        "par": [
+          4,
+          5,
+          4,
+          4,
+          3,
+          4,
+          3,
+          4,
+          5
+        ],
+        "parTotal": 36,
+        "gross": [
+          5,
+          6,
+          4,
+          6,
+          4,
+          5,
+          3,
+          5,
+          7
+        ],
+        "grossTotal": 45,
+        "net": [
+          4,
+          5,
+          3,
+          5,
+          3,
+          4,
+          2,
+          3,
+          6
+        ],
+        "netTotal": 35
+      }
+    },
+    "2": {
+      "p1": "Ben Linck",
+      "p1Pts": 8,
+      "p1Net": 36,
+      "p2": "Jerome Martin",
+      "p2Pts": 0,
+      "p2Net": 54,
+      "winner": "Ben Linck",
+      "played": true,
+      "p1Scorecard": {
+        "course": "Skybrook",
+        "nine": "Front 9",
+        "handicap": 30,
+        "par": [
+          4,
+          3,
+          4,
+          5,
+          4,
+          4,
+          3,
+          5,
+          4
+        ],
+        "parTotal": 36,
+        "gross": [
+          6,
+          5,
+          6,
+          6,
+          6,
+          6,
+          4,
+          6,
+          6
+        ],
+        "grossTotal": 51,
+        "net": [
+          4,
+          4,
+          4,
+          5,
+          4,
+          4,
+          3,
+          4,
+          4
+        ],
+        "netTotal": 36
+      },
+      "p2Scorecard": {
+        "course": "Skybrook",
+        "nine": "Front 9",
+        "handicap": 36,
+        "par": [
+          4,
+          3,
+          4,
+          5,
+          4,
+          4,
+          3,
+          5,
+          4
+        ],
+        "parTotal": 36,
+        "gross": [
+          8,
+          6,
+          8,
+          10,
+          8,
+          8,
+          6,
+          10,
+          8
+        ],
+        "grossTotal": 72,
+        "net": [
+          6,
+          4,
+          6,
+          8,
+          6,
+          6,
+          4,
+          8,
+          6
+        ],
+        "netTotal": 54
+      }
+    },
+    "3": {
+      "p1": "Ben Linck",
+      "p1Pts": 4.5,
+      "p1Net": 42,
+      "p2": "Megan Serian",
+      "p2Pts": 3.5,
+      "p2Net": 43,
+      "winner": "Ben Linck",
+      "played": true,
+      "p1Scorecard": {
+        "course": "Highland Creek",
+        "nine": "Back 9",
+        "handicap": 30,
+        "par": [
+          4,
+          3,
+          5,
+          4,
+          4,
+          4,
+          4,
+          3,
+          5
+        ],
+        "parTotal": 36,
+        "gross": [
+          5,
+          4,
+          10,
+          4,
+          8,
+          7,
+          8,
+          6,
+          5
+        ],
+        "grossTotal": 57,
+        "net": [
+          4,
+          2,
+          8,
+          2,
+          7,
+          5,
+          6,
+          4,
+          4
+        ],
+        "netTotal": 42
+      },
+      "p2Scorecard": {
+        "course": "Highland Creek",
+        "nine": "Back 9",
+        "handicap": 36,
+        "par": [
+          4,
+          3,
+          5,
+          4,
+          4,
+          4,
+          4,
+          3,
+          5
+        ],
+        "parTotal": 36,
+        "gross": [
+          5,
+          6,
+          10,
+          7,
+          6,
+          8,
+          8,
+          6,
+          5
+        ],
+        "grossTotal": 61,
+        "net": [
+          3,
+          4,
+          8,
+          5,
+          4,
+          6,
+          6,
+          4,
+          3
+        ],
+        "netTotal": 43
+      }
+    }
+  }
+}
