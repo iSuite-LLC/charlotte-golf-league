@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-06-24 9:27 AM ET",
+  "lastUpdated": "2026-06-29 9:42 AM ET",
   "currentRound": 5,
   "players": [
     {
@@ -31,9 +31,9 @@
       "id": 2,
       "name": "Ethan High",
       "handicap": 12,
-      "totalPts": 20,
-      "record": "3-0-0",
-      "avgNet": 39.0,
+      "totalPts": 27,
+      "record": "4-0-0",
+      "avgNet": 38.0,
       "rounds": [
         {
           "round": 1,
@@ -47,6 +47,13 @@
           "matchPts": 7,
           "net": 36,
           "opponent": "Carson Bass",
+          "result": "W"
+        },
+        {
+          "round": 3,
+          "matchPts": 7,
+          "net": 35,
+          "opponent": "Michael McHugh",
           "result": "W"
         },
         {
@@ -110,9 +117,9 @@
       "id": 5,
       "name": "Michael McHugh",
       "handicap": 22,
-      "totalPts": 6,
-      "record": "1-1-0",
-      "avgNet": 44.5,
+      "totalPts": 7,
+      "record": "1-2-0",
+      "avgNet": 44.0,
       "rounds": [
         {
           "round": 1,
@@ -127,6 +134,13 @@
           "net": 43,
           "opponent": "Alex Palmer",
           "result": "W"
+        },
+        {
+          "round": 3,
+          "matchPts": 1,
+          "net": 43,
+          "opponent": "Ethan High",
+          "result": "L"
         }
       ]
     },
@@ -328,9 +342,9 @@
       "id": 12,
       "name": "Jerome Martin",
       "handicap": 36,
-      "totalPts": 5,
-      "record": "0-2-1",
-      "avgNet": 54.0,
+      "totalPts": 11,
+      "record": "1-2-1",
+      "avgNet": 53.5,
       "rounds": [
         {
           "round": 1,
@@ -352,6 +366,13 @@
           "net": 54,
           "opponent": "David Maddox",
           "result": "L"
+        },
+        {
+          "round": 5,
+          "matchPts": 6,
+          "net": 52,
+          "opponent": "Nick Coglianese",
+          "result": "W"
         }
       ]
     },
@@ -450,9 +471,9 @@
       "id": 15,
       "name": "Nick Coglianese",
       "handicap": 36,
-      "totalPts": 5,
-      "record": "0-2-1",
-      "avgNet": 50.0,
+      "totalPts": 7,
+      "record": "0-3-1",
+      "avgNet": 51.0,
       "rounds": [
         {
           "round": 1,
@@ -474,6 +495,13 @@
           "net": 43,
           "opponent": "David Maddox",
           "result": "D"
+        },
+        {
+          "round": 5,
+          "matchPts": 2,
+          "net": 54,
+          "opponent": "Jerome Martin",
+          "result": "L"
         }
       ]
     }
@@ -1954,6 +1982,15 @@
           "p2Pts": 1,
           "p2Net": 54,
           "winner": "David Maddox"
+        },
+        {
+          "p1": "Ethan High",
+          "p1Pts": 7,
+          "p1Net": 35,
+          "p2": "Michael McHugh",
+          "p2Pts": 1,
+          "p2Net": 43,
+          "winner": "Ethan High"
         }
       ],
       "pairings": [
@@ -1969,13 +2006,95 @@
         },
         {
           "p1": "Ethan High",
-          "p1Pts": null,
-          "p1Net": null,
+          "p1Pts": 7,
+          "p1Net": 35,
           "p2": "Michael McHugh",
-          "p2Pts": null,
-          "p2Net": null,
-          "winner": null,
-          "played": false
+          "p2Pts": 1,
+          "p2Net": 43,
+          "winner": "Ethan High",
+          "played": true,
+          "p1Scorecard": {
+            "course": "Warrior Golf Club",
+            "nine": "Front 9",
+            "handicap": 12,
+            "par": [
+              5,
+              4,
+              3,
+              5,
+              4,
+              3,
+              4,
+              3,
+              4
+            ],
+            "parTotal": 35,
+            "gross": [
+              5,
+              5,
+              3,
+              4,
+              4,
+              3,
+              5,
+              5,
+              7
+            ],
+            "grossTotal": 41,
+            "net": [
+              4,
+              4,
+              3,
+              3,
+              3,
+              3,
+              4,
+              4,
+              7
+            ],
+            "netTotal": 35
+          },
+          "p2Scorecard": {
+            "course": "Warrior Golf Club",
+            "nine": "Front 9",
+            "handicap": 22,
+            "par": [
+              5,
+              4,
+              3,
+              5,
+              4,
+              3,
+              4,
+              3,
+              4
+            ],
+            "parTotal": 35,
+            "gross": [
+              6,
+              7,
+              6,
+              8,
+              6,
+              3,
+              6,
+              6,
+              6
+            ],
+            "grossTotal": 54,
+            "net": [
+              5,
+              5,
+              5,
+              7,
+              5,
+              2,
+              4,
+              5,
+              5
+            ],
+            "netTotal": 43
+          }
         },
         {
           "p1": "Rob Bass",
@@ -2805,7 +2924,7 @@
       "round": 5,
       "dates": "Jun 15 – Jun 26",
       "bye": "Wojcio / High / R. Bass",
-      "status": "in_progress",
+      "status": "complete",
       "matches": [
         {
           "p1": "Megan Serian",
@@ -2815,6 +2934,15 @@
           "p2Pts": 7,
           "p2Net": 48,
           "winner": "Kaylan Adams"
+        },
+        {
+          "p1": "Nick Coglianese",
+          "p1Pts": 2,
+          "p1Net": 54,
+          "p2": "Jerome Martin",
+          "p2Pts": 6,
+          "p2Net": 52,
+          "winner": "Jerome Martin"
         }
       ],
       "pairings": [
@@ -2859,14 +2987,96 @@
           "played": false
         },
         {
-          "p1": "Jerome Martin",
-          "p1Pts": null,
-          "p1Net": null,
-          "p2": "Nick Coglianese",
-          "p2Pts": null,
-          "p2Net": null,
-          "winner": null,
-          "played": false
+          "p1": "Nick Coglianese",
+          "p1Pts": 2,
+          "p1Net": 54,
+          "p2": "Jerome Martin",
+          "p2Pts": 6,
+          "p2Net": 52,
+          "winner": "Jerome Martin",
+          "played": true,
+          "p1Scorecard": {
+            "course": "Skybrook",
+            "nine": "Front 9",
+            "handicap": 36,
+            "par": [
+              4,
+              3,
+              4,
+              5,
+              4,
+              4,
+              3,
+              5,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              8,
+              6,
+              8,
+              10,
+              8,
+              8,
+              6,
+              10,
+              8
+            ],
+            "grossTotal": 72,
+            "net": [
+              6,
+              4,
+              6,
+              8,
+              6,
+              6,
+              4,
+              8,
+              6
+            ],
+            "netTotal": 54
+          },
+          "p2Scorecard": {
+            "course": "Skybrook",
+            "nine": "Front 9",
+            "handicap": 36,
+            "par": [
+              4,
+              3,
+              4,
+              5,
+              4,
+              4,
+              3,
+              5,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              8,
+              6,
+              8,
+              10,
+              8,
+              8,
+              4,
+              10,
+              8
+            ],
+            "grossTotal": 70,
+            "net": [
+              6,
+              4,
+              6,
+              8,
+              6,
+              6,
+              2,
+              8,
+              6
+            ],
+            "netTotal": 52
+          }
         },
         {
           "p1": "Megan Serian",
@@ -2966,7 +3176,7 @@
       "round": 6,
       "dates": "Jun 29 – Jul 10",
       "bye": "C. Bass / McHugh",
-      "status": "upcoming",
+      "status": "in_progress",
       "matches": [],
       "pairings": [
         {

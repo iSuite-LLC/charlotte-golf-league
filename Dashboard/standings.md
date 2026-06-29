@@ -1,7 +1,7 @@
 # IMI Golf League 2026 — Standings
 
 **Season:** 2026 | **Rounds:** 9 | **Players:** 13 active (2 withdrawn)
-**Last updated:** 2026-06-24 via Claude (roster change: Megan Serian withdrawn)
+**Last updated:** 2026-06-29 via Claude (R3 Ethan High–Michael McHugh @ Warrior; R5 Jerome Martin–Nick Coglianese)
 
 ---
 
@@ -32,33 +32,36 @@ Ben Linck has moved and can no longer play. **Preston Stoner (HC 28)** takes ove
 **Round 5** | Jun 15 – Jun 26, 2026
 BYE: Brian Wojcio, Ethan High, Rob Bass
 
-> **Note:** We're in Round 5, but Round 4 makeup matches are still being played and recorded as they come in. R4 so far: Maddox–Coglianese (draw), Ethan High def. Alex Palmer 7–1, Charlotte Hayes def. Megan Serian 8–0, Preston Stoner def. Kaylan Adams 8–0 — 4 of 7 recorded. R5 underway: Kaylan Adams def. Megan Serian 7–1.
+> **Note:** We're in Round 5, but earlier rounds still have makeup matches being recorded as they come in.
+> - **R3** (5 of 7 recorded): newest — **Ethan High def. Michael McHugh 7–1**, played at **Warrior Golf Club** (NET 35 vs 43).
+> - **R4** makeups (4 of 7): Maddox–Coglianese (draw), Ethan High def. Alex Palmer 7–1, Charlotte Hayes def. Megan Serian 8–0, Preston Stoner def. Kaylan Adams 8–0.
+> - **R5** (2 of 6 recorded): Kaylan Adams def. Megan Serian 7–1; **Jerome Martin def. Nick Coglianese 6–2**.
 
 ---
 
 ## Standings
 
-*R1 and R2 complete. R3 mostly complete. R5 underway (Kaylan Adams–Megan Serian recorded), with R4 makeup matches still outstanding (4 of 7 recorded: Maddox–Coglianese, Ethan High–Alex Palmer, Charlotte Hayes–Megan Serian, Preston Stoner–Kaylan Adams).*
+*R1 and R2 complete. R3 at 5 of 7 (Ethan High–Michael McHugh added). R5 underway at 2 of 6 (Jerome Martin–Nick Coglianese added), with R3/R4 makeup matches still outstanding.*
 
 | Seed | Player | Total Pts | Record | Avg NET |
 |------|--------|-----------|--------|---------|
-| 1 | Preston Stoner | 22.5 | 3-1-0 | 38.8 |
-| 2 | Charlotte Hayes | 22 | 3-0-0 | 39.3 |
-| 3 | Curtis Lynn | 21 | 3-0-0 | 37.3 |
-| 4 | Ethan High | 20 | 3-0-0 | 39.0 |
+| 1 | Ethan High | 27 | 4-0-0 | 38.0 |
+| 2 | Preston Stoner | 22.5 | 3-1-0 | 38.8 |
+| 3 | Charlotte Hayes | 22 | 3-0-0 | 39.3 |
+| 4 | Curtis Lynn | 21 | 3-0-0 | 37.3 |
 | 5 | David Maddox | 19 | 2-0-1 | 46.0 |
 | 6 | Kaylan Adams | 12 | 1-3-1 | 51.4 |
-| 7 | Alex Palmer | 11 | 1-3-0 | 46.2 |
-| 8 | Carson Bass | 8 | 1-1-0 | 42.5 |
-| 9 | Michael McHugh | 6 | 1-1-0 | 44.5 |
-| 10 | Brian Wojcio | 6 | 0-1-1 | 41.5 |
-| 11 | Rob Bass | 5 | 0-1-1 | 41.0 |
-| 12 | Nick Coglianese | 5 | 0-2-1 | 50.0 |
-| 13 | Jerome Martin | 5 | 0-2-1 | 54.0 |
+| 7 | Jerome Martin | 11 | 1-2-1 | 53.5 |
+| 8 | Alex Palmer | 11 | 1-3-0 | 46.2 |
+| 9 | Carson Bass | 8 | 1-1-0 | 42.5 |
+| 10 | Michael McHugh | 7 | 1-2-0 | 44.0 |
+| 11 | Nick Coglianese | 7 | 0-3-1 | 51.0 |
+| 12 | Brian Wojcio | 6 | 0-1-1 | 41.5 |
+| 13 | Rob Bass | 5 | 0-1-1 | 41.0 |
 | — | ~~Bruce Atkins~~ (WD) | 10 | 1-1-0 | 36.0 |
 | — | ~~Megan Serian~~ (WD) | 11.5 | 1-4-0 | 50.2 |
 
-*Ties broken by: best record (most W, fewest L) → lowest avg NET → name.*
+*Ties broken by: best record (most W, fewest L) → lowest avg NET → name. Seed 7/8: Jerome Martin over Alex Palmer on fewer losses (2 vs 3). Seed 10/11: Michael McHugh over Nick Coglianese on more wins (1 vs 0).*
 
 ---
 
