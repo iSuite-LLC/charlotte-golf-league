@@ -29,14 +29,17 @@ WITHDRAWN = {
     "Megan Serian": "Megan Replacement - TBD",
 }
 
-# Pickup labels: when a withdrawn player's slot was filled by a named pickup that
-# round, show that name instead of the generic "- TBD". The match itself counts
-# only for the scheduled player (the pickup is the invited player's extra/dropped
-# match — see project_pickup_clobber_repair), so the schedule slot stays a pairing
-# placeholder; this just names who filled it. Keyed by (round, scheduled player
-# still in the slot) → the exact label for the opponent side.
-PICKUP_LABELS = {
-    (4, "Carson Bass"): "Bruce Replacement - Ethan",
+# Pickup slots: a withdrawn player's pairing slot that was actually filled and
+# played by a named pickup. The match counts only for the SCHEDULED player (the
+# pickup is the invited player's extra/dropped match — see
+# project_pickup_clobber_repair), but it really was played, so surface it as a
+# PLAYED pairing (Results + Schedule render from pairings, not matches) with the
+# opponent shown as `label`. Using the label rather than the pickup's real name
+# keeps it off the invited player's own schedule/record. Scores are pulled from
+# the round's `matches` entry between `scheduled` and `opponent`.
+# Keyed by (round, scheduled player) → {opponent: real name in matches, label}.
+PICKUP_SLOTS = {
+    (4, "Carson Bass"): {"opponent": "Ethan High", "label": "Bruce Replacement - Ethan"},
 }
 
 # Roster replacements: a player's slot taken over mid-season by a named successor.
@@ -220,18 +223,42 @@ def apply(path):
                         m[side] = repl
                         changes.append(f"R{r.get('round')} {side}: {repl}")
 
-    # 2b) name the pickup player in a replacement slot that was actually filled.
-    #     Runs after step 2, so it upgrades a generic "- TBD" placeholder (and only
-    #     a replacement placeholder, never a real opponent) to the named pickup.
+    # 2b) surface a filled replacement slot as a PLAYED pairing built from the real
+    #     match. Runs after step 2, so it replaces the generic "- TBD" placeholder
+    #     (only a replacement placeholder, never a real opponent) with the played
+    #     result; the opponent shows as `label` to keep it off the pickup's own row.
     for r in d.get("rounds", []):
         rno = r.get("round")
-        for m in r.get("pairings", []):
-            for keep, other in (("p1", "p2"), ("p2", "p1")):
-                label = PICKUP_LABELS.get((rno, m.get(keep)))
-                if label and isinstance(m.get(other), str) and "Replacement" in m.get(other):
-                    if m.get(other) != label:
-                        m[other] = label
-                        changes.append(f"R{rno} {other}: {label}")
+        matches = r.get("matches", [])
+        for (prno, sched), cfg in PICKUP_SLOTS.items():
+            if prno != rno:
+                continue
+            opp, label = cfg["opponent"], cfg["label"]
+            match = next((m for m in matches
+                          if {m.get("p1"), m.get("p2")} == {sched, opp}), None)
+            if not match:
+                continue
+            # orient so the scheduled player is p1, opponent (label) is p2
+            if match["p1"] == sched:
+                sp, sn, op, on = match["p1Pts"], match["p1Net"], match["p2Pts"], match["p2Net"]
+            else:
+                sp, sn, op, on = match["p2Pts"], match["p2Net"], match["p1Pts"], match["p1Net"]
+            winner = sched if sp > op else (label if op > sp else None)
+            new_pair = {"p1": sched, "p1Pts": sp, "p1Net": sn,
+                        "p2": label, "p2Pts": op, "p2Net": on,
+                        "winner": winner, "played": True}
+            pairings = r.setdefault("pairings", [])
+            idx = next((i for i, m in enumerate(pairings)
+                        if sched in (m.get("p1"), m.get("p2"))
+                        and ("Replacement" in str(m.get("p1")) or "Replacement" in str(m.get("p2")))),
+                       None)
+            if idx is not None:
+                if pairings[idx] != new_pair:
+                    pairings[idx] = new_pair
+                    changes.append(f"R{rno} pickup pairing (played): {sched} {sp}-{op} {label}")
+            elif new_pair not in pairings:
+                pairings.append(new_pair)
+                changes.append(f"R{rno} pickup pairing (played, appended): {sched} {sp}-{op} {label}")
 
     # 3) bye corrections (rounds[] and schedule[])
     for coll_name in ("rounds", "schedule"):

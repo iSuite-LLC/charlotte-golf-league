@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-06-29 11:04 AM ET",
+  "lastUpdated": "2026-06-29 11:17 AM ET",
   "currentRound": 4,
   "players": [
     {
@@ -2860,13 +2860,13 @@
         },
         {
           "p1": "Carson Bass",
-          "p1Pts": null,
-          "p1Net": null,
+          "p1Pts": 5,
+          "p1Net": 34,
           "p2": "Bruce Replacement - Ethan",
-          "p2Pts": null,
-          "p2Net": null,
-          "winner": null,
-          "played": false
+          "p2Pts": 3,
+          "p2Net": 38,
+          "winner": "Carson Bass",
+          "played": true
         },
         {
           "p1": "Preston Stoner",
