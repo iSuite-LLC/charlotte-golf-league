@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-06-29 11:17 AM ET",
+  "lastUpdated": "2026-06-29 11:33 AM ET",
   "currentRound": 4,
   "players": [
     {
@@ -2766,45 +2766,45 @@
           "winner": "Ethan High",
           "played": true,
           "p1Scorecard": {
-            "course": "Warrior Golf Club",
-            "nine": "Back 9",
+            "course": "Highland Creek",
+            "nine": "Front 9",
             "handicap": 12,
             "par": [
               4,
+              5,
+              3,
+              4,
               4,
               3,
               5,
               4,
-              4,
-              3,
-              5,
               4
             ],
             "parTotal": 36,
             "gross": [
-              4,
-              4,
               5,
               6,
-              5,
+              3,
               6,
-              4,
+              6,
+              6,
+              6,
               6,
               4
             ],
-            "grossTotal": 44,
+            "grossTotal": 48,
             "net": [
-              3,
-              3,
               4,
               6,
+              3,
+              5,
+              5,
               5,
               6,
-              3,
               5,
               3
             ],
-            "netTotal": 38
+            "netTotal": 42
           },
           "p2Scorecard": {
             "course": "Highland Creek",
@@ -2866,7 +2866,89 @@
           "p2Pts": 3,
           "p2Net": 38,
           "winner": "Carson Bass",
-          "played": true
+          "played": true,
+          "p1Scorecard": {
+            "course": "Warrior Golf Club",
+            "nine": "Back 9",
+            "handicap": 24,
+            "par": [
+              4,
+              4,
+              3,
+              5,
+              4,
+              4,
+              3,
+              5,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              5,
+              6,
+              3,
+              5,
+              4,
+              6,
+              4,
+              7,
+              6
+            ],
+            "grossTotal": 46,
+            "net": [
+              3,
+              4,
+              2,
+              4,
+              3,
+              5,
+              3,
+              5,
+              5
+            ],
+            "netTotal": 34
+          },
+          "p2Scorecard": {
+            "course": "Warrior Golf Club",
+            "nine": "Back 9",
+            "handicap": 12,
+            "par": [
+              4,
+              4,
+              3,
+              5,
+              4,
+              4,
+              3,
+              5,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              4,
+              4,
+              5,
+              6,
+              5,
+              6,
+              4,
+              6,
+              4
+            ],
+            "grossTotal": 44,
+            "net": [
+              3,
+              3,
+              4,
+              6,
+              5,
+              6,
+              3,
+              5,
+              3
+            ],
+            "netTotal": 38
+          }
         },
         {
           "p1": "Preston Stoner",

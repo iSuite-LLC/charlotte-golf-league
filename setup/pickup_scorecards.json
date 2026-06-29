@@ -1,0 +1,149 @@
+{
+  "_comment": "Corrected R4 scorecards the name-keyed parse_scorecards cant place. Ethan played twice in R4 (vs Alex = Highland/Front, and the Carson pickup = Warrior/Back); parse_scorecards keeps only the last block per name, so it puts Ethans Warrior card on his vs-Alex pairing and leaves the pickup pairing cardless. apply_overrides splices these. Source: Scores.xlsx R4 Scores tab.",
+  "scheduled_fixes": [
+    {
+      "round": 4,
+      "player": "Ethan High",
+      "scorecard": {
+        "course": "Highland Creek",
+        "nine": "Front 9",
+        "handicap": 12,
+        "par": [
+          4,
+          5,
+          3,
+          4,
+          4,
+          3,
+          5,
+          4,
+          4
+        ],
+        "parTotal": 36,
+        "gross": [
+          5,
+          6,
+          3,
+          6,
+          6,
+          6,
+          6,
+          6,
+          4
+        ],
+        "grossTotal": 48,
+        "net": [
+          4,
+          6,
+          3,
+          5,
+          5,
+          5,
+          6,
+          5,
+          3
+        ],
+        "netTotal": 42
+      }
+    }
+  ],
+  "pickup_cards": [
+    {
+      "round": 4,
+      "scheduled": "Carson Bass",
+      "p1Scorecard": {
+        "course": "Warrior Golf Club",
+        "nine": "Back 9",
+        "handicap": 24,
+        "par": [
+          4,
+          4,
+          3,
+          5,
+          4,
+          4,
+          3,
+          5,
+          4
+        ],
+        "parTotal": 36,
+        "gross": [
+          5,
+          6,
+          3,
+          5,
+          4,
+          6,
+          4,
+          7,
+          6
+        ],
+        "grossTotal": 46,
+        "net": [
+          3,
+          4,
+          2,
+          4,
+          3,
+          5,
+          3,
+          5,
+          5
+        ],
+        "netTotal": 34
+      },
+      "p2Scorecard": {
+        "course": "Warrior Golf Club",
+        "nine": "Back 9",
+        "handicap": 12,
+        "par": [
+          4,
+          4,
+          3,
+          5,
+          4,
+          4,
+          3,
+          5,
+          4
+        ],
+        "parTotal": 36,
+        "gross": [
+          4,
+          4,
+          5,
+          6,
+          5,
+          6,
+          4,
+          6,
+          4
+        ],
+        "grossTotal": 44,
+        "net": [
+          3,
+          3,
+          4,
+          6,
+          5,
+          6,
+          3,
+          5,
+          3
+        ],
+        "netTotal": 38
+      }
+    }
+  ],
+  "player_round_fixes": [
+    {
+      "round": 4,
+      "player": "Ethan High",
+      "matchPts": 7,
+      "net": 42,
+      "opponent": "Alex Palmer",
+      "result": "W",
+      "note": "Ethan played twice in R4; process_scores writes his pickup loss (vs Carson) to R4. This restores his counting result (def. Alex Palmer 7-1) and recomputes his totals. Pickup is dropped per mulligan."
+    }
+  ]
+}

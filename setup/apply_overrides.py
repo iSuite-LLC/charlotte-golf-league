@@ -101,6 +101,15 @@ INHERITED_PAIRINGS_FILE = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "inherited_pairings.json"
 )
 
+# Corrected scorecards parse_scorecards can't place because a player appears twice
+# in one round (a pickup). It keys by name and keeps only the last block, so it
+# mis-attaches the pickup card to the scheduled pairing and leaves the pickup
+# pairing cardless. This snapshot holds the right cards; apply_overrides splices
+# them. See setup/pickup_scorecards.json.
+PICKUP_SCORECARDS_FILE = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "pickup_scorecards.json"
+)
+
 DEFAULT_PATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
     "Dashboard", "data.json"
@@ -110,6 +119,14 @@ DEFAULT_PATH = os.path.join(
 def _load_inherited_pairings():
     try:
         with open(INHERITED_PAIRINGS_FILE, encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+def _load_pickup_scorecards():
+    try:
+        with open(PICKUP_SCORECARDS_FILE, encoding="utf-8") as f:
             return json.load(f)
     except (OSError, json.JSONDecodeError):
         return None
@@ -253,12 +270,84 @@ def apply(path):
                         and ("Replacement" in str(m.get("p1")) or "Replacement" in str(m.get("p2")))),
                        None)
             if idx is not None:
+                # preserve scorecards already attached (by 2c) so this stays idempotent
+                for k in ("p1Scorecard", "p2Scorecard"):
+                    if k in pairings[idx] and k not in new_pair:
+                        new_pair[k] = pairings[idx][k]
                 if pairings[idx] != new_pair:
                     pairings[idx] = new_pair
                     changes.append(f"R{rno} pickup pairing (played): {sched} {sp}-{op} {label}")
             elif new_pair not in pairings:
                 pairings.append(new_pair)
                 changes.append(f"R{rno} pickup pairing (played, appended): {sched} {sp}-{op} {label}")
+
+    # 2c) fix scorecards the name-keyed parse mis-placed for double-played rounds.
+    pcards = _load_pickup_scorecards()
+    if pcards:
+        by_round = {r.get("round"): r for r in d.get("rounds", [])}
+        # (a) restore the scheduled player's correct card on their REAL pairing
+        #     (the played pairing where they appear by name).
+        for fix in pcards.get("scheduled_fixes", []):
+            r = by_round.get(fix["round"])
+            if not r:
+                continue
+            for m in r.get("pairings", []):
+                if not m.get("played"):
+                    continue
+                side = "p1Scorecard" if m.get("p1") == fix["player"] else (
+                       "p2Scorecard" if m.get("p2") == fix["player"] else None)
+                if side and m.get(side) != fix["scorecard"]:
+                    m[side] = fix["scorecard"]
+                    changes.append(f"R{fix['round']} scorecard fix: {fix['player']} ({side})")
+        # (b) attach both cards to the pickup pairing (matched by scheduled player).
+        for pc in pcards.get("pickup_cards", []):
+            r = by_round.get(pc["round"])
+            if not r:
+                continue
+            for m in r.get("pairings", []):
+                if m.get("played") and m.get("p1") == pc["scheduled"] and "Replacement" in str(m.get("p2")):
+                    for side in ("p1Scorecard", "p2Scorecard"):
+                        if pc.get(side) and m.get(side) != pc[side]:
+                            m[side] = pc[side]
+                            changes.append(f"R{pc['round']} pickup scorecard: {pc['scheduled']} pairing ({side})")
+
+        # (c) restore a player's counting round + recompute their totals. A pickup
+        #     makes the invited player appear twice in a round; process_scores writes
+        #     the (dropped) pickup result to that round and miscomputes their season
+        #     totals. This rewrites the round to the counting result and recomputes
+        #     totalPts / record / avgNet from the player's rounds (drop-lowest = the
+        #     pickup simply isn't among the counting rounds). Master fix is separate;
+        #     see project_pickup_clobber_repair.
+        def _outcome(pts):
+            if pts is None: return None
+            if pts >= 4.5:  return "W"
+            if pts >= 4.0:  return "D"
+            return "L"
+        for fix in pcards.get("player_round_fixes", []):
+            player = next((p for p in d.get("players", []) if p.get("name") == fix["player"]), None)
+            if not player:
+                continue
+            rd = next((x for x in player.get("rounds", []) if x.get("round") == fix["round"]), None)
+            if rd is None:
+                continue
+            want = {"matchPts": fix["matchPts"], "net": fix["net"],
+                    "opponent": fix["opponent"], "result": fix["result"]}
+            if any(rd.get(k) != v for k, v in want.items()):
+                rd.update(want)
+                changes.append(f"R{fix['round']} round fix: {fix['player']} -> {fix['result']} {fix['matchPts']}pts vs {fix['opponent']}")
+            # recompute season aggregates from the (now-correct) counting rounds
+            pts_list = [x.get("matchPts") for x in player["rounds"] if x.get("matchPts") is not None]
+            nets     = [x.get("net") for x in player["rounds"] if isinstance(x.get("net"), (int, float))]
+            total    = sum(pts_list)
+            total    = int(total) if total == int(total) else total
+            w = sum(1 for x in pts_list if _outcome(x) == "W")
+            l = sum(1 for x in pts_list if _outcome(x) == "L")
+            dr = sum(1 for x in pts_list if _outcome(x) == "D")
+            rec = f"{w}-{l}-{dr}"
+            avg = round(sum(nets) / len(nets), 1) if nets else None
+            if player.get("totalPts") != total or player.get("record") != rec or player.get("avgNet") != avg:
+                player["totalPts"], player["record"], player["avgNet"] = total, rec, avg
+                changes.append(f"{fix['player']} totals -> {total} / {rec} / {avg}")
 
     # 3) bye corrections (rounds[] and schedule[])
     for coll_name in ("rounds", "schedule"):
