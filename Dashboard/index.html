@@ -1372,14 +1372,23 @@
   }
 
   /* ── Stats ── */
+  // Who actually played a pairing side's scorecard. Normally the pairing slot
+  // name, but a filled replacement slot ("Bruce Replacement - Ethan") tags the
+  // card with its real owner so the pickup counts toward that player's stats
+  // without polluting their record/schedule (the pairing name stays the label).
+  function scOwner(pairing, side) {
+    const sc = pairing[side + 'Scorecard'];
+    return (sc && sc.player) || pairing[side];
+  }
+
   function buildHoleDifficulty(playerFilter) {
     const courses = {};
     for (const round of leagueData.rounds) {
       for (const pairing of (round.pairings || [])) {
         if (!pairing.played) continue;
         const scorecards = [];
-        if (!playerFilter || pairing.p1 === playerFilter) scorecards.push(pairing.p1Scorecard);
-        if (!playerFilter || pairing.p2 === playerFilter) scorecards.push(pairing.p2Scorecard);
+        if (!playerFilter || scOwner(pairing, 'p1') === playerFilter) scorecards.push(pairing.p1Scorecard);
+        if (!playerFilter || scOwner(pairing, 'p2') === playerFilter) scorecards.push(pairing.p2Scorecard);
         for (const sc of scorecards) {
           if (!sc || !sc.gross || !sc.par) continue;
           const key = [sc.course, sc.nine].filter(Boolean).join(' · ');
@@ -1444,8 +1453,8 @@
       for (const pairing of (round.pairings || [])) {
         if (!pairing.played) continue;
         const scorecards = [];
-        if (!playerFilter || pairing.p1 === playerFilter) scorecards.push(pairing.p1Scorecard);
-        if (!playerFilter || pairing.p2 === playerFilter) scorecards.push(pairing.p2Scorecard);
+        if (!playerFilter || scOwner(pairing, 'p1') === playerFilter) scorecards.push(pairing.p1Scorecard);
+        if (!playerFilter || scOwner(pairing, 'p2') === playerFilter) scorecards.push(pairing.p2Scorecard);
         for (const sc of scorecards) {
           if (!sc || !sc.gross || !sc.par) continue;
           const key = [sc.course, sc.nine].filter(Boolean).join(' · ');
@@ -1469,8 +1478,8 @@
       for (const pairing of (round.pairings || [])) {
         if (!pairing.played) continue;
         const entries = [
-          { name: pairing.p1, sc: pairing.p1Scorecard },
-          { name: pairing.p2, sc: pairing.p2Scorecard }
+          { name: scOwner(pairing, 'p1'), sc: pairing.p1Scorecard },
+          { name: scOwner(pairing, 'p2'), sc: pairing.p2Scorecard }
         ];
         for (const { name, sc } of entries) {
           if (!name || !sc || !sc.gross || !sc.par) continue;

@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-06-29 11:33 AM ET",
+  "lastUpdated": "2026-06-29 11:49 AM ET",
   "currentRound": 4,
   "players": [
     {
@@ -2906,7 +2906,8 @@
               5,
               5
             ],
-            "netTotal": 34
+            "netTotal": 34,
+            "player": "Carson Bass"
           },
           "p2Scorecard": {
             "course": "Warrior Golf Club",
@@ -2947,7 +2948,8 @@
               5,
               3
             ],
-            "netTotal": 38
+            "netTotal": 38,
+            "player": "Ethan High"
           }
         },
         {
