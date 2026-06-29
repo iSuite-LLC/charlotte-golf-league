@@ -1,7 +1,7 @@
 # IMI Golf League 2026 — Standings
 
 **Season:** 2026 | **Rounds:** 9 | **Players:** 13 active (2 withdrawn)
-**Last updated:** 2026-06-29 via Claude (R3 Ethan High–Michael McHugh @ Warrior; R5 Jerome Martin–Nick Coglianese)
+**Last updated:** 2026-06-29 via Claude (R3 Brian Wojcio–Carson Bass @ Warrior)
 
 ---
 
@@ -33,15 +33,15 @@ Ben Linck has moved and can no longer play. **Preston Stoner (HC 28)** takes ove
 BYE: Brian Wojcio, Ethan High, Rob Bass
 
 > **Note:** We're in Round 5, but earlier rounds still have makeup matches being recorded as they come in.
-> - **R3** (5 of 7 recorded): newest — **Ethan High def. Michael McHugh 7–1**, played at **Warrior Golf Club** (NET 35 vs 43).
+> - **R3** (6 of 7 recorded): newest — **Brian Wojcio def. Carson Bass 8–0**, played at **Warrior Golf Club** (NET 34 vs 47). Outstanding: Rob Bass vs Bruce replacement (TBD).
 > - **R4** makeups (4 of 7): Maddox–Coglianese (draw), Ethan High def. Alex Palmer 7–1, Charlotte Hayes def. Megan Serian 8–0, Preston Stoner def. Kaylan Adams 8–0.
-> - **R5** (2 of 6 recorded): Kaylan Adams def. Megan Serian 7–1; **Jerome Martin def. Nick Coglianese 6–2**.
+> - **R5** (2 of 6 recorded): Kaylan Adams def. Megan Serian 7–1; Jerome Martin def. Nick Coglianese 6–2.
 
 ---
 
 ## Standings
 
-*R1 and R2 complete. R3 at 5 of 7 (Ethan High–Michael McHugh added). R5 underway at 2 of 6 (Jerome Martin–Nick Coglianese added), with R3/R4 makeup matches still outstanding.*
+*R1 and R2 complete. R3 at 6 of 7 (Brian Wojcio–Carson Bass added). R5 underway at 2 of 6, with R3/R4 makeup matches still outstanding.*
 
 | Seed | Player | Total Pts | Record | Avg NET |
 |------|--------|-----------|--------|---------|
@@ -50,18 +50,18 @@ BYE: Brian Wojcio, Ethan High, Rob Bass
 | 3 | Charlotte Hayes | 22 | 3-0-0 | 39.3 |
 | 4 | Curtis Lynn | 21 | 3-0-0 | 37.3 |
 | 5 | David Maddox | 19 | 2-0-1 | 46.0 |
-| 6 | Kaylan Adams | 12 | 1-3-1 | 51.4 |
-| 7 | Jerome Martin | 11 | 1-2-1 | 53.5 |
-| 8 | Alex Palmer | 11 | 1-3-0 | 46.2 |
-| 9 | Carson Bass | 8 | 1-1-0 | 42.5 |
-| 10 | Michael McHugh | 7 | 1-2-0 | 44.0 |
-| 11 | Nick Coglianese | 7 | 0-3-1 | 51.0 |
-| 12 | Brian Wojcio | 6 | 0-1-1 | 41.5 |
+| 6 | Brian Wojcio | 14 | 1-1-1 | 39.0 |
+| 7 | Kaylan Adams | 12 | 1-3-1 | 51.4 |
+| 8 | Jerome Martin | 11 | 1-2-1 | 53.5 |
+| 9 | Alex Palmer | 11 | 1-3-0 | 46.2 |
+| 10 | Carson Bass | 8 | 1-2-0 | 44.0 |
+| 11 | Michael McHugh | 7 | 1-2-0 | 44.0 |
+| 12 | Nick Coglianese | 7 | 0-3-1 | 51.0 |
 | 13 | Rob Bass | 5 | 0-1-1 | 41.0 |
 | — | ~~Bruce Atkins~~ (WD) | 10 | 1-1-0 | 36.0 |
 | — | ~~Megan Serian~~ (WD) | 11.5 | 1-4-0 | 50.2 |
 
-*Ties broken by: best record (most W, fewest L) → lowest avg NET → name. Seed 7/8: Jerome Martin over Alex Palmer on fewer losses (2 vs 3). Seed 10/11: Michael McHugh over Nick Coglianese on more wins (1 vs 0).*
+*Ties broken by: best record (most W, fewest L) → lowest avg NET → name. Seed 8/9: Jerome Martin over Alex Palmer on fewer losses (2 vs 3). Seed 11/12: Michael McHugh over Nick Coglianese on more wins (1 vs 0).*
 
 ---
 

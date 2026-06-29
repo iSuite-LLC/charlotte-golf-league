@@ -1,15 +1,15 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-06-29 9:42 AM ET",
-  "currentRound": 5,
+  "lastUpdated": "2026-06-29 9:59 AM ET",
+  "currentRound": 3,
   "players": [
     {
       "id": 1,
       "name": "Brian Wojcio",
       "handicap": 12,
-      "totalPts": 6,
-      "record": "0-1-1",
-      "avgNet": 41.5,
+      "totalPts": 14,
+      "record": "1-1-1",
+      "avgNet": 39.0,
       "rounds": [
         {
           "round": 1,
@@ -24,6 +24,13 @@
           "net": 40,
           "opponent": "Rob Bass",
           "result": "D"
+        },
+        {
+          "round": 3,
+          "matchPts": 8,
+          "net": 34,
+          "opponent": "Carson Bass",
+          "result": "W"
         }
       ]
     },
@@ -94,8 +101,8 @@
       "name": "Carson Bass",
       "handicap": 20,
       "totalPts": 8,
-      "record": "1-1-0",
-      "avgNet": 42.5,
+      "record": "1-2-0",
+      "avgNet": 44.0,
       "rounds": [
         {
           "round": 1,
@@ -109,6 +116,13 @@
           "matchPts": 1,
           "net": 47,
           "opponent": "Ethan High",
+          "result": "L"
+        },
+        {
+          "round": 3,
+          "matchPts": 0,
+          "net": 47,
+          "opponent": "Brian Wojcio",
           "result": "L"
         }
       ]
@@ -1991,18 +2005,109 @@
           "p2Pts": 1,
           "p2Net": 43,
           "winner": "Ethan High"
+        },
+        {
+          "p1": "Carson Bass",
+          "p1Pts": 0,
+          "p1Net": 47,
+          "p2": "Brian Wojcio",
+          "p2Pts": 8,
+          "p2Net": 34,
+          "winner": "Brian Wojcio"
         }
       ],
       "pairings": [
         {
-          "p1": "Brian Wojcio",
-          "p1Pts": null,
-          "p1Net": null,
-          "p2": "Carson Bass",
-          "p2Pts": null,
-          "p2Net": null,
-          "winner": null,
-          "played": false
+          "p1": "Carson Bass",
+          "p1Pts": 0,
+          "p1Net": 47,
+          "p2": "Brian Wojcio",
+          "p2Pts": 8,
+          "p2Net": 34,
+          "winner": "Brian Wojcio",
+          "played": true,
+          "p1Scorecard": {
+            "course": "Warrior Golf Club",
+            "nine": "Front 9",
+            "handicap": 20,
+            "par": [
+              5,
+              4,
+              3,
+              5,
+              4,
+              3,
+              4,
+              3,
+              4
+            ],
+            "parTotal": 35,
+            "gross": [
+              7,
+              7,
+              5,
+              7,
+              6,
+              6,
+              8,
+              3,
+              8
+            ],
+            "grossTotal": 57,
+            "net": [
+              6,
+              6,
+              4,
+              6,
+              5,
+              5,
+              6,
+              2,
+              7
+            ],
+            "netTotal": 47
+          },
+          "p2Scorecard": {
+            "course": "Warrior Golf Club",
+            "nine": "Front 9",
+            "handicap": 12,
+            "par": [
+              5,
+              4,
+              3,
+              5,
+              4,
+              3,
+              4,
+              3,
+              4
+            ],
+            "parTotal": 35,
+            "gross": [
+              6,
+              5,
+              2,
+              5,
+              5,
+              3,
+              6,
+              4,
+              4
+            ],
+            "grossTotal": 40,
+            "net": [
+              5,
+              4,
+              2,
+              4,
+              4,
+              3,
+              5,
+              3,
+              4
+            ],
+            "netTotal": 34
+          }
         },
         {
           "p1": "Ethan High",
