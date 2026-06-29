@@ -29,6 +29,16 @@ WITHDRAWN = {
     "Megan Serian": "Megan Replacement - TBD",
 }
 
+# Pickup labels: when a withdrawn player's slot was filled by a named pickup that
+# round, show that name instead of the generic "- TBD". The match itself counts
+# only for the scheduled player (the pickup is the invited player's extra/dropped
+# match — see project_pickup_clobber_repair), so the schedule slot stays a pairing
+# placeholder; this just names who filled it. Keyed by (round, scheduled player
+# still in the slot) → the exact label for the opponent side.
+PICKUP_LABELS = {
+    (4, "Carson Bass"): "Bruce Replacement - Ethan",
+}
+
 # Roster replacements: a player's slot taken over mid-season by a named successor.
 # The successor INHERITS the slot's standing (points/record/seed) and plays every
 # round from `takeover_round` on — but rounds BEFORE that keep the ORIGINAL player's
@@ -209,6 +219,19 @@ def apply(path):
                     if repl:
                         m[side] = repl
                         changes.append(f"R{r.get('round')} {side}: {repl}")
+
+    # 2b) name the pickup player in a replacement slot that was actually filled.
+    #     Runs after step 2, so it upgrades a generic "- TBD" placeholder (and only
+    #     a replacement placeholder, never a real opponent) to the named pickup.
+    for r in d.get("rounds", []):
+        rno = r.get("round")
+        for m in r.get("pairings", []):
+            for keep, other in (("p1", "p2"), ("p2", "p1")):
+                label = PICKUP_LABELS.get((rno, m.get(keep)))
+                if label and isinstance(m.get(other), str) and "Replacement" in m.get(other):
+                    if m.get(other) != label:
+                        m[other] = label
+                        changes.append(f"R{rno} {other}: {label}")
 
     # 3) bye corrections (rounds[] and schedule[])
     for coll_name in ("rounds", "schedule"):
