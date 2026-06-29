@@ -970,8 +970,11 @@
 
     const parHTML = parRowHTML((sc1 || sc2).par, (sc1 || sc2).parTotal);
 
-    const p1First = match.p1.split(' ')[0];
-    const p2First = match.p2.split(' ')[0];
+    // For a filled replacement slot ("Bruce Replacement - Ethan") show the pickup's
+    // name on the row, not the withdrawn player's first word.
+    const scFirst = n => (n.includes(' - ') ? n.split(' - ').pop() : n).split(' ')[0];
+    const p1First = scFirst(match.p1);
+    const p2First = scFirst(match.p2);
     const sc = sc1 || sc2;
     const metaLine = [sc.course, sc.nine].filter(Boolean).join(' · ');
 
@@ -1031,8 +1034,11 @@
     }
 
     const fmt = v => v === 0.5 ? '½' : String(v);
-    const p1First = match.p1.split(' ')[0];
-    const p2First = match.p2.split(' ')[0];
+    // For a filled replacement slot ("Bruce Replacement - Ethan") show the pickup's
+    // name on the row, not the withdrawn player's first word.
+    const scFirst = n => (n.includes(' - ') ? n.split(' - ').pop() : n).split(' ')[0];
+    const p1First = scFirst(match.p1);
+    const p2First = scFirst(match.p2);
     const headers = ['First 3', 'Middle 3', 'Final 3', 'Overall', 'Net'];
 
     function playerRow(firstName, myPts, oppPts, myTotal, oppTotal) {
