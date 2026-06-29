@@ -10,13 +10,14 @@ Runs every Monday via Task Scheduler; only generates a file on scheduled recap d
 (or when a round number is passed manually).
 """
 
-import sys, io, os, re, datetime, random, openpyxl
+import sys, io, os, re, json, datetime, random, openpyxl
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
-LEAGUE     = r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\2026 IMI Golf League.xlsx"
-OUTPUT_DIR = r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\Recap Emails"
+LEAGUE         = r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\2026 IMI Golf League.xlsx"
+OUTPUT_DIR     = r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\Recap Emails"
+DASHBOARD_JSON = r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\Dashboard\data.json"
 
 # ── Round schedule ─────────────────────────────────────────────────────────────
 ROUNDS = {
@@ -300,6 +301,17 @@ def load_data(round_num):
     return data
 
 
+def load_withdrawn():
+    """Names flagged withdrawn in the dashboard (apply_overrides is the source of
+    truth for WD; the workbook has no withdrawal concept). Empty set if unreadable."""
+    try:
+        with open(DASHBOARD_JSON, encoding="utf-8") as f:
+            d = json.load(f)
+        return {p["name"] for p in d.get("players", []) if p.get("withdrawn")}
+    except (OSError, json.JSONDecodeError, KeyError, TypeError):
+        return set()
+
+
 def _h(text):
     """Minimal HTML-escape for cell content."""
     return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
@@ -324,17 +336,32 @@ def generate_email(round_num, today=None, tone="friendly"):
     banks    = TONE_BANKS[tone]
     rng      = random.Random(round_num * 13337 + sum(ord(c) for c in tone))
 
-    data = load_data(round_num)
+    data      = load_data(round_num)
+    withdrawn = load_withdrawn()
 
-    played  = [p for p in data if p["round_mp"] is not None and p["name"] not in bye_set]
-    missing = [p for p in data if p["round_mp"] is None and p["name"] not in bye_set]
+    # Withdrawn players are not active contenders: excluded from MVP/participation
+    # and from the missing-scores nag. Their played results still show in the
+    # scores table, and their frozen totals show (un-seeded) at the foot of standings.
+    played  = [p for p in data if p["round_mp"] is not None and p["name"] not in bye_set and p["name"] not in withdrawn]
+    missing = [p for p in data if p["round_mp"] is None and p["name"] not in bye_set and p["name"] not in withdrawn]
 
     best  = max(played, key=lambda x: x["round_mp"]) if played else None
     worst = min(played, key=lambda x: x["round_mp"]) if played else None
     if best and worst and best["name"] == worst["name"]:
         worst = None
 
-    standings = sorted(data, key=lambda x: (-x["total"], x["name"]))
+    # Seeding tiebreaker (matches standings.md / the dashboard):
+    #   total desc → best record (most wins, then fewest losses) → lowest avg NET → name
+    def standings_key(p):
+        try:
+            w, l, _d = (int(x) for x in str(p["record"]).split("-"))
+        except (ValueError, AttributeError):
+            w, l = 0, 0
+        avg = p["avg_net"] if p["avg_net"] is not None else float("inf")
+        return (-p["total"], -w, l, avg, p["name"])
+
+    active_standings = sorted((p for p in data if p["name"] not in withdrawn), key=standings_key)
+    wd_standings     = sorted((p for p in data if p["name"] in withdrawn),     key=standings_key)
 
     subject = (
         f"&#127949;&#65039; IMI Golf League — Round {round_num} Recap | "
@@ -389,17 +416,32 @@ def generate_email(round_num, today=None, tone="friendly"):
         f'<th style="{TH.format(a="center")}">Avg NET</th>'
         f'</tr>'
     )
-    for i, p in enumerate(standings, 1):
-        pts_str = f"{p['total']:.1f}" if p["total"] != int(p["total"]) else str(int(p["total"]))
-        avg_str = f"{p['avg_net']:.1f}" if p["avg_net"] is not None else "&mdash;"
+    def _pts(p):
+        return f"{p['total']:.1f}" if p["total"] != int(p["total"]) else str(int(p["total"]))
+    def _avg(p):
+        return f"{p['avg_net']:.1f}" if p["avg_net"] is not None else "&mdash;"
+
+    for i, p in enumerate(active_standings, 1):
         bg = "background:#fafafa;" if i % 2 == 0 else ""
         H.append(
             f'<tr style="{bg}">'
             f'<td style="{TD}text-align:center;">{i}</td>'
             f'<td style="{TD}">{_h(p["name"])}</td>'
-            f'<td style="{TD}text-align:center;font-weight:bold;">{pts_str}</td>'
+            f'<td style="{TD}text-align:center;font-weight:bold;">{_pts(p)}</td>'
             f'<td style="{TD}text-align:center;">{_h(p["record"])}</td>'
-            f'<td style="{TD}text-align:center;">{avg_str}</td>'
+            f'<td style="{TD}text-align:center;">{_avg(p)}</td>'
+            f'</tr>'
+        )
+    # Withdrawn players: un-seeded, struck through, frozen totals (mirrors standings.md)
+    for p in wd_standings:
+        H.append(
+            f'<tr style="color:#999;">'
+            f'<td style="{TD}text-align:center;">&mdash;</td>'
+            f'<td style="{TD}"><span style="text-decoration:line-through;">{_h(p["name"])}</span>'
+            f'&nbsp;<span style="font-size:11px;color:#cc2027;font-weight:bold;">WD</span></td>'
+            f'<td style="{TD}text-align:center;">{_pts(p)}</td>'
+            f'<td style="{TD}text-align:center;">{_h(p["record"])}</td>'
+            f'<td style="{TD}text-align:center;">{_avg(p)}</td>'
             f'</tr>'
         )
     H.append('</table>')
@@ -420,7 +462,10 @@ def generate_email(round_num, today=None, tone="friendly"):
         if p["round_mp"] is None: return (-0.1, p["name"])
         return (-p["round_mp"], p["name"])
 
-    for i, p in enumerate(sorted(data, key=sort_key), 1):
+    # Withdrawn players who didn't play this round are dropped (no MISSING nag);
+    # those who did play still show, tagged WD.
+    score_data = [p for p in data if not (p["name"] in withdrawn and p["round_mp"] is None)]
+    for i, p in enumerate(sorted(score_data, key=sort_key), 1):
         if p["name"] in bye_set:
             mp_str  = '<em style="color:#888;">BYE</em>'
             net_str = '<em style="color:#888;">BYE</em>'
@@ -430,10 +475,13 @@ def generate_email(round_num, today=None, tone="friendly"):
         else:
             mp_str  = f"{p['round_mp']:.1f}"
             net_str = str(int(p["round_net"])) if p["round_net"] is not None else "&mdash;"
+        name_html = _h(p["name"])
+        if p["name"] in withdrawn:
+            name_html += '&nbsp;<span style="font-size:11px;color:#cc2027;font-weight:bold;">WD</span>'
         bg = "background:#fafafa;" if i % 2 == 0 else ""
         H.append(
             f'<tr style="{bg}">'
-            f'<td style="{TD}">{_h(p["name"])}</td>'
+            f'<td style="{TD}">{name_html}</td>'
             f'<td style="{TD}text-align:center;font-weight:bold;">{mp_str}</td>'
             f'<td style="{TD}text-align:center;">{net_str}</td>'
             f'</tr>'
@@ -463,7 +511,8 @@ def generate_email(round_num, today=None, tone="friendly"):
         H.append(f'<p style="margin:10px 0 0;">{banks["all_submitted"]}</p>')
 
     # ── BYE notice ────────────────────────────────────────────────────────────
-    bye_label = " &amp; ".join(_h(b) for b in r_info["bye_players"])
+    bye_active = [b for b in r_info["bye_players"] if b not in withdrawn]
+    bye_label  = " &amp; ".join(_h(b) for b in bye_active) if bye_active else "&mdash;"
     H.append(
         f'<p style="margin:18px 0 0;padding:8px 12px;background:#f5f5f5;'
         f'border-left:4px solid #cc2027;">'
@@ -474,7 +523,8 @@ def generate_email(round_num, today=None, tone="friendly"):
     if has_next:
         nr     = round_num + 1
         nr_inf = ROUNDS[nr]
-        nr_bye = " &amp; ".join(_h(b) for b in nr_inf["bye_players"])
+        nr_bye_active = [b for b in nr_inf["bye_players"] if b not in withdrawn]
+        nr_bye = " &amp; ".join(_h(b) for b in nr_bye_active) if nr_bye_active else "&mdash;"
         H.append(_sec("📅", f"UP NEXT: ROUND {nr}  ({fmt_date(nr_inf['start'])} – {fmt_date(nr_inf['end'])})"))
         closing = rng.choice(banks["closings"]).format(nr=nr, end=fmt_date(nr_inf["end"]))
         H.append(
