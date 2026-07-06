@@ -18,6 +18,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 LEAGUE         = r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\2026 IMI Golf League.xlsx"
 OUTPUT_DIR     = r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\Recap Emails"
 DASHBOARD_JSON = r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\Dashboard\data.json"
+HC_ADJUST_JSON = r"C:\Users\ehigh\OneDrive - IMI Companies\Documents\Golf League\setup\handicap_adjustments.json"
 
 # ── Round schedule ─────────────────────────────────────────────────────────────
 ROUNDS = {
@@ -250,6 +251,11 @@ TONE_BANKS = {
             "None &mdash; everyone submitted their scores. This is historic. "
             "Frame this email. Put it in the trophy case."
         ),
+        "hc_intro": (
+            "A few handicaps have been adjusted mid-season to keep matches "
+            "competitive. Here's where things stand &mdash; the numbers below are "
+            "in effect going forward."
+        ),
     },
     "harsh": {
         "openings": HARSH_OPENINGS,
@@ -260,6 +266,11 @@ TONE_BANKS = {
         "all_submitted": (
             "Nobody, somehow &mdash; every last score came in on time. Mark the "
             "calendar; it's the one thing this group got right all round."
+        ),
+        "hc_intro": (
+            "The committee took pity on a few of you and bumped some handicaps &mdash; "
+            "consider it a mercy. The revised numbers below are now in effect, so "
+            "there are officially fewer excuses left."
         ),
     },
 }
@@ -312,6 +323,27 @@ def load_withdrawn():
         return set()
 
 
+def load_adjustments(round_num):
+    """Mid-season handicap adjustments from setup/handicap_adjustments.json.
+
+    Returns the running list of adjustments that have taken effect by the round
+    players are about to start (effective_round <= round_num + 1), sorted by
+    (effective_round, player). Cumulative to date, not just the newest. Returns
+    [] on missing file / bad JSON / bad shape so the section is simply omitted."""
+    try:
+        with open(HC_ADJUST_JSON, encoding="utf-8") as f:
+            records = json.load(f)
+        adj = [
+            r for r in records
+            if isinstance(r, dict) and r.get("effective_round") is not None
+            and int(r["effective_round"]) <= round_num + 1
+        ]
+        adj.sort(key=lambda r: (int(r["effective_round"]), str(r.get("player", ""))))
+        return adj
+    except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError):
+        return []
+
+
 def _h(text):
     """Minimal HTML-escape for cell content."""
     return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
@@ -336,8 +368,9 @@ def generate_email(round_num, today=None, tone="friendly"):
     banks    = TONE_BANKS[tone]
     rng      = random.Random(round_num * 13337 + sum(ord(c) for c in tone))
 
-    data      = load_data(round_num)
-    withdrawn = load_withdrawn()
+    data        = load_data(round_num)
+    withdrawn   = load_withdrawn()
+    adjustments = load_adjustments(round_num)
 
     # Withdrawn players are not active contenders: excluded from MVP/participation
     # and from the missing-scores nag. Their played results still show in the
@@ -445,6 +478,32 @@ def generate_email(round_num, today=None, tone="friendly"):
             f'</tr>'
         )
     H.append('</table>')
+
+    # ── Handicap adjustments ───────────────────────────────────────────────────
+    # Cumulative running list of mid-season handicap changes in effect by the
+    # upcoming round. Omitted entirely when there are none (like the MVP section).
+    if adjustments:
+        H.append(_sec("⚖️", "HANDICAP ADJUSTMENTS"))
+        H.append(f'<p style="margin:10px 0 8px;">{banks["hc_intro"]}</p>')
+        H.append('<table style="width:100%;border-collapse:collapse;margin-top:0;">')
+        H.append(
+            f'<tr>'
+            f'<th style="{TH.format(a="left")}">Player</th>'
+            f'<th style="{TH.format(a="center")}">Change</th>'
+            f'<th style="{TH.format(a="center")}">Effective</th>'
+            f'</tr>'
+        )
+        for i, a in enumerate(adjustments, 1):
+            bg = "background:#fafafa;" if i % 2 == 0 else ""
+            change = f'{int(a["from"])} &rarr; {int(a["to"])}'
+            H.append(
+                f'<tr style="{bg}">'
+                f'<td style="{TD}">{_h(str(a["player"]))}</td>'
+                f'<td style="{TD}text-align:center;font-weight:bold;">{change}</td>'
+                f'<td style="{TD}text-align:center;">Round {int(a["effective_round"])}</td>'
+                f'</tr>'
+            )
+        H.append('</table>')
 
     # ── Round scores ──────────────────────────────────────────────────────────
     H.append(_sec("⛳", f"ROUND {round_num} SCORES"))
