@@ -1,7 +1,7 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-06-29 11:49 AM ET",
-  "currentRound": 4,
+  "lastUpdated": "2026-07-06 9:14 AM ET",
+  "currentRound": 5,
   "players": [
     {
       "id": 1,
@@ -246,9 +246,9 @@
       "id": 8,
       "name": "Curtis Lynn",
       "handicap": 28,
-      "totalPts": 21,
-      "record": "3-0-0",
-      "avgNet": 37.3,
+      "totalPts": 29,
+      "record": "4-0-0",
+      "avgNet": 36.8,
       "rounds": [
         {
           "round": 1,
@@ -270,6 +270,13 @@
           "net": 37,
           "opponent": "Nick Coglianese",
           "result": "W"
+        },
+        {
+          "round": 5,
+          "matchPts": 8,
+          "net": 35,
+          "opponent": "Preston Stoner",
+          "result": "W"
         }
       ]
     },
@@ -278,8 +285,8 @@
       "name": "Preston Stoner",
       "handicap": 28,
       "totalPts": 22.5,
-      "record": "3-1-0",
-      "avgNet": 38.8,
+      "record": "3-2-0",
+      "avgNet": 39.8,
       "rounds": [
         {
           "round": 1,
@@ -308,6 +315,13 @@
           "net": 38,
           "opponent": "Kaylan Adams",
           "result": "W"
+        },
+        {
+          "round": 5,
+          "matchPts": 0,
+          "net": 44,
+          "opponent": "Curtis Lynn",
+          "result": "L"
         }
       ]
     },
@@ -3253,6 +3267,15 @@
           "p2Pts": 6,
           "p2Net": 52,
           "winner": "Jerome Martin"
+        },
+        {
+          "p1": "Curtis Lynn",
+          "p1Pts": 8,
+          "p1Net": 35,
+          "p2": "Preston Stoner",
+          "p2Pts": 0,
+          "p2Net": 44,
+          "winner": "Curtis Lynn"
         }
       ],
       "pairings": [
@@ -3278,13 +3301,95 @@
         },
         {
           "p1": "Curtis Lynn",
-          "p1Pts": null,
-          "p1Net": null,
+          "p1Pts": 8,
+          "p1Net": 35,
           "p2": "Preston Stoner",
-          "p2Pts": null,
-          "p2Net": null,
-          "winner": null,
-          "played": false
+          "p2Pts": 0,
+          "p2Net": 44,
+          "winner": "Curtis Lynn",
+          "played": true,
+          "p1Scorecard": {
+            "course": "Skybrook",
+            "nine": "Front 9",
+            "handicap": 28,
+            "par": [
+              4,
+              3,
+              4,
+              5,
+              4,
+              4,
+              3,
+              5,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              7,
+              3,
+              7,
+              7,
+              5,
+              5,
+              3,
+              6,
+              6
+            ],
+            "grossTotal": 49,
+            "net": [
+              5,
+              2,
+              5,
+              6,
+              3,
+              4,
+              2,
+              4,
+              4
+            ],
+            "netTotal": 35
+          },
+          "p2Scorecard": {
+            "course": "Skybrook",
+            "nine": "Front 9",
+            "handicap": 28,
+            "par": [
+              4,
+              3,
+              4,
+              5,
+              4,
+              4,
+              3,
+              5,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              6,
+              6,
+              8,
+              8,
+              4,
+              6,
+              4,
+              8,
+              8
+            ],
+            "grossTotal": 58,
+            "net": [
+              4,
+              5,
+              6,
+              7,
+              2,
+              5,
+              3,
+              6,
+              6
+            ],
+            "netTotal": 44
+          }
         },
         {
           "p1": "Charlotte Hayes",
