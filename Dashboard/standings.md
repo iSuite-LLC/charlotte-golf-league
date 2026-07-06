@@ -29,10 +29,11 @@ Ben Linck has moved and can no longer play. **Preston Stoner (HC 28)** takes ove
 
 ## Handicap Adjustments
 
-After three matches apiece, two handicaps were revised upward (both were playing well over their number), **effective Round 4 onward** — R1–R3 results stand as played:
+After three matches apiece, three handicaps were revised upward (all were playing well over their number), **effective Round 4 onward** — R1–R3 results stand as played:
 
 - **Carson Bass: 20 → 24**
 - **Michael McHugh: 22 → 25**
+- **Alex Palmer: 27 → 30**
 
 Brian Wojcio was reviewed at the same time and **stays at 12** (already competitive, trending down). The new handicaps were used in their R4 matches — Michael promptly beat Brian 4.5–3.5, and Carson beat Ethan 5–3.
 
