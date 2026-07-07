@@ -1,7 +1,7 @@
 # IMI Golf League 2026 — Standings
 
 **Season:** 2026 | **Rounds:** 9 | **Players:** 13 active (2 withdrawn)
-**Last updated:** 2026-07-06 via Claude (R5 Curtis Lynn def. Preston Stoner 8–0 — Curtis takes over the #1 seed)
+**Last updated:** 2026-07-07 via Claude (advanced current round to Round 6; R3–R5 makeups still open)
 
 ---
 
@@ -41,21 +41,22 @@ Brian Wojcio was reviewed at the same time and **stays at 12** (already competit
 
 ## Current Round
 
-**Round 5** | Jun 15 – Jun 26, 2026
-BYE: Brian Wojcio, Ethan High, Rob Bass
+**Round 6** | Jun 29 – Jul 10, 2026
+BYE: Carson Bass, Michael McHugh
 
-> **Note:** We're in Round 5, but earlier rounds still have makeup matches being recorded as they come in.
-> - **R3** (6 of 7 recorded): newest — **Brian Wojcio def. Carson Bass 8–0**, played at **Warrior Golf Club** (NET 34 vs 47). Outstanding: Rob Bass vs Bruce replacement (TBD).
-> - **R4** (6 of 7 recorded): Maddox–Coglianese (draw), Ethan High def. Alex Palmer 7–1, Charlotte Hayes def. Megan Serian 8–0, Preston Stoner def. Kaylan Adams 8–0, **Michael McHugh def. Brian Wojcio 4.5–3.5**, **Carson Bass def. Ethan High 5–3** (Carson's Bruce-replacement pickup). Outstanding: Rob Bass vs Curtis Lynn.
-> - **R5** (3 of 6 recorded): Kaylan Adams def. Megan Serian 7–1; Jerome Martin def. Nick Coglianese 6–2; **Curtis Lynn def. Preston Stoner 8–0** at Skybrook (NET 35 vs 44).
+> **Note:** We're in Round 6. Earlier rounds still have makeup matches being recorded as they come in.
+> - **R3** (6 of 7 recorded): Outstanding: Rob Bass vs Bruce replacement (TBD).
+> - **R4** (6 of 7 recorded): Outstanding: Rob Bass vs Curtis Lynn.
+> - **R5** (3 of 6 recorded): Kaylan Adams def. Megan Serian 7–1; Jerome Martin def. Nick Coglianese 6–2; **Curtis Lynn def. Preston Stoner 8–0** at Skybrook (NET 35 vs 44). Outstanding: Carson Bass vs Michael McHugh, Alex Palmer vs Bruce replacement (TBD), Charlotte Hayes vs David Maddox.
+> - **R6** (0 of 6 recorded): underway.
 >
-> **Pickup note:** Carson's R4 vs Ethan was his Bruce-replacement pickup — Carson's 5 pts count toward his record (now 2-2-0). For Ethan it was an extra match; his 3-pt loss is his lowest round and is dropped per the mulligan rule, so his points (27) and record (4-0-0) are unchanged.
+> **Pickup note:** Carson's R4 vs Ethan was his Bruce-replacement pickup — Carson's 5 pts count toward his record (2-2-0). For Ethan it was an extra match; his 3-pt loss is his lowest round and is dropped per the mulligan rule, so his points (27) and record (4-0-0) are unchanged.
 
 ---
 
 ## Standings
 
-*R1 and R2 complete. R3 at 6 of 7, R4 at 6 of 7 (Michael–Brian and Carson's pickup added). R5 at 3 of 6, with R3/R4 makeup matches still outstanding.*
+*R1 and R2 complete. R3 at 6 of 7, R4 at 6 of 7, R5 at 3 of 6. Round 6 is now underway; R3–R5 makeup matches are still outstanding.*
 
 | Seed | Player | Total Pts | Record | Avg NET |
 |------|--------|-----------|--------|---------|
@@ -87,8 +88,8 @@ BYE: Brian Wojcio, Ethan High, Rob Bass
 | 2 | May 4 – May 15 | Nick Coglianese |
 | 3 | May 18 – May 29 | Charlotte Hayes |
 | 4 | Jun 1 – Jun 12 | Jerome Martin |
-| **5 ← current** | Jun 15 – Jun 26 | Wojcio / High / R. Bass |
-| 6 | Jun 29 – Jul 10 | C. Bass / McHugh |
+| 5 | Jun 15 – Jun 26 | Wojcio / High / R. Bass |
+| **6 ← current** | Jun 29 – Jul 10 | C. Bass / McHugh |
 | 7 | Jul 13 – Jul 24 | Palmer / Lynn / Stoner |
 | 8 | Jul 27 – Aug 7 | Kaylan Adams |
 | 9 | Aug 10 – Aug 21 | — (Megan Serian withdrawn) |
