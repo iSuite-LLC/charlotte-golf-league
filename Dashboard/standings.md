@@ -1,7 +1,7 @@
 # IMI Golf League 2026 — Standings
 
 **Season:** 2026 | **Rounds:** 9 | **Players:** 13 active (2 withdrawn)
-**Last updated:** 2026-07-07 via Claude (advanced current round to Round 6; R3–R5 makeups still open)
+**Last updated:** 2026-07-07 via Claude (R6 Nick Coglianese def. Kaylan Adams 6–2 — Nick's first win)
 
 ---
 
@@ -48,7 +48,7 @@ BYE: Carson Bass, Michael McHugh
 > - **R3** (6 of 7 recorded): Outstanding: Rob Bass vs Bruce replacement (TBD).
 > - **R4** (6 of 7 recorded): Outstanding: Rob Bass vs Curtis Lynn.
 > - **R5** (3 of 6 recorded): Kaylan Adams def. Megan Serian 7–1; Jerome Martin def. Nick Coglianese 6–2; **Curtis Lynn def. Preston Stoner 8–0** at Skybrook (NET 35 vs 44). Outstanding: Carson Bass vs Michael McHugh, Alex Palmer vs Bruce replacement (TBD), Charlotte Hayes vs David Maddox.
-> - **R6** (0 of 6 recorded): underway.
+> - **R6** (1 of 6 recorded): **Nick Coglianese def. Kaylan Adams 6–2** at Highland Creek (NET 45 vs 50).
 >
 > **Pickup note:** Carson's R4 vs Ethan was his Bruce-replacement pickup — Carson's 5 pts count toward his record (2-2-0). For Ethan it was an extra match; his 3-pt loss is his lowest round and is dropped per the mulligan rule, so his points (27) and record (4-0-0) are unchanged.
 
@@ -56,7 +56,7 @@ BYE: Carson Bass, Michael McHugh
 
 ## Standings
 
-*R1 and R2 complete. R3 at 6 of 7, R4 at 6 of 7, R5 at 3 of 6. Round 6 is now underway; R3–R5 makeup matches are still outstanding.*
+*R1 and R2 complete. R3 at 6 of 7, R4 at 6 of 7, R5 at 3 of 6, R6 at 1 of 6. R3–R5 makeup matches are still outstanding.*
 
 | Seed | Player | Total Pts | Record | Avg NET |
 |------|--------|-----------|--------|---------|
@@ -66,17 +66,17 @@ BYE: Carson Bass, Michael McHugh
 | 4 | Charlotte Hayes | 22 | 3-0-0 | 39.3 |
 | 5 | David Maddox | 19 | 2-0-1 | 46.0 |
 | 6 | Brian Wojcio | 17.5 | 1-2-1 | 39.0 |
-| 7 | Carson Bass | 13 | 2-2-0 | 41.5 |
-| 8 | Kaylan Adams | 12 | 1-3-1 | 51.4 |
-| 9 | Michael McHugh | 11.5 | 2-2-0 | 43.0 |
-| 10 | Jerome Martin | 11 | 1-2-1 | 53.5 |
-| 11 | Alex Palmer | 11 | 1-3-0 | 46.2 |
-| 12 | Nick Coglianese | 7 | 0-3-1 | 51.0 |
+| 7 | Kaylan Adams | 14 | 1-4-1 | 51.2 |
+| 8 | Carson Bass | 13 | 2-2-0 | 41.5 |
+| 9 | Nick Coglianese | 13 | 1-3-1 | 49.8 |
+| 10 | Michael McHugh | 11.5 | 2-2-0 | 43.0 |
+| 11 | Jerome Martin | 11 | 1-2-1 | 53.5 |
+| 12 | Alex Palmer | 11 | 1-3-0 | 46.2 |
 | 13 | Rob Bass | 5 | 0-1-1 | 41.0 |
 | — | ~~Bruce Atkins~~ (WD) | 10 | 1-1-0 | 36.0 |
 | — | ~~Megan Serian~~ (WD) | 11.5 | 1-4-0 | 50.2 |
 
-*Ties broken by: best record (most W, fewest L) → lowest avg NET → name. Seed 10/11: Jerome Martin over Alex Palmer on fewer losses (2 vs 3).*
+*Ties broken by: best record (most W, fewest L) → lowest avg NET → name. Seed 8/9: Carson Bass over Nick Coglianese on more wins (2 vs 1). Seed 11/12: Jerome Martin over Alex Palmer on fewer losses (2 vs 3).*
 
 ---
 
