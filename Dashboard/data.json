@@ -3963,5 +3963,25 @@
       ],
       "winner": null
     }
-  }
+  },
+  "handicapAdjustments": [
+    {
+      "player": "Alex Palmer",
+      "from": 27,
+      "to": 30,
+      "effective_round": 4
+    },
+    {
+      "player": "Carson Bass",
+      "from": 20,
+      "to": 24,
+      "effective_round": 4
+    },
+    {
+      "player": "Michael McHugh",
+      "from": 22,
+      "to": 25,
+      "effective_round": 4
+    }
+  ]
 }

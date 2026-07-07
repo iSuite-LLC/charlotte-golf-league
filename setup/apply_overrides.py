@@ -110,6 +110,15 @@ PICKUP_SCORECARDS_FILE = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "pickup_scorecards.json"
 )
 
+# Mid-season handicap adjustment log — the same file the recap email reads. The
+# workbook stores only the current handicap (no history), so the dashboard can't
+# derive "what changed and when." Inject it into data.json as `handicapAdjustments`
+# every run (the processor rebuilds data.json without it). See generate_recap.py's
+# load_adjustments() for the read side and project_handicap_adjustments memory.
+HANDICAP_ADJUSTMENTS_FILE = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "handicap_adjustments.json"
+)
+
 DEFAULT_PATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
     "Dashboard", "data.json"
@@ -130,6 +139,18 @@ def _load_pickup_scorecards():
             return json.load(f)
     except (OSError, json.JSONDecodeError):
         return None
+
+
+def _load_handicap_adjustments():
+    """Full adjustment log, sorted by (effective_round, player). [] if unreadable."""
+    try:
+        with open(HANDICAP_ADJUSTMENTS_FILE, encoding="utf-8") as f:
+            recs = json.load(f)
+        recs = [r for r in recs if isinstance(r, dict) and r.get("effective_round") is not None]
+        recs.sort(key=lambda r: (int(r["effective_round"]), str(r.get("player", ""))))
+        return recs
+    except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError):
+        return []
 
 
 def apply(path):
@@ -356,6 +377,12 @@ def apply(path):
             if want and r.get("bye") != want:
                 r["bye"] = want
                 changes.append(f"{coll_name} R{r.get('round')} bye → {want}")
+
+    # 4) inject the mid-season handicap adjustment log for the dashboard to render.
+    adjustments = _load_handicap_adjustments()
+    if d.get("handicapAdjustments") != adjustments:
+        d["handicapAdjustments"] = adjustments
+        changes.append(f"handicapAdjustments → {len(adjustments)} entry(ies)")
 
     if changes:
         with open(path, "w", encoding="utf-8") as f:

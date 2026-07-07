@@ -570,6 +570,60 @@
       .final-spacer { height: 70px; }
       .sf-spacer { height: 36px; }
     }
+
+    /* ── Handicap adjustments (Standings tab) ── */
+    .hcp-adj { color: var(--orange); font-weight: 700; cursor: help; }
+    .hc-adj-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 6px; margin-top: 18px; padding: 14px 16px 6px;
+    }
+    .hc-adj-title {
+      font-size: 0.9rem; font-weight: 700; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .hc-adj-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .hc-adj-table th {
+      text-align: left; color: var(--muted); font-weight: 600;
+      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em;
+      padding: 4px 8px; border-bottom: 2px solid var(--orange);
+    }
+    .hc-adj-table td { padding: 7px 8px; border-bottom: 1px solid var(--border); }
+    .hc-adj-table tr:last-child td { border-bottom: none; }
+
+    /* ── Outstanding matches (Results tab) ── */
+    .out-panel {
+      background: var(--surface); border: 1px solid var(--border);
+      border-left: 4px solid var(--orange); border-radius: 6px;
+      margin-bottom: 16px; padding: 12px 14px;
+    }
+    .out-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .out-title { font-size: 0.9rem; font-weight: 700; }
+    .out-count {
+      background: var(--orange); color: #fff; font-size: 0.72rem; font-weight: 700;
+      min-width: 20px; height: 20px; border-radius: 10px; padding: 0 6px;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .out-list { display: flex; flex-direction: column; gap: 2px; }
+    .out-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 7px 4px; border-bottom: 1px solid var(--border); font-size: 0.86rem;
+    }
+    .out-row:last-child { border-bottom: none; }
+    .out-round {
+      color: var(--orange); font-weight: 700; font-size: 0.75rem;
+      min-width: 28px; flex-shrink: 0;
+    }
+    .out-vs { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .out-p { font-weight: 600; }
+    .out-x { color: var(--muted); font-size: 0.75rem; }
+    .out-row-tbd .out-p, .out-row-tbd .out-x { color: var(--muted); font-weight: 500; }
+    .out-pill {
+      margin-left: auto; background: #2a2a2a; color: var(--muted);
+      font-size: 0.66rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.03em; padding: 2px 8px; border-radius: 10px;
+      border: 1px solid var(--border); white-space: nowrap;
+    }
+    .out-empty { color: #5aaa35; font-size: 0.85rem; font-weight: 500; }
   </style>
 </head>
 <body>
@@ -836,7 +890,15 @@
       });
     const unranked = leagueData.players.filter(p => p.rounds.length === 0);
 
-    const hcp = p => (p.handicap != null ? p.handicap : '—');
+    // Mid-season handicap adjustments (injected into data.json by apply_overrides).
+    const adjByName = {};
+    (leagueData.handicapAdjustments || []).forEach(a => { adjByName[a.player] = a; });
+    const hcp = p => {
+      const base = (p.handicap != null ? p.handicap : '—');
+      const a = adjByName[p.name];
+      if (!a) return base;
+      return `<span class="hcp-adj" title="Adjusted from ${a.from}, eff. R${a.effective_round}">${base}*</span>`;
+    };
 
     // Podium
     const podiumHTML = renderPodium(ranked.filter(p => !p.withdrawn));
@@ -917,7 +979,30 @@
     });
     cardsHTML += '</div>';
 
-    document.getElementById('tab-standings').innerHTML = podiumHTML + searchHTML + tableHTML + cardsHTML;
+    document.getElementById('tab-standings').innerHTML =
+      podiumHTML + searchHTML + tableHTML + cardsHTML + renderHcAdjustments();
+  }
+
+  /* ── Handicap adjustments card (mirrors the recap email) ── */
+  function renderHcAdjustments() {
+    const adj = leagueData.handicapAdjustments || [];
+    if (!adj.length) return '';
+    const rows = adj.map(a => `<tr>
+        <td>${a.player}</td>
+        <td style="text-align:center;font-weight:700">${a.from} &rarr; ${a.to}</td>
+        <td style="text-align:center">Round ${a.effective_round}</td>
+      </tr>`).join('');
+    return `<div class="hc-adj-card">
+      <div class="hc-adj-title">&#9878;&#65039; Handicap Adjustments</div>
+      <table class="hc-adj-table">
+        <thead><tr>
+          <th>Player</th>
+          <th style="text-align:center">Change</th>
+          <th style="text-align:center">Effective</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
   }
 
   /* ── Scorecard ── */
@@ -1119,7 +1204,46 @@
         </div>
       </div>`;
     }).join('');
-    document.getElementById('tab-results').innerHTML = html;
+    document.getElementById('tab-results').innerHTML = renderOutstanding() + html;
+  }
+
+  /* ── Outstanding matches: unplayed pairings in rounds whose window has closed
+        (status 'complete'). These are the overdue makeups still owed. The active
+        round (in_progress) is excluded — its remaining matches already show as
+        "N remaining" on that round; upcoming rounds are the normal schedule. ── */
+  function renderOutstanding() {
+    const items = [];
+    (leagueData.rounds || []).forEach(r => {
+      if (r.status !== 'complete') return;
+      (r.pairings || []).forEach(m => {
+        if (m.played === false) {
+          const tbd = /replacement|tbd/i.test(m.p1 || '') || /replacement|tbd/i.test(m.p2 || '');
+          items.push({ round: r.round, p1: m.p1, p2: m.p2, tbd });
+        }
+      });
+    });
+    items.sort((a, b) => a.round - b.round);
+
+    let body;
+    if (!items.length) {
+      body = `<div class="out-empty">All scheduled matches are in &mdash; no makeups outstanding. &#127881;</div>`;
+    } else {
+      body = '<div class="out-list">' + items.map(it => {
+        const tag = it.tbd ? '<span class="out-pill">pickup-eligible</span>' : '';
+        return `<div class="out-row${it.tbd ? ' out-row-tbd' : ''}">
+          <span class="out-round">R${it.round}</span>
+          <span class="out-vs"><span class="out-p">${it.p1}</span><span class="out-x">vs</span><span class="out-p">${it.p2}</span></span>
+          ${tag}
+        </div>`;
+      }).join('') + '</div>';
+    }
+    return `<div class="out-panel">
+      <div class="out-head">
+        <span class="out-title">&#9203; Outstanding Matches</span>
+        ${items.length ? `<span class="out-count">${items.length}</span>` : ''}
+      </div>
+      ${body}
+    </div>`;
   }
 
   function toggleResultsRound(roundNum) {
