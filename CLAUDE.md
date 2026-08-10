@@ -16,10 +16,22 @@ When the user reports that new scores are in the Scores folder (or otherwise ask
    2. Best record (most wins, then fewest losses) — ties for playoff seeding break here
    3. Lowest average NET score
    4. Name ascending (final tiebreaker only)
-6. **Commit and push** — stage `2026 IMI Golf League.xlsx`, `Dashboard/standings.md`, `Dashboard/data.json`, `Scores/Scores.xlsx`, `Score Calculator.xlsx`, `setup/processed_files.json`. Commit message must list the actual matchups from step 3, then push.
-7. **Website** — GitHub Pages auto-deploys from `Dashboard/` on push. No extra action needed.
+6. **Commit and push** — stage `2026 IMI Golf League.xlsx`, `Dashboard/standings.md`, `Dashboard/data.json`, `Scores/Scores.xlsx`, `Score Calculator.xlsx`, `setup/processed_files.json`. Commit message must list the actual matchups from step 3, then push. See **Pushing** below — the Claude desktop app cannot push.
+7. **Website** — GitHub Pages auto-deploys from `Dashboard/` on push. Nothing goes live until the push in step 6 actually lands.
 
 Do not modify `setup/process_scores.py`, `setup/generate_recap.py`, or `run_recap.bat` unless explicitly asked.
+
+## Pushing
+
+The **Claude desktop app's sandbox blocks outbound network access** — pushes fail with a `403` from its proxy. This is the app's network policy, not an auth problem. Do not try to route around it.
+
+- **In the desktop app:** commit only. Then stop and tell the user the commit is ready but needs to be pushed from the Claude Code CLI. Do not retry, and do not report the round as fully published.
+- **In the Claude Code CLI:** push normally with `git push`. Auth works here.
+- **The user** can also push from this session by typing `! git push`.
+
+Committing is local and works fine in both clients — only the push is blocked.
+
+Auth setup (fixed 2026-08-10): `origin` is the HTTPS URL `https://github.com/iSuite-LLC/charlotte-golf-league.git`, and `~/.gitconfig` sets `credential."https://github.com".helper = !gh auth git-credential` so the `gh` token is used non-interactively. There are **no SSH keys on this machine** — never switch `origin` back to a `git@github.com:` URL, it cannot authenticate.
 
 ## Key Files
 
