@@ -1,7 +1,7 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-07-07 8:54 AM ET",
-  "currentRound": 6,
+  "lastUpdated": "2026-08-10 12:14 PM ET",
+  "currentRound": 8,
   "players": [
     {
       "id": 1,
@@ -45,9 +45,9 @@
       "id": 2,
       "name": "Ethan High",
       "handicap": 12,
-      "totalPts": 27,
-      "record": "4-0-0",
-      "avgNet": 38.0,
+      "totalPts": 39,
+      "record": "6-0-0",
+      "avgNet": 37.0,
       "rounds": [
         {
           "round": 1,
@@ -76,6 +76,20 @@
           "net": 42,
           "opponent": "Alex Palmer",
           "result": "W"
+        },
+        {
+          "round": 6,
+          "matchPts": 5,
+          "net": 37,
+          "opponent": "Rob Bass",
+          "result": "W"
+        },
+        {
+          "round": 8,
+          "matchPts": 7,
+          "net": 33,
+          "opponent": "Curtis Lynn",
+          "result": "W"
         }
       ]
     },
@@ -83,9 +97,9 @@
       "id": 3,
       "name": "Rob Bass",
       "handicap": 15,
-      "totalPts": 5,
-      "record": "0-1-1",
-      "avgNet": 41.0,
+      "totalPts": 8,
+      "record": "0-2-1",
+      "avgNet": 40.0,
       "rounds": [
         {
           "round": 1,
@@ -100,6 +114,13 @@
           "net": 39,
           "opponent": "Brian Wojcio",
           "result": "D"
+        },
+        {
+          "round": 6,
+          "matchPts": 3,
+          "net": 38,
+          "opponent": "Ethan High",
+          "result": "L"
         }
       ]
     },
@@ -246,9 +267,9 @@
       "id": 8,
       "name": "Curtis Lynn",
       "handicap": 28,
-      "totalPts": 29,
-      "record": "4-0-0",
-      "avgNet": 36.8,
+      "totalPts": 30,
+      "record": "4-1-0",
+      "avgNet": 37.4,
       "rounds": [
         {
           "round": 1,
@@ -277,6 +298,13 @@
           "net": 35,
           "opponent": "Preston Stoner",
           "result": "W"
+        },
+        {
+          "round": 8,
+          "matchPts": 1,
+          "net": 40,
+          "opponent": "Ethan High",
+          "result": "L"
         }
       ]
     },
@@ -3605,7 +3633,7 @@
       "round": 6,
       "dates": "Aug 17 – Aug 28",
       "bye": "C. Bass / McHugh",
-      "status": "in_progress",
+      "status": "upcoming",
       "matches": [
         {
           "p1": "Nick Coglianese",
@@ -3615,6 +3643,15 @@
           "p2Pts": 2,
           "p2Net": 50,
           "winner": "Nick Coglianese"
+        },
+        {
+          "p1": "Ethan High",
+          "p1Pts": 5,
+          "p1Net": 37,
+          "p2": "Rob Bass",
+          "p2Pts": 3,
+          "p2Net": 38,
+          "winner": "Ethan High"
         }
       ],
       "pairings": [
@@ -3630,13 +3667,95 @@
         },
         {
           "p1": "Ethan High",
-          "p1Pts": null,
-          "p1Net": null,
+          "p1Pts": 5,
+          "p1Net": 37,
           "p2": "Rob Bass",
-          "p2Pts": null,
-          "p2Net": null,
-          "winner": null,
-          "played": false
+          "p2Pts": 3,
+          "p2Net": 38,
+          "winner": "Ethan High",
+          "played": true,
+          "p1Scorecard": {
+            "course": "Skybrook",
+            "nine": "Front 9",
+            "handicap": 12,
+            "par": [
+              4,
+              3,
+              4,
+              5,
+              4,
+              4,
+              3,
+              5,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              4,
+              4,
+              5,
+              5,
+              7,
+              5,
+              3,
+              6,
+              4
+            ],
+            "grossTotal": 43,
+            "net": [
+              3,
+              4,
+              4,
+              5,
+              6,
+              4,
+              3,
+              5,
+              3
+            ],
+            "netTotal": 37
+          },
+          "p2Scorecard": {
+            "course": "Skybrook",
+            "nine": "Front 9",
+            "handicap": 15,
+            "par": [
+              4,
+              3,
+              4,
+              5,
+              4,
+              4,
+              3,
+              5,
+              4
+            ],
+            "parTotal": 36,
+            "gross": [
+              7,
+              5,
+              4,
+              6,
+              4,
+              5,
+              4,
+              6,
+              5
+            ],
+            "grossTotal": 46,
+            "net": [
+              6,
+              4,
+              3,
+              5,
+              3,
+              4,
+              4,
+              5,
+              4
+            ],
+            "netTotal": 38
+          }
         },
         {
           "p1": "Alex Palmer",
@@ -3836,7 +3955,17 @@
       "dates": "Sep 14 – Sep 25",
       "bye": "Kaylan Adams",
       "status": "upcoming",
-      "matches": [],
+      "matches": [
+        {
+          "p1": "Ethan High",
+          "p1Pts": 7,
+          "p1Net": 33,
+          "p2": "Curtis Lynn",
+          "p2Pts": 1,
+          "p2Net": 40,
+          "winner": "Ethan High"
+        }
+      ],
       "pairings": [
         {
           "p1": "Brian Wojcio",
@@ -3850,13 +3979,95 @@
         },
         {
           "p1": "Ethan High",
-          "p1Pts": null,
-          "p1Net": null,
+          "p1Pts": 7,
+          "p1Net": 33,
           "p2": "Curtis Lynn",
-          "p2Pts": null,
-          "p2Net": null,
-          "winner": null,
-          "played": false
+          "p2Pts": 1,
+          "p2Net": 40,
+          "winner": "Ethan High",
+          "played": true,
+          "p1Scorecard": {
+            "course": "Skybrook",
+            "nine": "Back 9",
+            "handicap": 12,
+            "par": [
+              4,
+              5,
+              4,
+              4,
+              3,
+              4,
+              3,
+              4,
+              5
+            ],
+            "parTotal": 36,
+            "gross": [
+              5,
+              5,
+              4,
+              4,
+              3,
+              4,
+              3,
+              5,
+              6
+            ],
+            "grossTotal": 39,
+            "net": [
+              4,
+              4,
+              4,
+              3,
+              3,
+              3,
+              3,
+              4,
+              5
+            ],
+            "netTotal": 33
+          },
+          "p2Scorecard": {
+            "course": "Skybrook",
+            "nine": "Back 9",
+            "handicap": 28,
+            "par": [
+              4,
+              5,
+              4,
+              4,
+              3,
+              4,
+              3,
+              4,
+              5
+            ],
+            "parTotal": 36,
+            "gross": [
+              6,
+              7,
+              4,
+              6,
+              5,
+              7,
+              4,
+              7,
+              8
+            ],
+            "grossTotal": 54,
+            "net": [
+              4,
+              6,
+              3,
+              4,
+              4,
+              5,
+              3,
+              5,
+              6
+            ],
+            "netTotal": 40
+          }
         },
         {
           "p1": "Rob Bass",
