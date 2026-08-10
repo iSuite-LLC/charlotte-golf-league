@@ -1180,7 +1180,7 @@
         badgeCls = 'in-progress';
         badgeTxt = remaining === 1 ? '1 match remaining' : remaining + ' matches remaining';
       }
-      const isOpen    = r.status === 'in_progress' || r.status === 'upcoming';
+      const isOpen    = r.status === 'in_progress';
       const matchRows = played.map((m, mi) => {
         const draw    = m.winner === null;
         const scId    = `sc-r${r.round}-m${mi}`;
