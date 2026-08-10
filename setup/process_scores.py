@@ -37,10 +37,15 @@ SCHEDULE = [
     {'round': 3, 'dates': 'May 18 – May 29', 'bye': 'Charlotte Hayes'},
     {'round': 4, 'dates': 'Jun 1 – Jun 12',  'bye': 'Jerome Martin'},
     {'round': 5, 'dates': 'Jun 15 – Jun 26', 'bye': 'Wojcio / High / R. Bass'},
-    {'round': 6, 'dates': 'Jun 29 – Jul 10', 'bye': 'C. Bass / McHugh / Atkins'},
-    {'round': 7, 'dates': 'Jul 13 – Jul 24', 'bye': 'Palmer / Lynn / Stoner'},
-    {'round': 8, 'dates': 'Jul 27 – Aug 7',  'bye': 'Kaylan Adams'},
-    {'round': 9, 'dates': 'Aug 10 – Aug 21', 'bye': 'Megan Serian'},
+    # R6-R9 rescheduled 2026-08-10 after the summer pause. R6 only ever had one
+    # match played (Nick def. Kaylan 6-2, which stands); it reopens Aug 17 so the
+    # remaining six matchups can be played, and R7-R9 cascade from there.
+    # Original windows: R6 Jun 29 – Jul 10, R7 Jul 13 – Jul 24,
+    #                   R8 Jul 27 – Aug 7,  R9 Aug 10 – Aug 21.
+    {'round': 6, 'dates': 'Aug 17 – Aug 28', 'bye': 'C. Bass / McHugh / Atkins'},
+    {'round': 7, 'dates': 'Aug 31 – Sep 11', 'bye': 'Palmer / Lynn / Stoner'},
+    {'round': 8, 'dates': 'Sep 14 – Sep 25', 'bye': 'Kaylan Adams'},
+    {'round': 9, 'dates': 'Sep 28 – Oct 9',  'bye': 'Megan Serian'},
 ]
 
 # Expected match count per round (rounds 5-7 have 3-way BYEs → 6 matches each)

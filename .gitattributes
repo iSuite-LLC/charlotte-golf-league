@@ -1,0 +1,34 @@
+# Normalize line endings on commit so Windows/OneDrive edits don't
+# produce whole-file diffs. Text files are stored as LF in the repo;
+# git converts on checkout per each machine's settings.
+* text=auto
+
+# Explicitly text — these are the files Claude and the scripts touch
+*.md      text
+*.json    text
+*.py      text
+*.html    text
+*.htm     text
+*.svg     text
+*.css     text
+*.js      text
+*.txt     text
+*.yml     text
+*.yaml    text
+
+# Windows-only scripts must keep CRLF or they break
+*.bat     text eol=crlf
+*.cmd     text eol=crlf
+
+# Binary — never touch these
+*.xlsx    binary
+*.xlsm    binary
+*.xls     binary
+*.docx    binary
+*.doc     binary
+*.pdf     binary
+*.png     binary
+*.jpg     binary
+*.jpeg    binary
+*.gif     binary
+*.ico     binary

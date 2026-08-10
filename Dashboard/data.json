@@ -3603,7 +3603,7 @@
     },
     {
       "round": 6,
-      "dates": "Jun 29 – Jul 10",
+      "dates": "Aug 17 – Aug 28",
       "bye": "C. Bass / McHugh",
       "status": "in_progress",
       "matches": [
@@ -3764,7 +3764,7 @@
     },
     {
       "round": 7,
-      "dates": "Jul 13 – Jul 24",
+      "dates": "Aug 31 – Sep 11",
       "bye": "Palmer / Lynn / Stoner",
       "status": "upcoming",
       "matches": [],
@@ -3833,7 +3833,7 @@
     },
     {
       "round": 8,
-      "dates": "Jul 27 – Aug 7",
+      "dates": "Sep 14 – Sep 25",
       "bye": "Kaylan Adams",
       "status": "upcoming",
       "matches": [],
@@ -3912,7 +3912,7 @@
     },
     {
       "round": 9,
-      "dates": "Aug 10 – Aug 21",
+      "dates": "Sep 28 – Oct 9",
       "bye": "—",
       "status": "upcoming",
       "matches": [],
@@ -4018,22 +4018,22 @@
     },
     {
       "round": 6,
-      "dates": "Jun 29 – Jul 10",
+      "dates": "Aug 17 – Aug 28",
       "bye": "C. Bass / McHugh"
     },
     {
       "round": 7,
-      "dates": "Jul 13 – Jul 24",
+      "dates": "Aug 31 – Sep 11",
       "bye": "Palmer / Lynn / Stoner"
     },
     {
       "round": 8,
-      "dates": "Jul 27 – Aug 7",
+      "dates": "Sep 14 – Sep 25",
       "bye": "Kaylan Adams"
     },
     {
       "round": 9,
-      "dates": "Aug 10 – Aug 21",
+      "dates": "Sep 28 – Oct 9",
       "bye": "—"
     }
   ],

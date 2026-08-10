@@ -105,10 +105,12 @@ Each player = 2 consecutive rows: match points row then NET score row directly b
 | 3 | May 18 – May 29 | Charlotte Hayes (#10) |
 | 4 | Jun 1 – Jun 12 | Jerome Martin (#12) |
 | 5 | Jun 15 – Jun 26 | Brian Wojcio, Ethan High, Rob Bass (#1, #2, #3) |
-| 6 | Jun 29 – Jul 10 | Carson Bass, Michael McHugh, Bruce Atkins (#4, #5, #6) |
-| 7 | Jul 13 – Jul 24 | Alex Palmer, Curtis Lynn, Preston Stoner (#7, #8, #9) |
-| 8 | Jul 27 – Aug 7 | Kaylan Adams (#13) |
-| 9 | Aug 10 – Aug 21 | Megan Serian (#14) |
+| 6 | Aug 17 – Aug 28 | Carson Bass, Michael McHugh, Bruce Atkins (#4, #5, #6) |
+| 7 | Aug 31 – Sep 11 | Alex Palmer, Curtis Lynn, Preston Stoner (#7, #8, #9) |
+| 8 | Sep 14 – Sep 25 | Kaylan Adams (#13) |
+| 9 | Sep 28 – Oct 9 | Megan Serian (#14) — withdrawn, so R9 has no bye |
+
+**Rescheduled 2026-08-10.** The season paused mid-R6. Only one R6 match was ever played — **Nick Coglianese def. Kaylan Adams 6–2, and that result stands** (those two are done for R6). R6 reopens Aug 17 so the remaining six matchups can be played, and R7–R9 cascade in two-week windows from there. Original windows were R6 Jun 29 – Jul 10, R7 Jul 13 – Jul 24, R8 Jul 27 – Aug 7, R9 Aug 10 – Aug 21. Announced to the league in `Announcements/League_Restart_2026-08-10.htm`. Matchups and format are unchanged — dates only.
 
 ## Recap Email Schedule
 
@@ -118,11 +120,13 @@ Each player = 2 consecutive rows: match points row then NET score row directly b
 | May 18 | R2 | R3 |
 | Jun 1 | R3 | R4 |
 | Jun 15 | R4 | R5 |
-| Jun 29 | R5 | R6 |
-| Jul 13 | R6 | R7 |
-| Jul 27 | R7 | R8 |
-| Aug 10 | R8 | R9 |
-| Aug 24 | R9 (finale) | Season end |
+| Jun 29 | R5 | R6 (paused; reopened Aug 17) |
+| Aug 31 | R6 | R7 |
+| Sep 14 | R7 | R8 |
+| Sep 28 | R8 | R9 |
+| Oct 12 | R9 (finale) | Season end |
+
+Recap dates for R6 onward shifted with the reschedule above (originally Jul 13, Jul 27, Aug 10, Aug 24). No R6 recap went out during the pause — R6 is still in progress and gets recapped Aug 31 once the reopened window closes.
 
 `generate_recap.py` writes **two drafts per round**: a friendly one (`Round_NN_Recap_Draft_<date>.htm`) and a savage/roast one (`Round_NN_Recap_HARSH_Draft_<date>.htm`). The user picks which to send. Both tones live in `TONE_BANKS` in the script.
 

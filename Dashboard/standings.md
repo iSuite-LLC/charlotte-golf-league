@@ -41,7 +41,7 @@ Brian Wojcio was reviewed at the same time and **stays at 12** (already competit
 
 ## Current Round
 
-**Round 6** | Jun 29 – Jul 10, 2026
+**Round 6** | Aug 17 – Aug 28, 2026 *(reopened after the summer pause)*
 BYE: Carson Bass, Michael McHugh
 
 > **Note:** We're in Round 6. Earlier rounds still have makeup matches being recorded as they come in.
@@ -89,7 +89,9 @@ BYE: Carson Bass, Michael McHugh
 | 3 | May 18 – May 29 | Charlotte Hayes |
 | 4 | Jun 1 – Jun 12 | Jerome Martin |
 | 5 | Jun 15 – Jun 26 | Wojcio / High / R. Bass |
-| **6 ← current** | Jun 29 – Jul 10 | C. Bass / McHugh |
-| 7 | Jul 13 – Jul 24 | Palmer / Lynn / Stoner |
-| 8 | Jul 27 – Aug 7 | Kaylan Adams |
-| 9 | Aug 10 – Aug 21 | — (Megan Serian withdrawn) |
+| **6 ← current** | Aug 17 – Aug 28 | C. Bass / McHugh |
+| 7 | Aug 31 – Sep 11 | Palmer / Lynn / Stoner |
+| 8 | Sep 14 – Sep 25 | Kaylan Adams |
+| 9 | Sep 28 – Oct 9 | — (Megan Serian withdrawn) |
+
+**Season paused and restarted.** Play stopped mid-Round 6. The one R6 match that was completed — Nick Coglianese def. Kaylan Adams 6–2 — stands, and those two are done for the round. Round 6 reopened Aug 17 for the remaining six matchups; Rounds 7–9 shifted accordingly. Finale closes Oct 9.
