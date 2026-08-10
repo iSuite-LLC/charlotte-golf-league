@@ -1149,7 +1149,12 @@
   /* ── Results ── */
   function renderResults() {
     const html = leagueData.rounds.map(r => {
-      if (r.status === 'upcoming') {
+      const allPairings = r.pairings || r.matches || [];
+      const played    = allPairings.filter(m => m.played !== false);
+      const remaining = allPairings.length - played.length;
+      // A round whose window hasn't opened yet still shows its results if anyone
+      // played early. Only a genuinely empty upcoming round gets the dim stub.
+      if (r.status === 'upcoming' && played.length === 0) {
         return `<div class="round-section" style="opacity:0.4">
           <div class="round-header">
             <span class="round-label">Round ${r.round}</span>
@@ -1158,14 +1163,14 @@
           </div>
         </div>`;
       }
-      const allPairings = r.pairings || r.matches || [];
-      const played    = allPairings.filter(m => m.played !== false);
-      const remaining = allPairings.length - played.length;
       // While the round is still within its date window (in_progress) keep the
       // "In Progress" badge. Only once the window has passed (complete) do we
       // surface "Complete" (all in) or how many matches are still missing.
       let badgeCls, badgeTxt;
-      if (r.status === 'in_progress') {
+      if (r.status === 'upcoming') {
+        badgeCls = 'in-progress';
+        badgeTxt = `Played early &middot; ${played.length} of ${allPairings.length} in`;
+      } else if (r.status === 'in_progress') {
         badgeCls = 'in-progress';
         badgeTxt = 'In Progress';
       } else if (remaining === 0) {
@@ -1175,7 +1180,7 @@
         badgeCls = 'in-progress';
         badgeTxt = remaining === 1 ? '1 match remaining' : remaining + ' matches remaining';
       }
-      const isOpen    = r.status === 'in_progress';
+      const isOpen    = r.status === 'in_progress' || r.status === 'upcoming';
       const matchRows = played.map((m, mi) => {
         const draw    = m.winner === null;
         const scId    = `sc-r${r.round}-m${mi}`;
