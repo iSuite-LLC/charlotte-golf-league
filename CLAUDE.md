@@ -101,7 +101,7 @@ Each player = 2 consecutive rows: match points row then NET score row directly b
 | 7 | Alex Palmer | 30 |
 | 8 | Curtis Lynn | 28 |
 | 9 | Preston Stoner | 28 |
-| 10 | Charlotte Hayes | 36 |
+| 10 | Charlotte Hayes | 20 |
 | 11 | David Maddox | 36 |
 | 12 | Jerome Martin | 36 |
 | 13 | Kaylan Adams | 36 |
