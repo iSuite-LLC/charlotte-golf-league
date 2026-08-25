@@ -1,7 +1,7 @@
 # IMI Golf League 2026 — Standings
 
 **Season:** 2026 | **Rounds:** 9 | **Players:** 13 active (2 withdrawn)
-**Last updated:** 2026-08-10 via Claude (R6 Ethan High def. Rob Bass 5–3; R8 Ethan High def. Curtis Lynn 7–1 — Ethan takes over the top seed)
+**Last updated:** 2026-08-25 via Claude (R8 Charlotte Hayes def. Jerome Martin 6–2 — Charlotte moves up to the #3 seed at 4-0-0)
 
 ---
 
@@ -44,12 +44,12 @@ Brian Wojcio was reviewed at the same time and **stays at 12** (already competit
 **Round 6** | Aug 17 – Aug 28, 2026 *(reopened after the summer pause)*
 BYE: Carson Bass, Michael McHugh
 
-> **Note:** We're in Round 6. Earlier rounds still have makeup matches being recorded as they come in, and one Round 8 match has already been played ahead of schedule.
+> **Note:** We're in Round 6. Earlier rounds still have makeup matches being recorded as they come in, and two Round 8 matches have already been played ahead of schedule.
 > - **R3** (6 of 7 recorded): Outstanding: Rob Bass vs Bruce replacement (TBD).
 > - **R4** (6 of 7 recorded): Outstanding: Rob Bass vs Curtis Lynn.
 > - **R5** (3 of 6 recorded): Kaylan Adams def. Megan Serian 7–1; Jerome Martin def. Nick Coglianese 6–2; **Curtis Lynn def. Preston Stoner 8–0** at Skybrook (NET 35 vs 44). Outstanding: Carson Bass vs Michael McHugh, Alex Palmer vs Bruce replacement (TBD), Charlotte Hayes vs David Maddox.
 > - **R6** (2 of 6 recorded): Nick Coglianese def. Kaylan Adams 6–2 at Highland Creek (NET 45 vs 50); **Ethan High def. Rob Bass 5–3** at Skybrook (NET 37 vs 38).
-> - **R8** (1 of 7 recorded, played early): **Ethan High def. Curtis Lynn 7–1** at Skybrook (NET 33 vs 40).
+> - **R8** (2 of 7 recorded, played early): Ethan High def. Curtis Lynn 7–1 at Skybrook (NET 33 vs 40); **Charlotte Hayes def. Jerome Martin 6–2** at Highland Creek (NET 39 vs 50).
 >
 > **Pickup note:** Carson's R4 vs Ethan was his Bruce-replacement pickup — Carson's 5 pts count toward his record (2-2-0). For Ethan it was an extra match; his 3-pt loss is his lowest round and is dropped per the mulligan rule, so his R4 stands at 7 pts vs Alex Palmer.
 
@@ -57,29 +57,29 @@ BYE: Carson Bass, Michael McHugh
 
 ## Standings
 
-*R1 and R2 complete. R3 at 6 of 7, R4 at 6 of 7, R5 at 3 of 6, R6 at 2 of 6, R8 at 1 of 7. R3–R5 makeup matches are still outstanding.*
+*R1 and R2 complete. R3 at 6 of 7, R4 at 6 of 7, R5 at 3 of 6, R6 at 2 of 6, R8 at 2 of 7. R3–R5 makeup matches are still outstanding.*
 
 | Seed | Player | Total Pts | Record | Avg NET |
 |------|--------|-----------|--------|---------|
 | 1 | Ethan High | 39 | 6-0-0 | 37.0 |
 | 2 | Curtis Lynn | 30 | 4-1-0 | 37.4 |
-| 3 | Preston Stoner | 22.5 | 3-2-0 | 39.8 |
-| 4 | Charlotte Hayes | 22 | 3-0-0 | 39.3 |
+| 3 | Charlotte Hayes | 28 | 4-0-0 | 39.2 |
+| 4 | Preston Stoner | 22.5 | 3-2-0 | 39.8 |
 | 5 | David Maddox | 19 | 2-0-1 | 46.0 |
 | 6 | Brian Wojcio | 17.5 | 1-2-1 | 39.0 |
 | 7 | Kaylan Adams | 14 | 1-4-1 | 51.2 |
 | 8 | Carson Bass | 13 | 2-2-0 | 41.5 |
 | 9 | Nick Coglianese | 13 | 1-3-1 | 49.8 |
-| 10 | Michael McHugh | 11.5 | 2-2-0 | 43.0 |
-| 11 | Jerome Martin | 11 | 1-2-1 | 53.5 |
+| 10 | Jerome Martin | 13 | 1-3-1 | 52.8 |
+| 11 | Michael McHugh | 11.5 | 2-2-0 | 43.0 |
 | 12 | Alex Palmer | 11 | 1-3-0 | 46.2 |
 | 13 | Rob Bass | 8 | 0-2-1 | 40.0 |
 | — | ~~Bruce Atkins~~ (WD) | 10 | 1-1-0 | 36.0 |
 | — | ~~Megan Serian~~ (WD) | 11.5 | 1-4-0 | 50.2 |
 
-*Ties broken by: best record (most W, fewest L) → lowest avg NET → name. Seed 8/9: Carson Bass over Nick Coglianese on more wins (2 vs 1). Seed 11/12: Jerome Martin over Alex Palmer on fewer losses (2 vs 3).*
+*Ties broken by: best record (most W, fewest L) → lowest avg NET → name. Seeds 8–10 all sit on 13 pts: Carson Bass leads on wins (2 vs 1), then Nick Coglianese over Jerome Martin on lower avg NET (49.8 vs 52.8).*
 
-**Movement this update:** Ethan High takes the top seed from Curtis Lynn, going 2-for-2 (R6 5–3 over Rob Bass, R8 7–1 over Curtis) to reach 39 pts on a 6-0-0 record. Curtis drops to second and takes his first loss of the season. Rob Bass falls to 8 pts at 0-2-1.
+**Movement this update:** Charlotte Hayes jumps Preston Stoner into the #3 seed, running her record to 4-0-0 on 28 pts — the only unbeaten left besides Ethan. Jerome Martin picks up 2 pts but takes his third loss, sliding to 1-3-1 and landing in the three-way 13-pt logjam at seed 10.
 
 ---
 
