@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-09-29 8:59 AM ET",
+  "lastUpdated": "2026-09-29 9:20 AM ET",
   "currentRound": 9,
   "players": [
     {
@@ -281,7 +281,7 @@
       "id": 8,
       "name": "Curtis Lynn",
       "handicap": 28,
-      "totalPts": 37,
+      "totalPts": 43,
       "record": "5-1-0",
       "avgNet": 36.7,
       "rounds": [
@@ -326,6 +326,14 @@
           "net": 33,
           "opponent": "Alex Palmer",
           "result": "W"
+        }
+      ],
+      "pickupCredit": [
+        {
+          "fromRound": 5,
+          "pts": 7,
+          "replacedRound": 8,
+          "replacedPts": 1
         }
       ]
     },

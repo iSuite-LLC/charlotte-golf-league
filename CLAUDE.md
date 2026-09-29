@@ -152,3 +152,32 @@ Recap dates for R6 onward shifted with the reschedule above (originally Jul 13, 
   2. Best record (most wins, then fewest losses)
   3. Lowest average NET score
   4. Name ascending (final tiebreaker only)
+
+## Substitutes and Reserve Scores
+
+When a scheduled player can't play, anyone may sub into their slot. The match is a
+normal round **for the scheduled player only**. The sub's own score is banked as a
+**reserve score**:
+
+- It never occupies a round slot. Schedule and Results keep showing the real matchup.
+- It **replaces the sub's lowest counting round in total points**, and only when it is
+  strictly better. Equal is not better.
+- **Points only.** W-L-D record and average NET stay computed from the rounds the player
+  played in their own slots — a swapped-out loss is still a loss.
+- Re-evaluated on every refresh against the *current* lowest round, so the target moves
+  as makeup matches land. Keep a reserve on the books even when it doesn't help yet.
+
+**The scheduled player whose slot was filled takes no result** for that round (same as
+Bruce's and Megan's withdrawn slots).
+
+All of this lives in `PICKUP_RESERVES` / `DROPPED_PICKUP_ROUNDS` in `setup/apply_overrides.py`.
+Add an entry there whenever someone subs in — it is the only place the rule is encoded.
+
+### Why step 2b of the standing instructions matters
+
+`process_scores.parse_scores` is keyed by player **name**, so a player appearing twice in
+one round tab keeps only the **last** block. `apply_overrides.py` repairs this in both the
+workbook and `data.json` on every run: it restores the clobbered counting round, clears any
+round written from a pickup-only appearance, and applies reserve credit to the League Total
+(column M). It is idempotent — a clean run prints "No overrides needed". **Never hand-edit
+the workbook to fix a substitute; add the config entry and re-run the script.**

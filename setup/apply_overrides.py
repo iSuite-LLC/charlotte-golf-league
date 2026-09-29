@@ -53,6 +53,168 @@ PICKUP_SLOTS = {
                          "scheduled_opponent": "Carson Bass"},
 }
 
+# Pickup reserve scores. A player who subs into someone else's slot banks that
+# score; it never gets a round of its own (Results and Schedule keep showing the
+# real pairing). Instead it REPLACES that player's lowest counting round when it
+# is strictly better — in TOTAL POINTS ONLY. Record (W-L-D) and avg NET are
+# computed from the rounds played in the player's own slots and are left alone.
+# Recomputed every run against the CURRENT lowest round, so the target moves as
+# makeup matches land. Keep an entry here even when it doesn't currently help —
+# it stays banked and may apply once a worse round comes in.
+# Each entry: {player, round they subbed in, pts banked}.
+PICKUP_RESERVES = [
+    {"player": "Ethan High",  "round": 4, "pts": 3},   # filled Bruce's slot vs Carson Bass
+    {"player": "Curtis Lynn", "round": 5, "pts": 7},   # filled Bruce's slot vs Alex Palmer
+    {"player": "Alex Palmer", "round": 9, "pts": 1},   # filled in for Carson Bass vs Curtis Lynn
+]
+
+
+def apply_pickup_reserves(rounds, reserves):
+    """Return (extra_points, applied) for one player.
+
+    `rounds` is a list of (round_number, match_pts) for the rounds the player
+    played in their OWN slots. `reserves` is their PICKUP_RESERVES entries.
+    Best reserve goes against the worst round; a reserve is used only when it is
+    strictly greater. Returns the delta to add to the raw round total, plus an
+    audit trail. Pure function — same inputs always give the same answer, which
+    is what keeps the workbook and data.json in step.
+    """
+    slots = sorted(rounds, key=lambda t: (t[1], t[0]))            # worst round first
+    extra, applied, used = 0, [], set()
+    for res in sorted(reserves, key=lambda r: -r["pts"]):         # best reserve first
+        for rno, pts in slots:
+            if rno in used or res["pts"] <= pts:
+                continue
+            used.add(rno)
+            extra += res["pts"] - pts
+            applied.append({"fromRound": res["round"], "pts": res["pts"],
+                            "replacedRound": rno, "replacedPts": pts})
+            break
+    return extra, applied
+
+
+LEAGUE_XLSX = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "2026 IMI Golf League.xlsx",
+)
+SHEET_PASSWORD = "steelers"
+
+# Scores 2026 layout: each player owns two rows (match points, then NET below).
+# Rounds 1-9 live in columns D-L (4-12); M is the League Total.
+PLAYER_MP_ROW = {
+    "Brian Wojcio": 3, "Ethan High": 5, "Rob Bass": 7, "Carson Bass": 9,
+    "Michael McHugh": 11, "Bruce Atkins": 13, "Alex Palmer": 15, "Curtis Lynn": 17,
+    "Preston Stoner": 19, "Charlotte Hayes": 21, "David Maddox": 23,
+    "Jerome Martin": 25, "Kaylan Adams": 27, "Megan Serian": 29, "Nick Coglianese": 31,
+}
+COL_TOTAL, COL_REC, COL_AVG = 13, 14, 15
+
+# Rounds process_scores writes from a pickup-only appearance. The player subbed
+# into someone else's slot, so that round cell belongs to their OWN match — the
+# sub score is banked as a PICKUP_RESERVES entry instead. Cleared every run.
+DROPPED_PICKUP_ROUNDS = [
+    {"player": "Alex Palmer", "round": 9,
+     "why": "subbed in for Carson Bass; his own R9 vs Rob Bass is still to be played"},
+]
+
+
+def apply_workbook_fixes():
+    """Repair Scores 2026 after a score run. This is the master-workbook half of
+    the pickup handling — the `project_pickup_clobber_repair` the 2c comment
+    refers to — so the documented two-step workflow is self-healing.
+
+    process_scores.parse_scores is keyed by player NAME, so a player who appears
+    twice in one round tab keeps only the LAST block. Three repairs, in order:
+
+      1. restore a clobbered counting round   (pickup_scorecards player_round_fixes)
+      2. clear a round the processor wrote from a pickup-only appearance
+         (DROPPED_PICKUP_ROUNDS) — that slot belongs to the player's own match
+      3. recompute the League Total with pickup reserve credit (PICKUP_RESERVES)
+
+    Record (N) and avg NET (O) are recomputed from the round cells after 1 and 2,
+    but never from the reserve — a reserve swaps points only.
+    """
+    import openpyxl  # local import: the JSON-only path shouldn't need openpyxl
+
+    if not os.path.exists(LEAGUE_XLSX):
+        return [f"WARNING: workbook not found, skipped: {LEAGUE_XLSX}"]
+
+    wb = openpyxl.load_workbook(LEAGUE_XLSX)
+    ws = wb["Scores 2026"]
+    changes, touched = [], set()
+
+    def cells(name, rnd):
+        mp = PLAYER_MP_ROW[name]
+        return ws.cell(row=mp, column=3 + rnd), ws.cell(row=mp + 1, column=3 + rnd)
+
+    # 1) restore counting rounds the name-keyed parse overwrote
+    for fix in (_load_pickup_scorecards() or {}).get("player_round_fixes", []):
+        if fix["player"] not in PLAYER_MP_ROW:
+            continue
+        mp_cell, net_cell = cells(fix["player"], fix["round"])
+        if (mp_cell.value, net_cell.value) != (fix["matchPts"], fix["net"]):
+            was = (mp_cell.value, net_cell.value)
+            mp_cell.value, net_cell.value = fix["matchPts"], fix["net"]
+            touched.add(fix["player"])
+            changes.append(f"{fix['player']} R{fix['round']} restored {was} → "
+                           f"({fix['matchPts']}, {fix['net']}) vs {fix['opponent']}")
+
+    # 2) clear rounds written from a pickup-only appearance
+    for drop in DROPPED_PICKUP_ROUNDS:
+        if drop["player"] not in PLAYER_MP_ROW:
+            continue
+        mp_cell, net_cell = cells(drop["player"], drop["round"])
+        if (mp_cell.value, net_cell.value) != (None, None):
+            was = (mp_cell.value, net_cell.value)
+            mp_cell.value = net_cell.value = None
+            touched.add(drop["player"])
+            changes.append(f"{drop['player']} R{drop['round']} cleared {was} — {drop['why']}")
+
+    # 3) recompute aggregates for everyone touched above plus everyone holding a reserve
+    for name in sorted(touched | {r["player"] for r in PICKUP_RESERVES}):
+        if name not in PLAYER_MP_ROW:
+            continue
+        mp_row = PLAYER_MP_ROW[name]
+        rounds, nets = [], []
+        for rno in range(1, 10):
+            pts = ws.cell(row=mp_row, column=3 + rno).value
+            net = ws.cell(row=mp_row + 1, column=3 + rno).value
+            if isinstance(pts, (int, float)):
+                rounds.append((rno, pts))
+            if isinstance(net, (int, float)):
+                nets.append(net)
+        credit, applied = apply_pickup_reserves(
+            rounds, [r for r in PICKUP_RESERVES if r["player"] == name])
+        total = sum(p for _, p in rounds) + credit
+        total = int(total) if total == int(total) else total
+        w = sum(1 for _, p in rounds if p >= 4.5)
+        l = sum(1 for _, p in rounds if p < 4)
+        dr = len(rounds) - w - l
+        record = f"{w}-{l}-{dr}"
+        avg = round(sum(nets) / len(nets), 1) if nets else "N/A"
+        want = (total, record, avg)
+        got = tuple(ws.cell(row=mp_row, column=c).value for c in (COL_TOTAL, COL_REC, COL_AVG))
+        if got != want:
+            for c, v in zip((COL_TOTAL, COL_REC, COL_AVG), want):
+                ws.cell(row=mp_row, column=c).value = v
+            detail = "; ".join(
+                f"R{a['fromRound']} sub {a['pts']} over R{a['replacedRound']}'s {a['replacedPts']}"
+                for a in applied) or "no pickup credit"
+            changes.append(f"{name} totals {got} → {want} ({detail})")
+
+    if changes:
+        ws.protection.sheet = False
+        ws.protection.sheet = True
+        ws.protection.password = SHEET_PASSWORD
+        try:
+            wb.save(LEAGUE_XLSX)
+        except PermissionError:
+            wb.close()
+            return ["ERROR: workbook is open in Excel — close it and re-run."]
+    wb.close()
+    return changes
+
+
 # Roster replacements: a player's slot taken over mid-season by a named successor.
 # The successor INHERITS the slot's standing (points/record/seed) and plays every
 # round from `takeover_round` on — but rounds BEFORE that keep the ORIGINAL player's
@@ -262,6 +424,19 @@ def apply(path):
             p["withdrawn"] = True
             changes.append(f"set withdrawn=true on {p['name']}")
 
+    # 1b) drop the round entries process_scores wrote from a pickup-only
+    #     appearance. Mirrors DROPPED_PICKUP_ROUNDS on the workbook side; runs
+    #     before anything recomputes totals so the round never counts twice.
+    for drop in DROPPED_PICKUP_ROUNDS:
+        player = next((p for p in d.get("players", [])
+                       if p.get("name") == drop["player"]), None)
+        if not player:
+            continue
+        keep = [x for x in player.get("rounds", []) if x.get("round") != drop["round"]]
+        if len(keep) != len(player.get("rounds", [])):
+            player["rounds"] = keep
+            changes.append(f"{drop['player']} R{drop['round']} round entry dropped — {drop['why']}")
+
     # 2) relabel withdrawn players in UNPLAYED pairings only
     for r in d.get("rounds", []):
         for m in r.get("pairings", []):
@@ -375,10 +550,16 @@ def apply(path):
             if any(rd.get(k) != v for k, v in want.items()):
                 rd.update(want)
                 changes.append(f"R{fix['round']} round fix: {fix['player']} -> {fix['result']} {fix['matchPts']}pts vs {fix['opponent']}")
-            # recompute season aggregates from the (now-correct) counting rounds
+            # recompute season aggregates from the (now-correct) counting rounds.
+            # Include any pickup reserve credit here too, otherwise this and step 5
+            # take turns rewriting totalPts and the run never settles.
             pts_list = [x.get("matchPts") for x in player["rounds"] if x.get("matchPts") is not None]
             nets     = [x.get("net") for x in player["rounds"] if isinstance(x.get("net"), (int, float))]
-            total    = sum(pts_list)
+            credit, _ = apply_pickup_reserves(
+                [(x["round"], x["matchPts"]) for x in player["rounds"]
+                 if x.get("matchPts") is not None],
+                [r for r in PICKUP_RESERVES if r["player"] == fix["player"]])
+            total    = sum(pts_list) + credit
             total    = int(total) if total == int(total) else total
             w = sum(1 for x in pts_list if _outcome(x) == "W")
             l = sum(1 for x in pts_list if _outcome(x) == "L")
@@ -403,6 +584,46 @@ def apply(path):
         d["handicapAdjustments"] = adjustments
         changes.append(f"handicapAdjustments → {len(adjustments)} entry(ies)")
 
+    # 5) pickup reserve credit — see PICKUP_RESERVES. Runs last so it sees the
+    #    counting rounds after every earlier fix (2c rewrites clobbered rounds).
+    for player in d.get("players", []):
+        reserves = [r for r in PICKUP_RESERVES if r["player"] == player.get("name")]
+        if not reserves:
+            continue
+        rounds = [x for x in player.get("rounds", []) if x.get("matchPts") is not None]
+        credit, applied = apply_pickup_reserves(
+            [(x["round"], x["matchPts"]) for x in rounds], reserves)
+        base = sum(x["matchPts"] for x in rounds)
+        base = int(base) if base == int(base) else base
+        want_total = base + credit
+        want_total = int(want_total) if want_total == int(want_total) else want_total
+        want_note = applied or None
+        # record and avg NET come from the rounds only — a reserve swaps points,
+        # nothing else. Recomputed here because 1b may have dropped a round.
+        nets = [x["net"] for x in rounds if isinstance(x.get("net"), (int, float))]
+        w = sum(1 for x in rounds if x["matchPts"] >= 4.5)
+        l = sum(1 for x in rounds if x["matchPts"] < 4)
+        want_rec = f"{w}-{l}-{len(rounds) - w - l}"
+        want_avg = round(sum(nets) / len(nets), 1) if nets else None
+        if (player.get("totalPts") != want_total or player.get("pickupCredit") != want_note
+                or player.get("record") != want_rec or player.get("avgNet") != want_avg):
+            if player.get("record") != want_rec or player.get("avgNet") != want_avg:
+                changes.append(f"{player['name']} record/avg → {want_rec} / {want_avg}")
+            player["totalPts"], player["record"], player["avgNet"] = want_total, want_rec, want_avg
+            if want_note:
+                player["pickupCredit"] = want_note
+            else:
+                player.pop("pickupCredit", None)
+            if credit:
+                for a in applied:
+                    changes.append(
+                        f"{player['name']} pickup credit: R{a['fromRound']} sub score "
+                        f"{a['pts']} replaces R{a['replacedRound']}'s {a['replacedPts']} "
+                        f"→ total {want_total}"
+                    )
+            else:
+                changes.append(f"{player['name']} total (no pickup credit) → {want_total}")
+
     if changes:
         with open(path, "w", encoding="utf-8") as f:
             json.dump(d, f, indent=2, ensure_ascii=False)
@@ -411,6 +632,16 @@ def apply(path):
             print(f"  - {c}")
     else:
         print(f"No overrides needed — {path} already up to date.")
+
+    # 6) mirror the pickup credit into the workbook's League Total column, so
+    #    standings.md (written from the workbook) can't drift from the dashboard.
+    wb_changes = apply_workbook_fixes()
+    if wb_changes:
+        print(f"Applied {len(wb_changes)} workbook fix(es) to {LEAGUE_XLSX}:")
+        for c in wb_changes:
+            print(f"  - {c}")
+    else:
+        print("No workbook fixes needed — Scores 2026 already correct.")
 
     # Safety check: no withdrawn player should remain in an unplayed pairing.
     leftover = [
