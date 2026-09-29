@@ -1,13 +1,13 @@
 # IMI Golf League 2026 — Standings
 
 **Season:** 2026 | **Rounds:** 9 | **Players:** 13 active (2 withdrawn)
-**Last updated:** 2026-08-25 via Claude (R8 Charlotte Hayes def. Jerome Martin 6–2 — Charlotte moves up to the #3 seed at 4-0-0)
+**Last updated:** 2026-09-29 via Claude (Emerald Lake triple-header: Charlotte Hayes def. Alex Palmer 7–1 in R6; Curtis Lynn def. Alex Palmer 7–1 twice — as Bruce's replacement in R5 and as Carson's opponent in R9)
 
 ---
 
 ## Roster Change — Bruce Atkins Withdrawn
 
-Bruce Atkins has withdrawn from the league. His played results (R1, R2) stand and remain on the board, but he is no longer an active contender and is not seeded. His incomplete/upcoming match slots (R3, R4, R5, R7, R8, R9) now read **"Bruce Replacement - TBD"**.
+Bruce Atkins has withdrawn from the league. His played results (R1, R2) stand and remain on the board, but he is no longer an active contender and is not seeded. His incomplete/upcoming match slots (R3, R4, R7, R8, R9) now read **"Bruce Replacement - TBD"**. His R5 slot was filled by Curtis Lynn (see the pickup note below).
 
 **Pickup rule:** the player who was scheduled against Bruce may invite any league member to a pickup match that round. The invited player plays twice that round; both results count. Any player who plays an extra (pickup) match may drop their lowest round — removed entirely from points, record, and avg NET — when it helps them.
 
@@ -39,31 +39,44 @@ Brian Wojcio was reviewed at the same time and **stays at 12** (already competit
 
 ---
 
+## New Course — Emerald Lake
+
+**Emerald Lake** (par 35 front / 36 back, 71 total) has been added to the Score Calculator alongside Skybrook, Highland Creek and Warrior Golf Club. Blue, White and Red tees share the same hole handicap ordering.
+
+---
+
 ## Current Round
 
-**Round 6** | Aug 17 – Aug 28, 2026 *(reopened after the summer pause)*
-BYE: Carson Bass, Michael McHugh
+**Round 9** | Sep 28 – Oct 9, 2026 — the finale
+BYE: none (Megan Serian withdrawn)
 
-> **Note:** We're in Round 6. Earlier rounds still have makeup matches being recorded as they come in, and two Round 8 matches have already been played ahead of schedule.
-> - **R3** (6 of 7 recorded): Outstanding: Rob Bass vs Bruce replacement (TBD).
-> - **R4** (6 of 7 recorded): Outstanding: Rob Bass vs Curtis Lynn.
-> - **R5** (3 of 6 recorded): Kaylan Adams def. Megan Serian 7–1; Jerome Martin def. Nick Coglianese 6–2; **Curtis Lynn def. Preston Stoner 8–0** at Skybrook (NET 35 vs 44). Outstanding: Carson Bass vs Michael McHugh, Alex Palmer vs Bruce replacement (TBD), Charlotte Hayes vs David Maddox.
-> - **R6** (2 of 6 recorded): Nick Coglianese def. Kaylan Adams 6–2 at Highland Creek (NET 45 vs 50); **Ethan High def. Rob Bass 5–3** at Skybrook (NET 37 vs 38).
-> - **R8** (2 of 7 recorded, played early): Ethan High def. Curtis Lynn 7–1 at Skybrook (NET 33 vs 40); **Charlotte Hayes def. Jerome Martin 6–2** at Highland Creek (NET 39 vs 50).
+> **Note:** We're in Round 9, but makeup matches from Rounds 3–8 are still landing. Round 7 has not started.
+> - **R3** (6 of 7): Outstanding: Rob Bass vs Bruce replacement (TBD).
+> - **R4** (6 of 7): Outstanding: Rob Bass vs Curtis Lynn.
+> - **R5** (4 of 6): **Curtis Lynn def. Alex Palmer 7–1** at Emerald Lake (NET 33 vs 48), Curtis filling Bruce's slot. Outstanding: Carson Bass vs Michael McHugh, Charlotte Hayes vs David Maddox.
+> - **R6** (3 of 6): **Charlotte Hayes def. Alex Palmer 7–1** at Emerald Lake (NET 36 vs 48). Outstanding: Brian Wojcio vs Curtis Lynn, Preston Stoner vs David Maddox, Jerome Martin vs Megan replacement (TBD).
+> - **R7** (0 of 6): Not yet started.
+> - **R8** (2 of 7, played early): Ethan High def. Curtis Lynn 7–1; Charlotte Hayes def. Jerome Martin 6–2.
+> - **R9** (1 of 7): **Curtis Lynn def. Alex Palmer 7–1** at Emerald Lake (NET 33 vs 48), Alex filling in for Carson Bass.
 >
-> **Pickup note:** Carson's R4 vs Ethan was his Bruce-replacement pickup — Carson's 5 pts count toward his record (2-2-0). For Ethan it was an extra match; his 3-pt loss is his lowest round and is dropped per the mulligan rule, so his R4 stands at 7 pts vs Alex Palmer.
+> **Emerald Lake triple-header:** Alex Palmer, Curtis Lynn and Charlotte Hayes played one nine at Emerald Lake and settled three matchups from it. Alex lost all three (1 pt each).
+>
+> **Pickup notes:** A pickup match counts only for the *scheduled* player; the fill-in's extra match is dropped under the mulligan rule.
+> - R4 — Ethan filled Bruce's slot vs Carson. Carson's 5 pts count; Ethan's 3-pt loss is dropped, so his R4 stands at 7 pts vs Alex Palmer.
+> - R5 — Curtis filled Bruce's slot vs Alex. Alex's 1 pt counts; Curtis's 7-pt win is dropped, so his R5 stands at 8 pts vs Preston Stoner.
+> - R9 — Alex filled in for Carson Bass vs Curtis. Curtis's 7 pts count; Alex's 1-pt loss is dropped, and **Alex's own R9 match vs Rob Bass is still to be played**. Carson takes no result for R9.
 
 ---
 
 ## Standings
 
-*R1 and R2 complete. R3 at 6 of 7, R4 at 6 of 7, R5 at 3 of 6, R6 at 2 of 6, R8 at 2 of 7. R3–R5 makeup matches are still outstanding.*
+*R1 and R2 complete. R3 at 6 of 7, R4 at 6 of 7, R5 at 4 of 6, R6 at 3 of 6, R7 at 0 of 6, R8 at 2 of 7, R9 at 1 of 7.*
 
 | Seed | Player | Total Pts | Record | Avg NET |
 |------|--------|-----------|--------|---------|
 | 1 | Ethan High | 39 | 6-0-0 | 37.0 |
-| 2 | Curtis Lynn | 30 | 4-1-0 | 37.4 |
-| 3 | Charlotte Hayes | 28 | 4-0-0 | 39.2 |
+| 2 | Curtis Lynn | 37 | 5-1-0 | 36.7 |
+| 3 | Charlotte Hayes | 35 | 5-0-0 | 38.6 |
 | 4 | Preston Stoner | 22.5 | 3-2-0 | 39.8 |
 | 5 | David Maddox | 19 | 2-0-1 | 46.0 |
 | 6 | Brian Wojcio | 17.5 | 1-2-1 | 39.0 |
@@ -71,15 +84,15 @@ BYE: Carson Bass, Michael McHugh
 | 8 | Carson Bass | 13 | 2-2-0 | 41.5 |
 | 9 | Nick Coglianese | 13 | 1-3-1 | 49.8 |
 | 10 | Jerome Martin | 13 | 1-3-1 | 52.8 |
-| 11 | Michael McHugh | 11.5 | 2-2-0 | 43.0 |
-| 12 | Alex Palmer | 11 | 1-3-0 | 46.2 |
+| 11 | Alex Palmer | 13 | 1-5-0 | 46.8 |
+| 12 | Michael McHugh | 11.5 | 2-2-0 | 43.0 |
 | 13 | Rob Bass | 8 | 0-2-1 | 40.0 |
 | — | ~~Bruce Atkins~~ (WD) | 10 | 1-1-0 | 36.0 |
 | — | ~~Megan Serian~~ (WD) | 11.5 | 1-4-0 | 50.2 |
 
-*Ties broken by: best record (most W, fewest L) → lowest avg NET → name. Seeds 8–10 all sit on 13 pts: Carson Bass leads on wins (2 vs 1), then Nick Coglianese over Jerome Martin on lower avg NET (49.8 vs 52.8).*
+*Ties broken by: best record (most W, fewest L) → lowest avg NET → name. Seeds 8–11 all sit on 13 pts: Carson Bass leads on wins (2 vs 1); Nick Coglianese and Jerome Martin follow on 3 losses apiece, split by avg NET (49.8 vs 52.8); Alex Palmer is last of the group on 5 losses.*
 
-**Movement this update:** Charlotte Hayes jumps Preston Stoner into the #3 seed, running her record to 4-0-0 on 28 pts — the only unbeaten left besides Ethan. Jerome Martin picks up 2 pts but takes his third loss, sliding to 1-3-1 and landing in the three-way 13-pt logjam at seed 10.
+**Movement this update:** Curtis Lynn takes the #2 seed with 37 pts and the league's best avg NET (36.7), and Charlotte Hayes moves to #3 at 35 pts — still unbeaten at 5-0-0. Ethan High holds #1 by 2 pts with three rounds outstanding. Alex Palmer's two counting losses lift him to 13 pts but drop his record to 1-5-0, putting him last in the four-way 13-pt tie at seed 11.
 
 ---
 
@@ -92,9 +105,9 @@ BYE: Carson Bass, Michael McHugh
 | 3 | May 18 – May 29 | Charlotte Hayes |
 | 4 | Jun 1 – Jun 12 | Jerome Martin |
 | 5 | Jun 15 – Jun 26 | Wojcio / High / R. Bass |
-| **6 ← current** | Aug 17 – Aug 28 | C. Bass / McHugh |
+| 6 | Aug 17 – Aug 28 | C. Bass / McHugh |
 | 7 | Aug 31 – Sep 11 | Palmer / Lynn / Stoner |
 | 8 | Sep 14 – Sep 25 | Kaylan Adams |
-| 9 | Sep 28 – Oct 9 | — (Megan Serian withdrawn) |
+| **9 ← current** | Sep 28 – Oct 9 | — (Megan Serian withdrawn) |
 
 **Season paused and restarted.** Play stopped mid-Round 6. The one R6 match that was completed — Nick Coglianese def. Kaylan Adams 6–2 — stands, and those two are done for the round. Round 6 reopened Aug 17 for the remaining six matchups; Rounds 7–9 shifted accordingly. Finale closes Oct 9.

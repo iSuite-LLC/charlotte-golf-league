@@ -38,8 +38,19 @@ WITHDRAWN = {
 # keeps it off the invited player's own schedule/record. Scores are pulled from
 # the round's `matches` entry between `scheduled` and `opponent`.
 # Keyed by (round, scheduled player) → {opponent: real name in matches, label}.
+# Optional `scheduled_opponent`: the ORIGINAL opponent from ROUND_PAIRINGS, needed
+# when that player is merely unavailable rather than withdrawn. Withdrawn players
+# get a "... Replacement - TBD" placeholder in step 2 that step 2b can find on its
+# own; an active no-show keeps their real name, so name the pairing explicitly.
 PICKUP_SLOTS = {
     (4, "Carson Bass"): {"opponent": "Ethan High", "label": "Bruce Replacement - Ethan"},
+    # 2026-09-29: Alex, Curtis and Charlotte played one nine at Emerald Lake that
+    # settled three matchups. Alex's R5 opponent Bruce is withdrawn → Curtis picked
+    # up that slot; Curtis's R9 opponent Carson was unavailable → Alex picked up his.
+    # Each counts only for the scheduled player: Alex in R5, Curtis in R9.
+    (5, "Alex Palmer"): {"opponent": "Curtis Lynn", "label": "Bruce Replacement - Curtis"},
+    (9, "Curtis Lynn"): {"opponent": "Alex Palmer", "label": "Carson Replacement - Alex",
+                         "scheduled_opponent": "Carson Bass"},
 }
 
 # Roster replacements: a player's slot taken over mid-season by a named successor.
@@ -286,10 +297,18 @@ def apply(path):
                         "p2": label, "p2Pts": op, "p2Net": on,
                         "winner": winner, "played": True}
             pairings = r.setdefault("pairings", [])
-            idx = next((i for i, m in enumerate(pairings)
-                        if sched in (m.get("p1"), m.get("p2"))
-                        and ("Replacement" in str(m.get("p1")) or "Replacement" in str(m.get("p2")))),
-                       None)
+            sched_opp = cfg.get("scheduled_opponent")
+            if sched_opp:
+                # active-but-absent opponent: the pairing still carries their real name
+                idx = next((i for i, m in enumerate(pairings)
+                            if {m.get("p1"), m.get("p2")} == {sched, sched_opp}
+                            or {m.get("p1"), m.get("p2")} == {sched, label}),
+                           None)
+            else:
+                idx = next((i for i, m in enumerate(pairings)
+                            if sched in (m.get("p1"), m.get("p2"))
+                            and ("Replacement" in str(m.get("p1")) or "Replacement" in str(m.get("p2")))),
+                           None)
             if idx is not None:
                 # preserve scorecards already attached (by 2c) so this stays idempotent
                 for k in ("p1Scorecard", "p2Scorecard"):

@@ -1,5 +1,5 @@
 {
-  "_comment": "Corrected R4 scorecards the name-keyed parse_scorecards cant place. Ethan played twice in R4 (vs Alex = Highland/Front, and the Carson pickup = Warrior/Back); parse_scorecards keeps only the last block per name, so it puts Ethans Warrior card on his vs-Alex pairing and leaves the pickup pairing cardless. apply_overrides splices these. Source: Scores.xlsx R4 Scores tab.",
+  "_comment": "Corrected R4 scorecards the name-keyed parse_scorecards cant place. Ethan played twice in R4 (vs Alex = Highland/Front, and the Carson pickup = Warrior/Back); parse_scorecards keeps only the last block per name, so it puts Ethans Warrior card on his vs-Alex pairing and leaves the pickup pairing cardless. apply_overrides splices these. Source: Scores.xlsx R4 Scores tab. 2026-09-29: same situation in R5 (Curtis played Preston AND subbed for Bruce vs Alex) and R9 (Alex subbed for Carson vs Curtis).",
   "scheduled_fixes": [
     {
       "round": 4,
@@ -44,6 +44,51 @@
           3
         ],
         "netTotal": 42
+      }
+    },
+    {
+      "round": 5,
+      "player": "Curtis Lynn",
+      "scorecard": {
+        "course": "Skybrook",
+        "nine": "Front 9",
+        "handicap": 28,
+        "par": [
+          4,
+          3,
+          4,
+          5,
+          4,
+          4,
+          3,
+          5,
+          4
+        ],
+        "parTotal": 36,
+        "gross": [
+          7,
+          3,
+          7,
+          7,
+          5,
+          5,
+          3,
+          6,
+          6
+        ],
+        "grossTotal": 49,
+        "net": [
+          5,
+          2,
+          5,
+          6,
+          3,
+          4,
+          2,
+          4,
+          4
+        ],
+        "netTotal": 35
       }
     }
   ],
@@ -135,6 +180,182 @@
         "netTotal": 38,
         "player": "Ethan High"
       }
+    },
+    {
+      "round": 5,
+      "scheduled": "Alex Palmer",
+      "p1Scorecard": {
+        "course": "Emerald Lake",
+        "nine": "Front 9",
+        "handicap": 30,
+        "par": [
+          4,
+          4,
+          3,
+          4,
+          5,
+          4,
+          3,
+          4,
+          4
+        ],
+        "parTotal": 35,
+        "gross": [
+          5,
+          8,
+          6,
+          6,
+          10,
+          8,
+          5,
+          7,
+          8
+        ],
+        "grossTotal": 63,
+        "net": [
+          4,
+          6,
+          4,
+          5,
+          8,
+          7,
+          3,
+          5,
+          6
+        ],
+        "netTotal": 48,
+        "player": "Alex Palmer"
+      },
+      "p2Scorecard": {
+        "course": "Emerald Lake",
+        "nine": "Front 9",
+        "handicap": 28,
+        "par": [
+          4,
+          4,
+          3,
+          4,
+          5,
+          4,
+          3,
+          4,
+          4
+        ],
+        "parTotal": 35,
+        "gross": [
+          5,
+          5,
+          6,
+          5,
+          5,
+          6,
+          4,
+          5,
+          6
+        ],
+        "grossTotal": 47,
+        "net": [
+          4,
+          3,
+          5,
+          4,
+          3,
+          5,
+          2,
+          3,
+          4
+        ],
+        "netTotal": 33,
+        "player": "Curtis Lynn"
+      }
+    },
+    {
+      "round": 9,
+      "scheduled": "Curtis Lynn",
+      "p1Scorecard": {
+        "course": "Emerald Lake",
+        "nine": "Front 9",
+        "handicap": 28,
+        "par": [
+          4,
+          4,
+          3,
+          4,
+          5,
+          4,
+          3,
+          4,
+          4
+        ],
+        "parTotal": 35,
+        "gross": [
+          5,
+          5,
+          6,
+          5,
+          5,
+          6,
+          4,
+          5,
+          6
+        ],
+        "grossTotal": 47,
+        "net": [
+          4,
+          3,
+          5,
+          4,
+          3,
+          5,
+          2,
+          3,
+          4
+        ],
+        "netTotal": 33,
+        "player": "Curtis Lynn"
+      },
+      "p2Scorecard": {
+        "course": "Emerald Lake",
+        "nine": "Front 9",
+        "handicap": 30,
+        "par": [
+          4,
+          4,
+          3,
+          4,
+          5,
+          4,
+          3,
+          4,
+          4
+        ],
+        "parTotal": 35,
+        "gross": [
+          5,
+          8,
+          6,
+          6,
+          10,
+          8,
+          5,
+          7,
+          8
+        ],
+        "grossTotal": 63,
+        "net": [
+          4,
+          6,
+          4,
+          5,
+          8,
+          7,
+          3,
+          5,
+          6
+        ],
+        "netTotal": 48,
+        "player": "Alex Palmer"
+      }
     }
   ],
   "player_round_fixes": [
@@ -146,6 +367,15 @@
       "opponent": "Alex Palmer",
       "result": "W",
       "note": "Ethan played twice in R4; process_scores writes his pickup loss (vs Carson) to R4. This restores his counting result (def. Alex Palmer 7-1) and recomputes his totals. Pickup is dropped per mulligan."
+    },
+    {
+      "round": 5,
+      "player": "Curtis Lynn",
+      "matchPts": 8,
+      "net": 35,
+      "opponent": "Preston Stoner",
+      "result": "W",
+      "note": "Curtis played twice in R5; process_scores keeps the later block (the Bruce-slot pickup vs Alex, 7 pts) and clobbers his scheduled 8-0 win over Preston. This restores the counting result. Pickup is dropped per mulligan."
     }
   ]
 }
