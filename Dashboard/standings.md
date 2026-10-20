@@ -1,7 +1,25 @@
 # IMI Golf League 2026 — Standings
 
 **Season:** 2026 | **Rounds:** 9 | **Players:** 13 active (2 withdrawn)
-**Last updated:** 2026-09-29 via Claude (Emerald Lake triple-header, plus the sub-score rule applied — Curtis Lynn's R5 sub score banks over his R8 loss and takes him to 43 pts and the #1 seed)
+**Last updated:** 2026-10-20 via Claude (Playoffs complete — Ethan High wins the 2026 championship)
+
+---
+
+## Playoffs — Final (Skybrook)
+
+**Champion: Ethan High** 🏆
+
+| Seed | Player | Finish |
+|------|--------|--------|
+| 1 | Curtis Lynn | 2nd |
+| 2 | Ethan High | **Champion** |
+| 3 | Charlotte Hayes | 4th (could not play — forfeit) |
+| 4 | Preston Stoner | 3rd |
+
+- **Semifinal 1 (Front 9):** Curtis Lynn def. Preston Stoner **4.5–3.5** (NET 35 vs 38)
+- **Semifinal 2:** Ethan High advances — Charlotte Hayes forfeit
+- **Championship (Back 9):** Ethan High def. Curtis Lynn **5–3** (NET 37 vs 39)
+- **3rd Place:** Preston Stoner — Charlotte Hayes forfeit
 
 ---
 

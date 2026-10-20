@@ -2019,13 +2019,21 @@
       ? `<div class="playoff-notice">⚡ Projected seeds — updates each round and locks in after Round 9</div>`
       : status === 'in_progress'
       ? `<div class="playoff-notice" style="background:rgba(26,111,196,0.12);border-color:rgba(26,111,196,0.35);color:var(--blue);">🏌️ Playoffs Underway</div>`
+      : status === 'complete' && pd.champion
+      ? `<div class="playoff-notice" style="background:rgba(212,160,23,0.14);border-color:rgba(212,160,23,0.45);color:#d4a017;font-weight:700;">🏆 ${pd.champion} — 2026 League Champion${pd.finish ? ` &nbsp;&middot;&nbsp; 2nd ${pd.finish[1]} &nbsp;&middot;&nbsp; 3rd ${pd.finish[2]} &nbsp;&middot;&nbsp; 4th ${pd.finish[3]}` : ''}</div>`
       : '';
+    const forfeitNote = [sf2d, sf1d, thdd].some(m => m.forfeit)
+      ? `<p class="playoff-format-note"><strong>FF</strong> = forfeit. ${[...new Set([sf1d, sf2d, thdd].map(m => m.forfeit).filter(Boolean))].join(', ')} could not play and took 4th place.</p>`
+      : '';
+    const subtitle = status === 'complete'
+      ? `Final${pd.course ? ' &nbsp;&middot;&nbsp; ' + pd.course : ''}${pd.date && pd.date !== 'TBD' ? ' &nbsp;&middot;&nbsp; ' + pd.date : ''} &nbsp;&middot;&nbsp; Single Elimination`
+      : `Date: ${pd.date || 'TBD'} &nbsp;&middot;&nbsp; Following Round 9 &nbsp;&middot;&nbsp; Single Elimination`;
 
     document.getElementById('tab-playoffs').innerHTML = `
       <div class="playoff-wrap">
         <div class="playoff-header">
           <div class="playoff-title">🏆 2026 Playoffs</div>
-          <div class="playoff-subtitle">Date: TBD &nbsp;&middot;&nbsp; Following Round 9 &nbsp;&middot;&nbsp; Single Elimination</div>
+          <div class="playoff-subtitle">${subtitle}</div>
         </div>
         ${noticeHtml}
         <div class="playoff-bracket">
@@ -2052,6 +2060,7 @@
           Back 9 — Championship (winners) and 3rd Place match (losers) played simultaneously.
           Most match points advances. In the event of a draw (4–4), lower net score is the tiebreaker.
         </p>
+        ${forfeitNote}
       </div>`;
   }
 

@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "lastUpdated": "2026-09-29 9:20 AM ET",
+  "lastUpdated": "2026-10-20 ET (playoffs final)",
   "currentRound": 9,
   "players": [
     {
@@ -4668,37 +4668,60 @@
     }
   ],
   "playoffs": {
-    "status": "pending",
-    "date": "TBD",
-    "seeds": [],
+    "status": "complete",
+    "date": "Oct 2026",
+    "course": "Skybrook",
+    "seeds": [
+      "Curtis Lynn",
+      "Ethan High",
+      "Charlotte Hayes",
+      "Preston Stoner"
+    ],
     "semi1": {
       "scores": [
-        null,
-        null
+        4.5,
+        3.5
       ],
-      "winner": null
+      "winner": "Curtis Lynn",
+      "nets": [
+        35,
+        38
+      ]
     },
     "semi2": {
       "scores": [
-        null,
-        null
+        "W",
+        "FF"
       ],
-      "winner": null
+      "winner": "Ethan High",
+      "forfeit": "Charlotte Hayes"
     },
     "final": {
       "scores": [
-        null,
-        null
+        3,
+        5
       ],
-      "winner": null
+      "winner": "Ethan High",
+      "nets": [
+        39,
+        37
+      ]
     },
     "third": {
       "scores": [
-        null,
-        null
+        "W",
+        "FF"
       ],
-      "winner": null
-    }
+      "winner": "Preston Stoner",
+      "forfeit": "Charlotte Hayes"
+    },
+    "champion": "Ethan High",
+    "finish": [
+      "Ethan High",
+      "Curtis Lynn",
+      "Preston Stoner",
+      "Charlotte Hayes"
+    ]
   },
   "handicapAdjustments": [
     {
